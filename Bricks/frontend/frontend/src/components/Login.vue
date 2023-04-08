@@ -1,0 +1,351 @@
+<template>
+    <div>
+        <div class="header cov">
+            <div class="logo"><img src="../assets/" alt=""></div>
+            <div><a href="./Homepage.vue">回首頁</a></div>
+        </div>
+        <div class="middle cov">
+            <div class="title">登入</div>
+            <div class="enter">
+                <input type="text" placeholder="帳號" id="account">
+                <input type="password" placeholder="密碼" id="password">
+                <button id="eye"><img src="../assets/eye.png" alt=""></button>
+            </div>
+            <div class="keep_login">
+                <div id="che">
+                    <input type="checkbox" onclick="check()" id="check1">
+                    <label for="check1">保持登入</label>
+                </div>
+                <a href="https://www.youtube.com/">忘記密碼</a>
+            </div>
+            <button class="login">登入</button>
+            <div class="register">
+                <p>還沒有帳戶？</p>
+                <a href="./Register.vue">註冊</a>
+            </div>
+            <div class="line">
+                <div class="leftline"></div>
+                <p>或</p>
+                <div class="rightline"></div>
+            </div>
+            <div class="from_other">
+                <a href="https://www.google.com.tw/?hl=zh_TW" class="google">
+                    <img src="../assets/google.png" alt="">
+                    <p>Google登入</p>
+                </a>
+                <a href="https://www.facebook.com/" class="facebook">
+                    <img src="../assets/facebook.png" alt="">
+                    <p>Facebook登入</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+        var passwordinput = document.querySelector("#password")
+        var eyebtn = document.querySelector("#eye")
+        eyebtn.onclick = function () {
+            if (passwordinput.type === "password") {
+                passwordinput.type = "text"
+            } else {
+                passwordinput.type = "password"
+            }
+        }
+
+        記住密碼
+        讀取cookie
+        var user = $.cookie('uu');
+        var pwd = $.cookie('pp');
+
+        $(document).ready(function () {
+            alert("hksfsf");
+            // 判斷是否存在cookie
+            if (user) {
+                $("input:text").val(user);
+                $("input:password").val(pwd);
+                $("#che").html("<input type=\"checkbox\" onclick=\"uncheck()\" id=\"check1\" checked> <label for=\"keeplogin\">保持登入</label>");
+            }
+            alert("hksfsf");
+        });
+
+
+        // 選中記住密碼
+        function check() {
+            $("#che").html("<input type=\"checkbox\" onclick=\"uncheck()\" id=\"check1\"> <label for=\"keeplogin\">保持登入</label>");
+
+            // 設置爲選中狀態
+            document.getElementById("check1").checked = true;
+
+            // 創建一個cookie並設置有效時間爲 7天
+            $.cookie('uu', $("input:text").val(), { expires: 7 });
+            $.cookie('pp', $("input:password").val(), { expires: 7 });
+            alert("hksfsf");
+        }
+
+        // 取消記住密碼
+        function uncheck() {
+            $("#che").html("<input type=\"checkbox\" onclick=\"check()\" id=\"check1\"> <label for=\"keeplogin\">保持登入</label>");
+            // 設置爲取消狀態
+            document.getElementById("check1").checked = false;
+
+            // 刪除cookie
+            $.cookie('uu', '');
+            $.cookie('pp', '');
+
+        }
+</script>
+
+<style scoped>
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Noto Sans TC", sans-serif;
+}
+
+.cov {
+    margin: 0 auto;
+}
+
+.header {
+    position: relative;
+    height: 111px;
+    overflow: hidden;
+    margin-bottom: 17px;
+}
+
+.header .logo {
+    position: absolute;
+    left: 3.229%;
+}
+
+.header img {
+    height: 100%;
+    width: auto;
+}
+
+.header a {
+    position: absolute;
+    top: 27%;
+    right: 1.5625%;
+    width: auto;
+    border: 1px solid #676767;
+    line-height: 47px;
+    border-radius: 50px;
+    text-align: center;
+    font-size: 1vw;
+    background-color: white;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    color: #363b3e;
+    padding: 0 1.16% 0 1.16%;
+}
+
+.header a:active {
+    color: #363b3e;
+}
+
+.middle {
+    width: 34.375vw;
+    height: 670px;
+    position: relative;
+}
+
+.title {
+    width: auto;
+    height: 10%;
+    font-size: 3vw;
+    position: absolute;
+    left: 50%;
+    top: 0px;
+    transform: translate(-50%);
+    font-weight: 400;
+}
+
+.enter {
+    width: 80.3%;
+    height: 23.88%;
+    position: absolute;
+    top: 21.64%;
+    left: 9.85%;
+}
+
+.enter input {
+    width: 100%;
+    height: 36.25%;
+    border: 1px solid #9c9c9c;
+    border-radius: 10px;
+    font-size: 1vw;
+    text-indent: 1em;
+}
+
+#password {
+    position: absolute;
+    bottom: 0;
+}
+
+.enter button {
+    position: absolute;
+    width: 1.8vw;
+    height: 20%;
+    top: 71%;
+    left: 90%;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.enter img{
+    width: 100%;
+    height: 100%;
+}
+
+.keep_login {
+    width: 74.24%;
+    height: 2vw;
+    position: absolute;
+    top: 50.746%;
+    left: 12.88%;
+}
+
+.keep_login label {
+    font-size: 1.1vw;
+    color: #676767;
+    position: absolute;
+    left: 5.045%;
+    line-height: 100%;
+}
+
+.keep_login input {
+    height: 1.1vw;
+    width: 4%;
+    position: absolute;
+}
+
+.keep_login a {
+    font-size: 1.1vw;
+    color: #676767;
+    float: right;
+    text-decoration: none;
+    vertical-align: middle;
+    line-height: 100%;
+}
+
+.login {
+    width: 80%;
+    height: 7.164%;
+    border: 1px solid #9A2B2E;
+    border-radius: 50px;
+    background-color: #9A2B2E;
+    cursor: pointer;
+    font-size: 1.3vw;
+    color: white;
+    position: absolute;
+    top: 60.447%;
+    left: 9.8485%;
+}
+
+.register {
+    width: auto;
+    height: 3.582%;
+    position: absolute;
+    top: 70.895%;
+    left: 50%;
+    transform: translate(-50%);
+    margin-bottom: 9.85%;
+}
+
+.register p {
+    font-size: 1.1vw;
+    float: left;
+    color: #676767;
+}
+
+.register a {
+    font-size: 1.1vw;
+    color: #1977f3;
+    text-decoration: none;
+    float: left;
+}
+
+.line .leftline {
+    position: absolute;
+    left: 0;
+    top: 82.836%;
+    border-bottom: 2px solid #bcbcbc;
+    width: 47.73%;
+    height: 12px;
+}
+
+.line p {
+    position: absolute;
+    left: 48.485%;
+    font-size: 1.1vw;
+    color: #676767;
+    top: 82.985%;
+
+}
+
+.line .rightline {
+    position: absolute;
+    left: 52.773%;
+    top: 82.836%;
+    border-bottom: 2px solid #bcbcbc;
+    width: 47.73%;
+    height: 12px;
+}
+
+.from_other {
+    width: 80.3%;
+    height: 8.955%;
+    position: absolute;
+    top: 91.045%;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.from_other a {
+    width: 47.17%;
+    height: 100%;
+    border: 1px solid #bfbfbf;
+    border-radius: 10px;
+    font-size: 100%;
+    text-decoration: none;
+    color: #676767;
+    overflow: hidden;
+    position: relative;
+}
+
+.from_other img {
+    height: 58.33%;
+    width: 14%;
+    position: absolute;
+    top: 21.67%;
+    left: 12%;
+}
+
+.from_other p {
+    font-size: 100%;
+    display: inline-block;
+    position: absolute;
+    top: 25%;
+    left: 40%;
+}
+
+.google {
+    float: left;
+}
+
+.facebook {
+    float: right;
+}
+
+.facebook p{
+    left: 36%;
+}
+
+.from_other a:active {
+    color: #676767;
+}
+</style>
