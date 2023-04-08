@@ -47,7 +47,7 @@ open your cmd(命令提示字元)
 `git add .` *加入所在資料夾內所有檔案
 或 `git add 檔案名稱` *加入該檔案或資料夾
 
-`git commit -m 版本名稱 *建立新版本
+`git commit -m 版本名稱` *建立新版本
 
 `git pull --rebase 本地端名稱 master` *將檔案及資料夾從遠端拉下來本地端整合
 
