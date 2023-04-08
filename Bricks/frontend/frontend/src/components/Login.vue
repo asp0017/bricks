@@ -1,19 +1,19 @@
 <template>
     <div>
         <div class="header cov">
-            <div class="logo"><img src="../assets/" alt=""></div>
+            <div class="logo"><img src="../assets/brickslogo.png" alt="" /></div>
             <div><a href="./Homepage.vue">回首頁</a></div>
         </div>
         <div class="middle cov">
             <div class="title">登入</div>
             <div class="enter">
-                <input type="text" placeholder="帳號" id="account">
-                <input type="password" placeholder="密碼" id="password">
-                <button id="eye"><img src="../assets/eye.png" alt=""></button>
+                <input type="text" placeholder="帳號" id="account" />
+                <input type="password" placeholder="密碼" id="password" />
+                <button id="eye"><img src="../assets/eye.png" alt="" /></button>
             </div>
             <div class="keep_login">
                 <div id="che">
-                    <input type="checkbox" onclick="check()" id="check1">
+                    <input type="checkbox" onclick="check()" id="check1" />
                     <label for="check1">保持登入</label>
                 </div>
                 <a href="https://www.youtube.com/">忘記密碼</a>
@@ -30,71 +30,17 @@
             </div>
             <div class="from_other">
                 <a href="https://www.google.com.tw/?hl=zh_TW" class="google">
-                    <img src="../assets/google.png" alt="">
+                    <img src="../assets/google.png" alt="" />
                     <p>Google登入</p>
                 </a>
                 <a href="https://www.facebook.com/" class="facebook">
-                    <img src="../assets/facebook.png" alt="">
+                    <img src="../assets/facebook.png" alt="" />
                     <p>Facebook登入</p>
                 </a>
             </div>
         </div>
     </div>
 </template>
-
-<script>
-        var passwordinput = document.querySelector("#password")
-        var eyebtn = document.querySelector("#eye")
-        eyebtn.onclick = function () {
-            if (passwordinput.type === "password") {
-                passwordinput.type = "text"
-            } else {
-                passwordinput.type = "password"
-            }
-        }
-
-        記住密碼
-        讀取cookie
-        var user = $.cookie('uu');
-        var pwd = $.cookie('pp');
-
-        $(document).ready(function () {
-            alert("hksfsf");
-            // 判斷是否存在cookie
-            if (user) {
-                $("input:text").val(user);
-                $("input:password").val(pwd);
-                $("#che").html("<input type=\"checkbox\" onclick=\"uncheck()\" id=\"check1\" checked> <label for=\"keeplogin\">保持登入</label>");
-            }
-            alert("hksfsf");
-        });
-
-
-        // 選中記住密碼
-        function check() {
-            $("#che").html("<input type=\"checkbox\" onclick=\"uncheck()\" id=\"check1\"> <label for=\"keeplogin\">保持登入</label>");
-
-            // 設置爲選中狀態
-            document.getElementById("check1").checked = true;
-
-            // 創建一個cookie並設置有效時間爲 7天
-            $.cookie('uu', $("input:text").val(), { expires: 7 });
-            $.cookie('pp', $("input:password").val(), { expires: 7 });
-            alert("hksfsf");
-        }
-
-        // 取消記住密碼
-        function uncheck() {
-            $("#che").html("<input type=\"checkbox\" onclick=\"check()\" id=\"check1\"> <label for=\"keeplogin\">保持登入</label>");
-            // 設置爲取消狀態
-            document.getElementById("check1").checked = false;
-
-            // 刪除cookie
-            $.cookie('uu', '');
-            $.cookie('pp', '');
-
-        }
-</script>
 
 <style scoped>
 * {
@@ -196,7 +142,7 @@
     background-color: transparent;
 }
 
-.enter img{
+.enter img {
     width: 100%;
     height: 100%;
 }
@@ -235,9 +181,9 @@
 .login {
     width: 80%;
     height: 7.164%;
-    border: 1px solid #9A2B2E;
+    border: 1px solid #9a2b2e;
     border-radius: 50px;
-    background-color: #9A2B2E;
+    background-color: #9a2b2e;
     cursor: pointer;
     font-size: 1.3vw;
     color: white;
@@ -284,7 +230,6 @@
     font-size: 1.1vw;
     color: #676767;
     top: 82.985%;
-
 }
 
 .line .rightline {
@@ -341,7 +286,7 @@
     float: right;
 }
 
-.facebook p{
+.facebook p {
     left: 36%;
 }
 
