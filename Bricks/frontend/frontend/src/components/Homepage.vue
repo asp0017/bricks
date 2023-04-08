@@ -106,6 +106,7 @@ window.onscroll = function () {
 * {
   position: relative;
   font-family: "Noto Sans TC", sans-serif;
+  margin: 0;
 }
 
 body {

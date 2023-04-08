@@ -1,19 +1,22 @@
 <template>
     <div>
         <div class="header cov">
-            <div class="logo"><img src="../assets/brickslogo.png" alt="" /></div>
+            <div class="logo"><img src="../assets/brickslogo.png" alt=""></div>
             <div><a href="./Homepage.vue">回首頁</a></div>
         </div>
         <div class="middle cov">
             <div class="title">登入</div>
             <div class="enter">
-                <input type="text" placeholder="帳號" id="account" />
-                <input type="password" placeholder="密碼" id="password" />
-                <button id="eye"><img src="../assets/eye.png" alt="" /></button>
+                <input type="text" placeholder="帳號" id="account" v-model="account">
+                <div class="wrong accountx"></div>
+                <input v-if="showPassword" type="text" v-model="password" placeholder="密碼" id="password">
+                <input v-else type="password" v-model="password" placeholder="密碼" id="password">
+                <div class="wrong passwordx"></div>
+                <button id="eye" @click="eyebtn"><img src="../assets/eye.png" alt=""></button>
             </div>
             <div class="keep_login">
                 <div id="che">
-                    <input type="checkbox" onclick="check()" id="check1" />
+                    <input type="checkbox" onclick="check()" id="check1">
                     <label for="check1">保持登入</label>
                 </div>
                 <a href="https://www.youtube.com/">忘記密碼</a>
@@ -30,17 +33,38 @@
             </div>
             <div class="from_other">
                 <a href="https://www.google.com.tw/?hl=zh_TW" class="google">
-                    <img src="../assets/google.png" alt="" />
+                    <img src="../assets/google.png" alt="">
                     <p>Google登入</p>
                 </a>
                 <a href="https://www.facebook.com/" class="facebook">
-                    <img src="../assets/facebook.png" alt="" />
+                    <img src="../assets/facebook.png" alt="">
                     <p>Facebook登入</p>
                 </a>
             </div>
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    name:'Login',
+    data() {
+        return {
+            showPassword: false,
+            password: null,
+        };
+    },
+    methods : {
+        eyebtn(){
+            this.showPassword = !this.showPassword;
+        }
+    },
+    created(){
+
+    }
+}
+
+</script>
 
 <style scoped>
 * {
@@ -142,7 +166,7 @@
     background-color: transparent;
 }
 
-.enter img {
+.enter img{
     width: 100%;
     height: 100%;
 }
@@ -181,9 +205,9 @@
 .login {
     width: 80%;
     height: 7.164%;
-    border: 1px solid #9a2b2e;
+    border: 1px solid #9A2B2E;
     border-radius: 50px;
-    background-color: #9a2b2e;
+    background-color: #9A2B2E;
     cursor: pointer;
     font-size: 1.3vw;
     color: white;
@@ -230,6 +254,7 @@
     font-size: 1.1vw;
     color: #676767;
     top: 82.985%;
+
 }
 
 .line .rightline {
@@ -286,7 +311,7 @@
     float: right;
 }
 
-.facebook p {
+.facebook p{
     left: 36%;
 }
 
