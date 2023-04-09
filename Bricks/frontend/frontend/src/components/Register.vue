@@ -175,12 +175,12 @@ export default {
 
 .enter .account p {
   top: 5%;
-  left: 7%;
+  left: 5%;
 }
 
 .enter .password p {
   top: 33%;
-  left: 7%;
+  left: 5%;
 }
 
 .enter .repassword p {
@@ -281,8 +281,7 @@ export default {
   height: 7.75%;
   position: absolute;
   top: 92.248%;
-  left: 50%;
-  transform: translate(-50%);
+  left: 15%;
 }
 
 .from_other a {
