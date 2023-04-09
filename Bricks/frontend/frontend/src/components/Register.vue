@@ -3,7 +3,7 @@
     <div class="header cov">
       <div class="logo"><img src="../assets/brickslogo.png" alt="" /></div>
       <div class="topright">
-        <div><a href="../components/Homepage.vue">回首頁</a></div>
+        <div><a href="../components/Homepage">回首頁</a></div>
       </div>
     </div>
     <div class="middle cov">
@@ -31,7 +31,7 @@
       <button class="login">登入</button>
       <div class="already">
         <p>已經有帳戶？</p>
-        <a href="./Login.vue">登入</a>
+        <a href="./Login">登入</a>
       </div>
       <div class="line">
         <div class="leftline"></div>

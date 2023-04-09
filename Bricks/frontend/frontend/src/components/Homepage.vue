@@ -12,10 +12,10 @@
         <button class="button try" type="button" onclick="location.href='https://www.nccu.edu.tw/app/home.php'">
           試用
         </button>
-        <button class="button login" type="button" onclick="location.href='./Login.vue'">
+        <button class="button login" type="button" onclick="location.href='./Login'">
           登入
         </button>
-        <button class="button" type="button" onclick="location.href='./Register.vue'">
+        <button class="button" type="button" onclick="location.href='./Register'">
           註冊
         </button>
       </div>

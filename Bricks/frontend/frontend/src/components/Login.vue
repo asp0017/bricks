@@ -2,29 +2,29 @@
     <div>
         <div class="header cov">
             <div class="logo"><img src="../assets/brickslogo.png" alt=""></div>
-            <div><a href="./Homepage.vue">回首頁</a></div>
+            <div><a href="./Homepage">回首頁</a></div>
         </div>
         <div class="middle cov">
             <div class="title">登入</div>
             <div class="enter">
-                <input type="text" placeholder="帳號" id="account" v-model="account">
-                <div class="wrong accountx"></div>
-                <input v-if="showPassword" type="text" v-model="password" placeholder="密碼" id="password">
-                <input v-else type="password" v-model="password" placeholder="密碼" id="password">
-                <div class="wrong passwordx"></div>
+                <input type="text" placeholder="帳號" id="account" ref="account">
+                <div class="wrong accountx" ref="wrong1">帳號錯誤或不存在</div>
+                <input v-if="showPassword" type="text" v-model="password" placeholder="密碼" ref="password" id="password">
+                <input v-else type="password" v-model="password" placeholder="密碼" ref="password" id="password">
                 <button id="eye" @click="eyebtn"><img src="../assets/eye.png" alt=""></button>
             </div>
+            <div class="wrong passwordx" ref="wrong2">帳號錯誤或不存在</div>
             <div class="keep_login">
                 <div id="che">
-                    <input type="checkbox" onclick="check()" id="check1">
+                    <input type="checkbox" id="check1">
                     <label for="check1">保持登入</label>
                 </div>
                 <a href="https://www.youtube.com/">忘記密碼</a>
             </div>
-            <button class="login">登入</button>
+            <button class="login" @click="Login">登入</button>
             <div class="register">
                 <p>還沒有帳戶？</p>
-                <a href="./Register.vue">註冊</a>
+                <a href="./Register">註冊</a>
             </div>
             <div class="line">
                 <div class="leftline"></div>
@@ -57,7 +57,13 @@ export default {
     methods : {
         eyebtn(){
             this.showPassword = !this.showPassword;
-        }
+        },
+        Login(){
+            this.$refs.account.style = "border-color : #e03939";
+            this.$refs.password.style = "border-color : #e03939";
+            this.$refs.wrong1.style = "display : block";
+            this.$refs.wrong2.style = "display : block";
+        },
     },
     created(){
 
@@ -148,6 +154,23 @@ export default {
     border-radius: 10px;
     font-size: 1vw;
     text-indent: 1em;
+}
+
+.wrong{
+    font-size: 1vw;
+    color: #e03939;
+    position: absolute;
+    display: none;
+}
+
+.accountx{
+    top: 39.375%;
+    left: 3.783%;
+}
+
+.passwordx{
+    top: 45.97%;
+    left: 12.8788%;
 }
 
 #password {
