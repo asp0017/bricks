@@ -21,6 +21,7 @@
                 </div>
                 <a href="https://www.youtube.com/">忘記密碼</a>
             </div>
+            <!-- 目前先設定按登入後不論輸入什麼都會跑出錯誤的樣式 -->
             <button class="login" @click="Login">登入</button>
             <div class="register">
                 <p>還沒有帳戶？</p>
