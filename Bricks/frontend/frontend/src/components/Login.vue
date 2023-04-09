@@ -7,13 +7,13 @@
         <div class="middle cov">
             <div class="title">登入</div>
             <div class="enter">
-                <input type="text" placeholder="帳號" id="account" ref="account">
-                <div class="wrong accountx" ref="wrong1">帳號錯誤或不存在</div>
+                <input type="text" placeholder="帳號" id="account" v-model="account" ref="account">
+                <div class="wrong accountx" ref="wrong1">{{ accountError }}</div>
                 <input v-if="showPassword" type="text" v-model="password" placeholder="密碼" ref="password" id="password">
                 <input v-else type="password" v-model="password" placeholder="密碼" ref="password" id="password">
                 <button id="eye" @click="eyebtn"><img src="../assets/eye.png" alt=""></button>
             </div>
-            <div class="wrong passwordx" ref="wrong2">帳號錯誤或不存在</div>
+            <div class="wrong passwordx" ref="wrong2">{{ passwordError }}</div>
             <div class="keep_login">
                 <div id="che">
                     <input type="checkbox" id="check1">
@@ -23,6 +23,7 @@
             </div>
             <!-- 目前先設定按登入後不論輸入什麼都會跑出錯誤的樣式 -->
             <button class="login" @click="Login">登入</button>
+            <div>{{ loginTest }}</div>
             <div class="register">
                 <p>還沒有帳戶？</p>
                 <a href="./Register">註冊</a>
@@ -47,26 +48,66 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
-    name:'Login',
+    name: 'Login',
     data() {
         return {
             showPassword: false,
-            password: null,
+            account: "",
+            password: "",
+            accountError: "1",
+            passwordError: "2",
+            loginTest: "現在還沒有按登入鍵",
         };
     },
-    methods : {
-        eyebtn(){
+    methods: {
+        eyebtn() {
             this.showPassword = !this.showPassword;
         },
-        Login(){
-            this.$refs.account.style = "border-color : #e03939";
-            this.$refs.password.style = "border-color : #e03939";
-            this.$refs.wrong1.style = "display : block";
-            this.$refs.wrong2.style = "display : block";
+        Login() {
+            //前端部分先進行帳號密碼原則檢驗，還有其他條件式
+            if (this.password == "" || this.account == "") {
+                this.$refs.account.style = "border-color : #e03939";
+                this.$refs.password.style = "border-color : #e03939";
+                this.$refs.wrong1.style = "display : block";
+                this.$refs.wrong2.style = "display : block";
+                this.accountError = "帳號錯誤或不存在";
+                this.passwordError = "帳號錯誤或不存在";
+                this.loginTest = "前端block";
+            } else {
+                this.loginTest = "送後端，可能block，可能成功登入";
+                // const path = "";
+                // const user = { account: this.account, password: this.password };
+                // this.account = "";
+                // this.password = "";
+                // axios
+                //     .post(path, user)
+                //     .then((res) => {
+                //         if (res.data.status = 'success') {
+                //             this.goToPersonalPage();
+                //         } else {
+                //             this.$refs.account.style = "border-color : #e03939";
+                //             this.$refs.password.style = "border-color : #e03939";
+                //             this.$refs.wrong1.style = "display : block";
+                //             this.$refs.wrong2.style = "display : block";
+                //             this.accountError = res.data.accountError;
+                //             this.passwordError = res.data.passwordError;
+                //         }
+
+                //     })
+                //     .catch((error) => {
+                //         console.log(error);
+
+                //     });
+            }
+
         },
+        goToPersonalPage() {
+            console.log("goToPersonalPage");
+        }
     },
-    created(){
+    created() {
 
     }
 }
@@ -157,19 +198,19 @@ export default {
     text-indent: 1em;
 }
 
-.wrong{
+.wrong {
     font-size: 1vw;
     color: #e03939;
     position: absolute;
     display: none;
 }
 
-.accountx{
+.accountx {
     top: 39.375%;
     left: 3.783%;
 }
 
-.passwordx{
+.passwordx {
     top: 45.97%;
     left: 12.8788%;
 }
@@ -190,7 +231,7 @@ export default {
     background-color: transparent;
 }
 
-.enter img{
+.enter img {
     width: 100%;
     height: 100%;
 }
@@ -335,7 +376,7 @@ export default {
     float: right;
 }
 
-.facebook p{
+.facebook p {
     left: 36%;
 }
 

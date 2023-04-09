@@ -1,82 +1,80 @@
 <template>
-    <div>
-        <div class="header cov">
-            <div class="logo"><img src="../assets/brickslogo.png" alt="" /></div>
-            <div><a href="./Homepage">回首頁</a></div>
-        </div>
-        <div class="middle cov">
-            <p class="title">註冊</p>
-            <div class="enter">
-                <div class="account box">
-                    <p>帳號</p>
-                    <input type="text" placeholder="請輸入(規則)帳號名稱(不可改)" />
-                </div>
-                <div class="password box">
-                    <p>密碼</p>
-                    <input type="password" placeholder="請輸入(規則)密碼" id="password" ref="password" />
-                    <button id="eye1" @click="eyebtn1"><img src="../assets/eye.png" alt="" /></button>
-                </div>
-                <div class="repassword box">
-                    <p>確認密碼</p>
-                    <input type="password" placeholder="請再次輸入您的密碼" id="repassword" ref="repassword"/>
-                    <button id="eye2" @click="eyebtn2"><img src="../assets/eye.png" alt="" /></button>
-                </div>
-                <div class="email box">
-                    <p>電子信箱</p>
-                    <input type="email" placeholder="請填寫聯絡用電子信箱(可更改)" />
-                </div>
-            </div>
-            <button class="login">註冊</button>
-            <div class="already">
-                <p>已經有帳戶？</p>
-                <a href="./Login">登入</a>
-            </div>
-            <div class="line">
-                <div class="leftline"></div>
-                <p>或</p>
-                <div class="rightline"></div>
-            </div>
-            <div class="from_other">
-                <a href="https://www.google.com.tw/?hl=zh_TW" class="google">
-                    <img src="../assets/google.png" alt="" />
-                    <p>Google登入</p>
-                </a>
-                <a href="https://www.facebook.com/" class="facebook">
-                    <img src="../assets/facebook.png" alt="" />
-                    <p>Facebook登入</p>
-                </a>
-            </div>
-        </div>
+  <div>
+    <div class="header cov">
+      <div class="logo"><img src="../assets/brickslogo.png" alt="" /></div>
+      <div><a href="./Homepage">回首頁</a></div>
     </div>
+    <div class="middle cov">
+      <p class="title">註冊</p>
+      <div class="enter">
+        <div class="account box">
+          <p>帳號</p>
+          <input type="text" placeholder="請輸入(規則)帳號名稱(不可改)" />
+        </div>
+        <div class="password box">
+          <p>密碼</p>
+          <input v-if="showPassword" type="text" placeholder="請輸入(規則)密碼" v-model="password" id="password"
+            ref="password" />
+          <input v-else type="password" placeholder="請輸入(規則)密碼" v-model="password" id="password" ref="password" />
+          <button id="eye1" @click="eyebtn1"><img src="../assets/eye.png" alt="" /></button>
+        </div>
+        <div class="repassword box">
+          <p>確認密碼</p>
+          <input v-if="showRepassword" type="text" placeholder="請再次輸入您的密碼" v-model="repassword" id="repassword"
+            ref="repassword" />
+          <input v-else type="password" placeholder="請再次輸入您的密碼" v-model="repassword" id="repassword" ref="repassword" />
+
+          <button id="eye2" @click="eyebtn2"><img src="../assets/eye.png" alt="" /></button>
+        </div>
+        <div class="email box">
+          <p>電子信箱</p>
+          <input type="email" placeholder="請填寫聯絡用電子信箱(可更改)" />
+        </div>
+      </div>
+      <button class="login">註冊</button>
+      <div class="already">
+        <p>已經有帳戶？</p>
+        <a href="./Login">登入</a>
+      </div>
+      <div class="line">
+        <div class="leftline"></div>
+        <p>或</p>
+        <div class="rightline"></div>
+      </div>
+      <div class="from_other">
+        <a href="https://www.google.com.tw/?hl=zh_TW" class="google">
+          <img src="../assets/google.png" alt="" />
+          <p>Google登入</p>
+        </a>
+        <a href="https://www.facebook.com/" class="facebook">
+          <img src="../assets/facebook.png" alt="" />
+          <p>Facebook登入</p>
+        </a>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-  name:'Login',
+  name: 'Register',
   data() {
-      return {
-
-      };
+    return {
+      showPassword: false,
+      password: null,
+      showRepassword: false,
+      repassword: null,
+    };
   },
-  methods : {
-      eyebtn1(){
-        if(this.$refs.password.type = 'password'){
-            return this.$refs.password.type = 'text';
-        }
-        else{
-            return this.$refs.password.type = 'password';
-        }
-      },
-      eyebtn2(){
-        if(this.$refs.repassword.type = 'password'){
-            return this.$refs.repassword.type = 'text';
-        }
-        else{
-            return this.$refs.repassword.type = 'password';
-        }
-      },
+  methods: {
+    eyebtn1() {
+      this.showPassword = !this.showPassword;
+    },
+    eyebtn2() {
+      this.showRepassword = !this.showRepassword;
+    },
   },
-  created(){
+  created() {
 
   }
 }
@@ -94,10 +92,10 @@ export default {
 }
 
 .header {
-    position: relative;
-    height: 111px;
-    overflow: hidden;
-    margin-bottom: 17px;
+  position: relative;
+  height: 111px;
+  overflow: hidden;
+  margin-bottom: 17px;
 }
 
 .header .logo {
@@ -192,6 +190,7 @@ export default {
 .enter .email p {
   top: 88.5%;
 }
+
 .enter input {
   position: relative;
   left: 16.535%;
@@ -207,7 +206,7 @@ export default {
 .enter button {
   position: relative;
   top: 40%;
-  transform: translate(0,-50%);
+  transform: translate(0, -50%);
   left: 8.714%;
   border: none;
   background-color: white;
@@ -311,7 +310,7 @@ export default {
   display: inline-block;
   position: absolute;
   top: 50%;
-  transform: translate(0,-50%);
+  transform: translate(0, -50%);
   left: 45%;
 }
 
