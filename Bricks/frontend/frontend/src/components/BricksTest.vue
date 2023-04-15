@@ -4,14 +4,13 @@
   </div>
 </template>
 
-
 <script>
 import axios from "axios";
 export default {
   name: "BricksTest", //should be multi-word
   data() {
     return {
-      msg: "Not Found", 
+      msg: "Not Found",
     };
   },
   methods: {
