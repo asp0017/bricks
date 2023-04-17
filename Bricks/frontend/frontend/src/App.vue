@@ -9,6 +9,8 @@
 body{
   margin: 0;
 }
+
+@import url('http://fonts.googleapis.com/css?family=Noto+Sans+TC:100,300,400,500,700,900');
 /* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
