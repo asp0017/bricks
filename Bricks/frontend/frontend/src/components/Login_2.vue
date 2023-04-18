@@ -24,8 +24,9 @@
                 </div>
                 <div class="login_btn">登入</div>
                 <div class="keep_login">
-                    <input type="checkbox" class="keep_login_checkbox">
-                    <span>保持登入</span>
+                    <img src="../assets/checkbox/CheckBox_off.svg" class="keep_login_checkbox keep_login_checkbox_off" v-if="checked" @click="check_btn">
+                    <img src="../assets/checkbox/CheckBox_on.svg" class="keep_login_checkbox keep_login_checkbox_on" v-else @click="check_btn">
+                    <p style="user-select: none; cursor: pointer;" @click="check_btn">保持登入</p>
                 </div>
                 <div class="forget_password">忘記密碼</div>
                 <div class="line">
@@ -70,12 +71,16 @@ export default {
     data() {
         return {
             showpassword: false,
+            checked: true,
         };
     },
     methods: {
         eyebtn() {
             this.showpassword = !this.showpassword;
-        }
+        },
+        check_btn() {
+            this.checked = !this.checked;
+        },
     },
     created() {
 
@@ -139,7 +144,7 @@ export default {
         width: 576px;
         height: 654px;
         position: absolute;
-        top: 80px;
+        top: 145px;
         left: 50%;
         transform: translate(-50%);
     }
@@ -166,7 +171,7 @@ export default {
         width: 470px;
         height: 654px;
         position: absolute;
-        top: 80px;
+        top: 145px;
         left: 50%;
         transform: translate(-50%);
     }
@@ -193,7 +198,7 @@ export default {
         width: 416px;
         height: 654px;
         position: absolute;
-        top: 80px;
+        top: 145px;
         left: 50%;
         transform: translate(-50%);
     }
@@ -232,6 +237,7 @@ export default {
     height: 172px;
     position: absolute;
     top: 202px;
+    background-color: #b6aeae;
 }
 
 input {
@@ -310,40 +316,24 @@ input::placeholder {
     color: #3b3838;
 }
 
-input[type='checkbox'] {
-    display: none;
-}
-
-/* 為啥要用label？這是拿來幹嘛的 */
-label {
+.keep_login_checkbox{
+    float: left;
+    margin-top: 9px;
+    margin-left: 8px;
     cursor: pointer;
 }
 
-input[type='checkbox']+span {
-    background: url(../assets/checkbox/CheckBox_off.svg) no-repeat;
-    user-select: none;
+.keep_login_checkbox_off:hover{
+    content: url(../assets/checkbox/CheckBox_off_hover.svg);
+    margin-top: 4px;
+    margin-left: 3px;
 }
 
-input[type='checkbox']:hover+span {
-    background: url(../assets/checkbox/CheckBox_off_hover.svg) no-repeat;
-    user-select: none;
+.keep_login_checkbox_on:hover{
+    content: url(../assets/checkbox/CheckBox_on_hover.svg);
+    margin-top: 4px;
+    margin-left: 3px;
 }
-
-input[type='checkbox']:checked+span {
-    background: url(../assets/checkbox/CheckBox_on.svg) no-repeat;
-    user-select: none;
-}
-
-input[type='checkbox']:checked:hover+span {
-    background: url(../assets/checkbox/CheckBox_on_hover.svg) no-repeat;
-    user-select: none;
-}
-
-.keep_login_checkbox {
-    position: relative;
-    left: 8px;
-}
-
 
 .forget_password {
     width: auto;
