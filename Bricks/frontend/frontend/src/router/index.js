@@ -4,6 +4,7 @@ import Bricks from "../components/BricksTest.vue";
 import Login from "../components/Login.vue";
 import Register from "../components/Register.vue";
 import HomePage from "../components/Homepage.vue";
+import Login_2 from "../components/Login_2.vue";
 
 Vue.use(VueRouter);
 
@@ -29,6 +30,11 @@ const routes = [
     path: "/homepage",
     name: "Homepage",
     component: HomePage,
+  },
+  {
+    path: "/login_2",
+    name: "Login_2",
+    component: Login_2,
   },
 ];
 
