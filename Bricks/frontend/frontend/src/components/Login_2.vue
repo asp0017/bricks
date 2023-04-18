@@ -237,7 +237,6 @@ export default {
     height: 172px;
     position: absolute;
     top: 202px;
-    background-color: #b6aeae;
 }
 
 input {
