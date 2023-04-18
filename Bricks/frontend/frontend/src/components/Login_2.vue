@@ -23,10 +23,10 @@
                     <div class="wrong"></div>
                 </div>
                 <div class="login_btn">登入</div>
-                <label class="keep_login">
-                    <input type="checkbox">
+                <div class="keep_login">
+                    <input type="checkbox" class="keep_login_checkbox">
                     <span>保持登入</span>
-                </label>
+                </div>
                 <div class="forget_password">忘記密碼</div>
                 <div class="line">
                     <div class="left_line"></div>
@@ -42,7 +42,7 @@
                     </a>
                     <a href="">
                         <div id="FB_login_btn">
-                            <img src="../assets/FB_login.svg" alt="">  
+                            <img src="../assets/FB_login.svg" alt="">
                             <p>Facebook 登入</p>
                         </div>
                     </a>
@@ -58,44 +58,44 @@
         <div class="bottom">
             <a href="" class="privacy"># <span style="text-decoration: underline;">隱私權政策</span></a>
             <a href="" class="contact"># 聯絡我們 <span style="color: #b6aeae;">bricks@gmail.com</span></a>
-            <div class="photo"># Photo by <a href="https://unsplash.com/@charlesdeluvio">charlesdeluvio</a> on Unsplash</div>
+            <div class="photo"># Photo by <a href="https://unsplash.com/@charlesdeluvio">charlesdeluvio</a> on Unsplash
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 export default {
-  name: 'Login_2',
-  data() {
-    return {
-        showpassword : false,
-    };
-  },
-  methods: {
-    eyebtn(){
-        this.showpassword = !this.showpassword;
-    }
-  },
-  created() {
+    name: 'Login_2',
+    data() {
+        return {
+            showpassword: false,
+        };
+    },
+    methods: {
+        eyebtn() {
+            this.showpassword = !this.showpassword;
+        }
+    },
+    created() {
 
-  }
+    }
 }
 </script>
 
 <style scoped>
-
-*{
+* {
     margin: 0;
     padding: 0;
 }
 
-.nav{
+.nav {
     width: 100vw;
     height: 65px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.nav img{
+.nav img {
     height: 32.06px;
     width: auto;
     position: absolute;
@@ -103,7 +103,7 @@ export default {
     left: 5.21%;
 }
 
-.tribtn{
+.tribtn {
     width: 284px;
     height: 41px;
     position: absolute;
@@ -111,7 +111,7 @@ export default {
     right: 5.21%;
 }
 
-.btn{
+.btn {
     width: 76px;
     height: 39px;
     border: 1px solid #120405;
@@ -130,88 +130,92 @@ export default {
 }
 
 
-.bg{
+.bg {
     background-image: url(../assets/bricks_bg.svg);
 }
 
-@media screen and (min-width: 1920px){
-    .middle{
+@media screen and (min-width: 1920px) {
+    .middle {
         width: 576px;
         height: 654px;
         position: absolute;
         top: 80px;
         left: 50%;
         transform: translate(-50%);
-    } 
+    }
 
-    .bg{
+    .bg {
         height: 950px;
     }
-    .privacy{
+
+    .privacy {
         left: 540px;
     }
 
-    .contact{
+    .contact {
         left: 688px;
     }
 
-    .photo{
+    .photo {
         right: 540px;
     }
 }
 
-@media screen and (min-width: 1600px) and (max-width: 1920px){
-    .middle{
+@media screen and (min-width: 1600px) and (max-width: 1920px) {
+    .middle {
         width: 470px;
         height: 654px;
         position: absolute;
         top: 80px;
         left: 50%;
         transform: translate(-50%);
-    } 
-
-    .bg{
-        height: 770px;
     }
-    .privacy{
+
+    .bg {
+        height: 950px;
+    }
+
+    .privacy {
         left: 380px;
     }
 
-    .contact{
+    .contact {
         left: 528px;
     }
 
-    .photo{
+    .photo {
         right: 380px;
     }
 }
 
-@media screen and (max-width: 1600px){
-    .middle{
+@media screen and (max-width: 1600px) {
+    .middle {
         width: 416px;
         height: 654px;
         position: absolute;
         top: 80px;
         left: 50%;
         transform: translate(-50%);
-    } 
+    }
 
-    .bg{
+    .bg {
         height: 770px;
     }
-    .privacy{
+
+    .privacy {
         left: 300px;
     }
 
-    .contact{
+    .contact {
         left: 448px;
     }
 
-    .photo{
+    .photo {
         right: 300px;
     }
 }
-.title{
+
+.title {
     width: 100%;
     height: 182px;
     font-size: 58px;
@@ -223,14 +227,14 @@ export default {
     user-select: none;
 }
 
-.enter{
+.enter {
     width: 100%;
     height: 172px;
     position: absolute;
     top: 202px;
 }
 
-input{
+input {
     width: 99.8%;
     height: 45px;
     border: 1.5px solid #c7c2c2;
@@ -242,21 +246,21 @@ input{
     text-indent: 33.5px;
 }
 
-input::placeholder{
+input::placeholder {
     color: #b6aeae;
 }
 
-.wrong{
+.wrong {
     margin-top: 6px;
     width: 92%;
     height: 22px;
 }
 
-.password{
+.password {
     margin-top: 21px;
 }
 
-.enter img{
+.enter img {
     position: absolute;
     top: 108px;
     right: 28px;
@@ -266,15 +270,15 @@ input::placeholder{
     user-select: none;
 }
 
-#eye_off:hover{
+#eye_off:hover {
     content: url(../assets/eye/eye_origin_hover.svg);
 }
 
-#eye_on:hover{
+#eye_on:hover {
     content: url(../assets/eye/eye_on_hover.svg);
 }
 
-.login_btn{
+.login_btn {
     width: 100%;
     height: 48px;
     background-color: #b82c30;
@@ -291,7 +295,7 @@ input::placeholder{
     user-select: none;
 }
 
-.keep_login{
+.keep_login {
     width: 110px;
     height: 32px;
     position: absolute;
@@ -306,36 +310,42 @@ input::placeholder{
     color: #3b3838;
 }
 
-input[type='checkbox']{
+input[type='checkbox'] {
     display: none;
 }
 
-label{
+/* 為啥要用label？這是拿來幹嘛的 */
+label {
     cursor: pointer;
 }
 
-input[type='checkbox']+span{
+input[type='checkbox']+span {
     background: url(../assets/checkbox/CheckBox_off.svg) no-repeat;
     user-select: none;
 }
 
-input[type='checkbox']:hover+span{
+input[type='checkbox']:hover+span {
     background: url(../assets/checkbox/CheckBox_off_hover.svg) no-repeat;
     user-select: none;
 }
 
-input[type='checkbox']:checked+span{
+input[type='checkbox']:checked+span {
     background: url(../assets/checkbox/CheckBox_on.svg) no-repeat;
     user-select: none;
 }
 
-input[type='checkbox']:checked:hover+span{
+input[type='checkbox']:checked:hover+span {
     background: url(../assets/checkbox/CheckBox_on_hover.svg) no-repeat;
     user-select: none;
 }
 
+.keep_login_checkbox {
+    position: relative;
+    left: 8px;
+}
 
-.forget_password{
+
+.forget_password {
     width: auto;
     height: 32px;
     line-height: 32px;
@@ -350,7 +360,7 @@ input[type='checkbox']:checked:hover+span{
     user-select: none;
 }
 
-.line{
+.line {
     height: 33px;
     width: 100%;
     position: relative;
@@ -364,28 +374,28 @@ input[type='checkbox']:checked:hover+span{
     user-select: none;
 }
 
-.left_line{
+.left_line {
     width: 47%;
     height: 16px;
     border-bottom: 1px solid #b6aeae;
     float: left;
 }
 
-.right_line{
+.right_line {
     width: 47%;
     height: 16px;
     border-bottom: 1px solid #b6aeae;
     float: right;
 }
 
-.other_resource{
+.other_resource {
     width: 100%;
     height: 48px;
     position: absolute;
     top: 538px;
 }
 
-.other_resource div{
+.other_resource div {
     width: 171px;
     height: 46px;
     border: 1px solid #b6aeae;
@@ -398,24 +408,24 @@ input[type='checkbox']:checked:hover+span{
     letter-spacing: 1.25px;
     float: left;
     position: relative;
-    text-indent:  44px;
+    text-indent: 44px;
     background-color: white;
 }
 
-#FB_login_btn{
+#FB_login_btn {
     width: 195px;
     float: right;
 }
 
-.other_resource a img{
+.other_resource a img {
     width: 24px;
     position: absolute;
     top: 50%;
-    transform: translate(0,-50%);
+    transform: translate(0, -50%);
     left: 12px;
 }
 
-.register{
+.register {
     width: 201px;
     height: 32px;
     position: absolute;
@@ -424,7 +434,7 @@ input[type='checkbox']:checked:hover+span{
     transform: translate(-50%);
 }
 
-.register p{
+.register p {
     font-size: 18px;
     font-weight: 500;
     line-height: 32px;
@@ -435,19 +445,19 @@ input[type='checkbox']:checked:hover+span{
     margin-right: 12px;
 }
 
-.register a p{
+.register a p {
     color: #c65659;
 }
 
-.bottom{
+.bottom {
     width: 100vw;
     height: 65px;
-    position: relative;
+    position: fixed;
     bottom: 0px;
     box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.privacy{
+.privacy {
     width: 116px;
     height: 23px;
     font-size: 19px;
@@ -455,14 +465,14 @@ input[type='checkbox']:checked:hover+span{
     line-height: 23px;
     position: absolute;
     top: 50%;
-    transform: translate(0,-50%);
+    transform: translate(0, -50%);
     letter-spacing: 0.15px;
     cursor: pointer;
     color: #120406;
     text-decoration: none;
 }
 
-.contact{
+.contact {
     width: 271px;
     height: 23px;
     font-size: 19px;
@@ -470,14 +480,14 @@ input[type='checkbox']:checked:hover+span{
     line-height: 23px;
     position: absolute;
     top: 50%;
-    transform: translate(0,-50%);
+    transform: translate(0, -50%);
     letter-spacing: 0.15px;
     cursor: pointer;
     color: #120406;
     text-decoration: none;
 }
 
-.photo{
+.photo {
     width: 357px;
     height: 23px;
     font-size: 19px;
@@ -485,13 +495,12 @@ input[type='checkbox']:checked:hover+span{
     line-height: 23px;
     position: absolute;
     top: 50%;
-    transform: translate(0,-50%);
+    transform: translate(0, -50%);
     letter-spacing: 0.15px;
     color: #c7c2c2;
 }
 
-.photo a{
+.photo a {
     color: #c7c2c2;
 }
-
 </style>

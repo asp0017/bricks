@@ -6,7 +6,8 @@
 
 <style>
 /* 會影響所有頁面的css */
-body{
+
+body {
   margin: 0;
 }
 
