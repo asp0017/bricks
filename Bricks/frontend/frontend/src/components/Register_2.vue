@@ -5,9 +5,9 @@
                 <img src="../assets/brickslogo.svg" alt="">
             </a>
             <div class="tribtn">
-                <div class="btn">試用</div>
-                <div class="btn" style="background-color: #b82c30; border-color: #b82c30; color: #ffffff;">登入</div>
-                <div class="btn" style="margin-right: 0px;">註冊</div>
+                <a href="" class="btn">試用</a>
+                <a href="./login_2" class="btn" style="background-color: #b82c30; border-color: #b82c30; color: #ffffff;">登入</a>
+                <a href="./Register_2" class="btn" style="margin-right: 0px;">註冊</a>
             </div>
         </div>
         <div class="bg">
@@ -56,7 +56,7 @@
                 </div>
                 <div class="login">
                     <p>已經有帳戶？</p>
-                    <a href="">
+                    <a href="./Login_2">
                         <p>登入</p>
                     </a>
                 </div>
@@ -142,6 +142,8 @@ export default {
     text-align: center;
     letter-spacing: 1.25px;
     user-select: none;
+    text-decoration: none;
+    color: black;
 }
 
 
@@ -447,6 +449,7 @@ input::placeholder {
     position: fixed;
     bottom: 0px;
     box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
 }
 
 .privacy {

@@ -6,8 +6,8 @@
             </a>
             <div class="tribtn">
                 <div class="btn">試用</div>
-                <div class="btn" style="background-color: #b82c30; border-color: #b82c30; color: #ffffff;">登入</div>
-                <div class="btn" style="margin-right: 0px;">註冊</div>
+                <a href="./login_2" class="btn" style="background-color: #b82c30; border-color: #b82c30; color: #ffffff;">登入</a>
+                <a href="./Register_2" class="btn" style="margin-right: 0px;">註冊</a>
             </div>
         </div>
         <div class="bg">
@@ -50,7 +50,7 @@
                 </div>
                 <div class="register">
                     <p>還沒有帳戶？</p>
-                    <a href="">
+                    <a href="./Register_2">
                         <p>註冊</p>
                     </a>
                 </div>
@@ -132,6 +132,8 @@ export default {
     text-align: center;
     letter-spacing: 1.25px;
     user-select: none;
+    text-decoration: none;
+    color: black;
 }
 
 
@@ -317,20 +319,20 @@ input::placeholder {
 
 .keep_login_checkbox{
     float: left;
-    margin-top: 9px;
+    margin-top: 7px;
     margin-left: 8px;
     cursor: pointer;
 }
 
 .keep_login_checkbox_off:hover{
     content: url(../assets/checkbox/CheckBox_off_hover.svg);
-    margin-top: 4px;
+    margin-top: 2px;
     margin-left: 3px;
 }
 
 .keep_login_checkbox_on:hover{
     content: url(../assets/checkbox/CheckBox_on_hover.svg);
-    margin-top: 4px;
+    margin-top: 2px;
     margin-left: 3px;
 }
 
@@ -444,6 +446,7 @@ input::placeholder {
     position: fixed;
     bottom: 0px;
     box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
 }
 
 .privacy {
