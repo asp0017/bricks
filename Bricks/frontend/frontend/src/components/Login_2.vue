@@ -1,13 +1,13 @@
 <template>
     <div>
         <div class="nav">
-            <a href="">
+            <a href="./homepage_2">
                 <img src="../assets/brickslogo.svg" alt="">
             </a>
             <div class="tribtn">
                 <div class="btn">試用</div>
-                <a href="./login_2" class="btn" style="background-color: #b82c30; border-color: #b82c30; color: #ffffff;">登入</a>
-                <a href="./Register_2" class="btn" style="margin-right: 0px;">註冊</a>
+                <a href="./login_2" class="btn nav_login_btn" style="background-color: #b82c30; border-color: #b82c30; color: #ffffff;">登入</a>
+                <a href="./register_2" class="btn" style="margin-right: 0px;">註冊</a>
             </div>
         </div>
         <div class="bg">
@@ -50,7 +50,7 @@
                 </div>
                 <div class="register">
                     <p>還沒有帳戶？</p>
-                    <a href="./Register_2">
+                    <a href="./register_2">
                         <p>註冊</p>
                     </a>
                 </div>
@@ -134,6 +134,14 @@ export default {
     user-select: none;
     text-decoration: none;
     color: black;
+}
+
+.btn:hover{
+    background-color: rgba(242, 238, 238, 1);
+}
+
+.nav_login_btn:hover{
+    background-color: rgba(212, 128, 131, 1)!important;
 }
 
 

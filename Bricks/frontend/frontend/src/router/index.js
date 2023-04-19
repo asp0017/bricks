@@ -5,7 +5,8 @@ import Login from "../components/Login.vue";
 import Register from "../components/Register.vue";
 import HomePage from "../components/Homepage.vue";
 import Login_2 from "../components/Login_2.vue";
-import Register_2 from "../components/Register_2.vue"
+import Register_2 from "../components/Register_2.vue";
+import Homepage_2 from "../components/Homepage_2.vue";
 
 Vue.use(VueRouter);
 
@@ -18,7 +19,7 @@ const routes = [
   },
   {
     path: "/register",
-    name: "RegisterRegister",
+    name: "Register",
     component: Register,
   },
   {
@@ -40,6 +41,11 @@ const routes = [
     path: "/register_2",
     name: "Register_2",
     component: Register_2,
+  },
+  {
+    path: "/homepage_2",
+    name: "Homapage_2",
+    component: Homepage_2,
   },
 ];
 
