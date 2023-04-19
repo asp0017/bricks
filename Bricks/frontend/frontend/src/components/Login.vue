@@ -76,30 +76,31 @@ export default {
                 this.passwordError = "帳號錯誤或不存在";
                 this.loginTest = "前端block";
             } else {
-                this.loginTest = "送後端，可能block，可能成功登入";
-                // const path = "";
-                // const user = { account: this.account, password: this.password };
-                // this.account = "";
-                // this.password = "";
-                // axios
-                //     .post(path, user)
-                //     .then((res) => {
-                //         if (res.data.status = 'success') {
-                //             this.goToPersonalPage();
-                //         } else {
-                //             this.$refs.account.style = "border-color : #e03939";
-                //             this.$refs.password.style = "border-color : #e03939";
-                //             this.$refs.wrong1.style = "display : block";
-                //             this.$refs.wrong2.style = "display : block";
-                //             this.accountError = res.data.accountError;
-                //             this.passwordError = res.data.passwordError;
-                //         }
+                const path = "http://localhost:5000/login";
+                const user = { account: this.account, password: this.password };
+                this.account = "";
+                this.password = "";
+                axios
+                    .post(path, user)
+                    .then((res) => {
+                        if (res.data.status = 'success') {
+                            this.goToPersonalPage();
+                            this.loginTest =  res.data.message;
+                        } else {
+                            this.$refs.account.style = "border-color : #e03939";
+                            this.$refs.password.style = "border-color : #e03939";
+                            this.$refs.wrong1.style = "display : block";
+                            this.$refs.wrong2.style = "display : block";
+                            this.accountError = res.data.accountError;
+                            this.passwordError = res.data.passwordError;
+                            this.loginTest = res.data.message;
+                        }
 
-                //     })
-                //     .catch((error) => {
-                //         console.log(error);
+                    })
+                    .catch((error) => {
+                        console.log(error);
 
-                //     });
+                    });
             }
 
         },
