@@ -129,6 +129,8 @@ export default {
 .nav {
     width: 100vw;
     height: 65px;
+    position: fixed;
+    top: 0;
 }
 
 .nav_scroll{
