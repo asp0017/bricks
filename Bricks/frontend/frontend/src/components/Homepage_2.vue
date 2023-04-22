@@ -6,7 +6,8 @@
             </a>
             <div class="tribtn">
                 <div class="btn">試用</div>
-                <a href="./login_2" class="btn nav_login_btn" style="background-color: #b82c30; border-color: #b82c30; color: #ffffff;">登入</a>
+                <a href="./login_2" class="btn nav_login_btn"
+                    style="background-color: #b82c30; border-color: #b82c30; color: #ffffff;">登入</a>
                 <a href="./register_2" class="btn" style="margin-right: 0px;">註冊</a>
             </div>
         </div>
@@ -16,7 +17,8 @@
             </a>
             <div class="tribtn">
                 <div class="btn">試用</div>
-                <a href="./login_2" class="btn nav_login_btn" style="background-color: #b82c30; border-color: #b82c30; color: #ffffff;">登入</a>
+                <a href="./login_2" class="btn nav_login_btn"
+                    style="background-color: #b82c30; border-color: #b82c30; color: #ffffff;">登入</a>
                 <a href="./register_2" class="btn" style="margin-right: 0px;">註冊</a>
             </div>
         </div>
@@ -47,7 +49,7 @@
             </div>
             <div class="card sec_card">
                 <img src="../assets/screen_shot.png" alt="">
-                <div class="text_area" >
+                <div class="text_area">
                     <p class="line_one"># 層級分明</p>
                     <p class="line_two">繪製組織架構圖</p>
                     <p class="three_adv">
@@ -59,7 +61,7 @@
             </div>
             <div class="card">
                 <img src="../assets/screen_shot.png" alt="">
-                <div class="text_area" >
+                <div class="text_area">
                     <p class="line_one"># 創意發想</p>
                     <p class="line_two">隨時隨地 IG 式提案</p>
                     <p class="three_adv">
@@ -80,7 +82,7 @@
                     現在就用 <span style="color:#b82c30">BRICKS</span> 完善你的專案！
                 </p>
                 <a href="" class="end_try_btn">立即試用</a>
-            </div>   
+            </div>
         </div>
         <div class="bottom">
             <a href="" class="privacy"># <span style="text-decoration: underline;">隱私權政策</span></a>
@@ -100,12 +102,15 @@ export default {
         };
     },
     methods: {
-        handleScroll(){
+        handleScroll() {
             var top = Math.floor(document.documentElement.scrollTop);
-            if(top > 1080){
+            // var screenHeight = window.innerHeight;
+            // var threshold = screenHeight * 1; // 將螢幕高度乘上1，即為100%的高度
+
+
+            if (top > 1015) {           //記得減掉navbar的高度  1080-65
                 this.scroll = false;
-            }
-            else{
+            } else {
                 this.scroll = true;
             }
         }
@@ -120,7 +125,7 @@ export default {
 </script>
 
 <style scoped>
-*{
+* {
     margin: 0;
     padding: 0;
     font-family: 'Noto Sans TC';
@@ -133,7 +138,7 @@ export default {
     top: 0;
 }
 
-.nav_scroll{
+.nav_scroll {
     width: 100vw;
     height: 65px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -186,15 +191,15 @@ export default {
     color: black;
 }
 
-.btn:hover{
+.btn:hover {
     background-color: rgba(242, 238, 238, 1);
 }
 
-.nav_login_btn:hover{
-    background-color: rgba(212, 128, 131, 1)!important;
+.nav_login_btn:hover {
+    background-color: rgba(212, 128, 131, 1) !important;
 }
 
-.first_bg{
+.first_bg {
     background-image: url(../assets/homepage_bg.svg);
     width: 100%;
     height: 1080px;
@@ -203,7 +208,7 @@ export default {
     background-position: top;
 }
 
-.slogan{
+.slogan {
     width: 880px;
     height: 368px;
     position: relative;
@@ -214,7 +219,7 @@ export default {
 
 }
 
-.first_line{
+.first_line {
     font-size: 47px;
     font-weight: 400;
     height: 56.4px;
@@ -227,7 +232,7 @@ export default {
     top: 0px;
 }
 
-.second_line{
+.second_line {
     font-size: 93px;
     font-weight: 700;
     height: 112px;
@@ -236,11 +241,11 @@ export default {
     position: absolute;
     left: 50%;
     transform: translate(-50%);
-    letter-spacing:24px;
+    letter-spacing: 24px;
     top: 68px;
 }
 
-.third_line{
+.third_line {
     font-size: 33px;
     font-weight: 400;
     height: 40px;
@@ -253,7 +258,7 @@ export default {
     top: 200px;
 }
 
-.try_now_first{
+.try_now_first {
     width: 272px;
     height: 48px;
     background-color: #b82c30;
@@ -271,21 +276,22 @@ export default {
     letter-spacing: 4px;
 }
 
-.try_now_first:hover{
+.try_now_first:hover {
     background-color: #d48083;
 }
 
-.try_now_first:active{
+.try_now_first:active {
     background-color: #932326;
 }
 
-.sec_body{
+.sec_body {
     width: 100vw;
     height: 3306px;
     background-image: url(../assets/bricks_bg.svg);
     background-size: cover;
 }
-.card{
+
+.card {
     width: 77.5vw;
     height: 502px;
     position: relative;
@@ -295,12 +301,12 @@ export default {
     margin-bottom: 240px;
 }
 
-.sec_card img{
+.sec_card img {
     float: left !important;
     left: 4% !important;
 }
 
-.card img{
+.card img {
     width: 60%;
     height: auto;
     aspect-ratio: 16/9;
@@ -308,30 +314,30 @@ export default {
     box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.4);
     position: relative;
     top: 50%;
-    transform: translate(0,-50%);
+    transform: translate(0, -50%);
     right: 4%;
 }
 
-.sec_card .text_area{
+.sec_card .text_area {
     right: 0 !important;
     float: right;
 }
 
-.text_area{
+.text_area {
     width: auto;
     height: 232px;
     position: relative;
     top: 50%;
-    transform: translate(0,-50%);
+    transform: translate(0, -50%);
     left: 0;
 }
 
-.first_text_area{
+.first_text_area {
     top: 68px;
     transform: none;
 }
 
-.line_one{
+.line_one {
     height: 28px;
     line-height: 28px;
     color: #b6aeae;
@@ -339,7 +345,7 @@ export default {
     font-weight: 700;
 }
 
-.line_two{
+.line_two {
     height: 56px;
     line-height: 56px;
     color: #252525;
@@ -347,7 +353,7 @@ export default {
     font-weight: 700;
 }
 
-.three_adv{
+.three_adv {
     position: relative;
     top: 48px;
     height: 100px;
@@ -356,7 +362,7 @@ export default {
     font-weight: 400;
 }
 
-.mid_try_btn{
+.mid_try_btn {
     display: inline-block;
     color: #b82c30;
     height: 46px;
@@ -374,15 +380,15 @@ export default {
     letter-spacing: 1.25px;
 }
 
-.mid_try_btn:hover{
+.mid_try_btn:hover {
     background-color: #f2eeee;
 }
 
-.mid_try_btn:active{
+.mid_try_btn:active {
     background-color: #f1d5d6;
 }
 
-.last_text_area{
+.last_text_area {
     width: 468px;
     height: 388px;
     position: relative;
@@ -391,7 +397,7 @@ export default {
     top: 240px;
 }
 
-.end_first_line{
+.end_first_line {
     font-size: 47px;
     height: 56px;
     line-height: 56px;
@@ -399,7 +405,7 @@ export default {
     text-align: center;
 }
 
-.end_sec_area{
+.end_sec_area {
     font-size: 23px;
     font-weight: 400;
     text-align: center;
@@ -407,7 +413,7 @@ export default {
     top: 104px;
 }
 
-.end_try_btn{
+.end_try_btn {
     display: inline-block;
     width: 272px;
     height: 48px;
@@ -425,11 +431,11 @@ export default {
     text-align: center;
 }
 
-.end_try_btn:hover{
+.end_try_btn:hover {
     background-color: #d48083;
 }
 
-.end_try_btn:active{
+.end_try_btn:active {
     background-color: #932326;
 }
 
@@ -500,5 +506,4 @@ export default {
 .photo {
     right: 540px;
 }
-
 </style>

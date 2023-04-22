@@ -6,7 +6,8 @@
             </a>
             <div class="tribtn">
                 <div class="btn">試用</div>
-                <a href="./login_2" class="btn nav_login_btn" style="background-color: #b82c30; border-color: #b82c30; color: #ffffff;">登入</a>
+                <a href="./login_2" class="btn nav_login_btn"
+                    style="background-color: #b82c30; border-color: #b82c30; color: #ffffff;">登入</a>
                 <a href="./register_2" class="btn" style="margin-right: 0px;">註冊</a>
             </div>
         </div>
@@ -24,8 +25,10 @@
                 </div>
                 <div class="login_btn">登入</div>
                 <div class="keep_login">
-                    <img src="../assets/checkbox/CheckBox_off.svg" class="keep_login_checkbox keep_login_checkbox_off" v-if="checked" @click="check_btn">
-                    <img src="../assets/checkbox/CheckBox_on.svg" class="keep_login_checkbox keep_login_checkbox_on" v-else @click="check_btn">
+                    <img src="../assets/checkbox/CheckBox_off.svg" class="keep_login_checkbox keep_login_checkbox_off"
+                        v-if="checked" @click="check_btn">
+                    <img src="../assets/checkbox/CheckBox_on.svg" class="keep_login_checkbox keep_login_checkbox_on" v-else
+                        @click="check_btn">
                     <p style="user-select: none; cursor: pointer;" @click="check_btn">保持登入</p>
                 </div>
                 <div class="forget_password">忘記密碼</div>
@@ -136,12 +139,12 @@ export default {
     color: black;
 }
 
-.btn:hover{
+.btn:hover {
     background-color: rgba(242, 238, 238, 1);
 }
 
-.nav_login_btn:hover{
-    background-color: rgba(212, 128, 131, 1)!important;
+.nav_login_btn:hover {
+    background-color: rgba(212, 128, 131, 1) !important;
 }
 
 
@@ -325,20 +328,20 @@ input::placeholder {
     color: #3b3838;
 }
 
-.keep_login_checkbox{
+.keep_login_checkbox {
     float: left;
     margin-top: 7px;
     margin-left: 8px;
     cursor: pointer;
 }
 
-.keep_login_checkbox_off:hover{
+.keep_login_checkbox_off:hover {
     content: url(../assets/checkbox/CheckBox_off_hover.svg);
     margin-top: 2px;
     margin-left: 3px;
 }
 
-.keep_login_checkbox_on:hover{
+.keep_login_checkbox_on:hover {
     content: url(../assets/checkbox/CheckBox_on_hover.svg);
     margin-top: 2px;
     margin-left: 3px;
@@ -502,5 +505,4 @@ input::placeholder {
 
 .photo a {
     color: #c7c2c2;
-}
-</style>
+}</style>
