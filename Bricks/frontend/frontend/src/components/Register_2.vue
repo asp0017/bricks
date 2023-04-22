@@ -1,35 +1,36 @@
 <template>
     <div>
         <div class="nav">
-            <a href="">
+            <a href="./homepage_2">
                 <img src="../assets/brickslogo.svg" alt="">
             </a>
             <div class="tribtn">
-                <div class="btn">試用</div>
-                <div class="btn" style="background-color: #b82c30; border-color: #b82c30; color: #ffffff;">登入</div>
-                <div class="btn" style="margin-right: 0px;">註冊</div>
+                <a href="" class="btn">試用</a>
+                <a href="./login_2" class="btn" style="background-color: #b82c30; border-color: #b82c30; color: #ffffff;">登入</a>
+                <a href="./register_2" class="btn" style="margin-right: 0px;">註冊</a>
             </div>
         </div>
         <div class="bg">
             <div class="middle">
                 <p class="title">註冊</p>
                 <div class="enter">
-                    <input required autofocus class="account" placeholder="請輸入 (規則) 帳號名稱 (後續無法更改)" style="margin-top: 0px;" ref="account">
+                    <input required autofocus class="account" placeholder="請輸入 (規則) 帳號名稱 (後續無法更改)" style="margin-top: 0px;" v-model="account">
                     <div class="wrong"></div>
-                    <input v-if="showpassword_1" required class="password" type="text" placeholder="請輸入 (規則) 密碼" ref="password1">
-                    <input v-else required class="password" type="password" placeholder="請輸入 (規則) 密碼" ref="password1">
+                    <input v-if="showpassword_1" required class="password" type="text" placeholder="請輸入 (規則) 密碼" v-model="password1">
+                    <input v-else required class="password" type="password" placeholder="請輸入 (規則) 密碼" v-model="password1">
                     <img class="eye1" v-if="showpassword_1" id="eye_on_1" src="../assets/eye/eye_on.svg" alt="" @click="eyebtn_1">
                     <img class="eye1" v-else id="eye_off_1" src="../assets/eye/eye_origin.svg" alt="" @click="eyebtn_1">
                     <div class="wrong"></div>
-                    <input v-if="showpassword_2" required class="password" type="text" placeholder="請再次輸入密碼" ref="password2">
-                    <input v-else required class="password" type="password" placeholder="請再次輸入密碼" ref="password2">
+                    <input v-if="showpassword_2" required class="password" type="text" placeholder="請再次輸入密碼" v-model="password2">
+                    <input v-else required class="password" type="password" placeholder="請再次輸入密碼" v-model="password2">
                     <img class="eye2" v-if="showpassword_2" id="eye_on_2" src="../assets/eye/eye_on.svg" alt="" @click="eyebtn_2">
                     <img class="eye2" v-else id="eye_off_2" src="../assets/eye/eye_origin.svg" alt="" @click="eyebtn_2">
                     <div class="wrong"></div>
-                    <input required type="text" class="email" placeholder="請填寫聯絡用電子信箱 (可更改)">
+                    <input required type="text" class="email" placeholder="請填寫聯絡用電子信箱 (可更改)" v-model="email">
                     <div class="wrong"></div>
                 </div>
-                <div class="login_btn">下一步</div>
+                <a href="" class="login_btn" v-if="counter == 4" style="background-color: #b82c30; cursor: pointer;">下一步</a>
+                <div class="login_btn" v-else>下一步</div>
                 <div class="agree">
                     <img src="../assets/checkbox/CheckBox_off.svg" class="agree_checkbox agree_checkbox_off" v-if="checked" @click="check_btn">
                     <img src="../assets/checkbox/CheckBox_on.svg" class="agree_checkbox agree_checkbox_on" v-else @click="check_btn">
@@ -56,7 +57,7 @@
                 </div>
                 <div class="login">
                     <p>已經有帳戶？</p>
-                    <a href="">
+                    <a href="./login_2">
                         <p>登入</p>
                     </a>
                 </div>
@@ -79,6 +80,11 @@ export default {
             showpassword_1: false,
             showpassword_2: false,
             checked: true,
+            account: "",
+            password1: "",
+            password2: "",
+            email: "",
+            counter: 0,
         };
     },
     methods: {
@@ -90,6 +96,44 @@ export default {
         },
         check_btn() {
             this.checked = !this.checked;
+        },
+    },
+    watch: {
+        account(newaccount,oldaccount){
+            if(newaccount != '' & oldaccount == ''){
+                this.counter += 1;
+            }
+            if(newaccount == '' & oldaccount != ''){
+                this.counter -= 1;
+            }
+            window.console.log(this.counter)
+        },
+        password1(newpassword1,oldpassword1){
+            if(newpassword1 != '' & oldpassword1 == ''){
+                this.counter += 1;
+            }
+            if(newpassword1 == '' & oldpassword1 != ''){
+                this.counter -= 1;
+            }
+            window.console.log(this.counter)
+        },
+        password2(newpassword2,oldpassword2){
+            if(newpassword2 != '' & oldpassword2 == ''){
+                this.counter += 1;
+            }
+            if(newpassword2 == '' & oldpassword2 != ''){
+                this.counter -= 1;
+            }
+            window.console.log(this.counter)
+        },
+        email(newemail,oldemail){
+            if(newemail != '' & oldemail == ''){
+                this.counter += 1;
+            }
+            if(newemail == '' & oldemail != ''){
+                this.counter -= 1;
+            }
+            window.console.log(this.counter)
         },
     },
     created() {
@@ -142,6 +186,12 @@ export default {
     text-align: center;
     letter-spacing: 1.25px;
     user-select: none;
+    text-decoration: none;
+    color: black;
+}
+
+.btn:hover{
+    background-color: rgba(242, 238, 238, 1);
 }
 
 
@@ -307,6 +357,7 @@ input::placeholder {
     line-height: 48px;
     text-align: center;
     user-select: none;
+    text-decoration: none;
 }
 
 .agree{
@@ -447,6 +498,7 @@ input::placeholder {
     position: fixed;
     bottom: 0px;
     box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
 }
 
 .privacy {
