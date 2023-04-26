@@ -6,7 +6,7 @@
             </a>
             <div class="tribtn">
                 <a href="" class="btn">試用</a>
-                <a href="./login_2" class="btn" style="background-color: #b82c30; border-color: #b82c30; color: #ffffff;">登入</a>
+                <a href="./login_2" class="btn nav_login_btn" style="background-color: #b82c30; border-color: #b82c30; color: #ffffff;">登入</a>
                 <a href="./register_2" class="btn" style="margin-right: 0px;">註冊</a>
             </div>
         </div>
@@ -194,6 +194,9 @@ export default {
     background-color: rgba(242, 238, 238, 1);
 }
 
+.nav_login_btn:hover{
+    background-color: rgba(212, 128, 131, 1)!important;
+}
 
 .bg {
     background-image: url(../assets/bricks_bg.svg);

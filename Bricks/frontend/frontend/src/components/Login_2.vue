@@ -12,16 +12,15 @@
             </div>
         </div>
         <div class="bg">
-            <div class="middle">
+            <div class="middle" style="background-color: #b6aeae;">
                 <p class="title">登入</p>
                 <div class="enter">
-                    <input required autofocus class="account" placeholder="帳號/Email">
                     <div class="wrong"></div>
+                    <input required autofocus class="account" placeholder="帳號/Email">
                     <input v-if="showpassword" required class="password" type="text" placeholder="密碼">
                     <input v-else required class="password" type="password" placeholder="密碼">
                     <img v-if="showpassword" id="eye_on" src="../assets/eye/eye_on.svg" alt="" @click="eyebtn">
                     <img v-else id="eye_off" src="../assets/eye/eye_origin.svg" alt="" @click="eyebtn">
-                    <div class="wrong"></div>
                 </div>
                 <div class="login_btn">登入</div>
                 <div class="keep_login">
@@ -155,7 +154,7 @@ export default {
 @media screen and (min-width: 1920px) {
     .middle {
         width: 576px;
-        height: 654px;
+        height: 536px;
         position: absolute;
         top: 145px;
         left: 50%;
@@ -182,7 +181,7 @@ export default {
 @media screen and (min-width: 1600px) and (max-width: 1920px) {
     .middle {
         width: 470px;
-        height: 654px;
+        height: 536px;
         position: absolute;
         top: 145px;
         left: 50%;
@@ -209,7 +208,7 @@ export default {
 @media screen and (max-width: 1600px) {
     .middle {
         width: 416px;
-        height: 654px;
+        height: 536px;
         position: absolute;
         top: 145px;
         left: 50%;
@@ -235,21 +234,38 @@ export default {
 
 .title {
     width: 100%;
-    height: 182px;
-    font-size: 58px;
+    height: 48px;
+    font-size: 33px;
     text-align: center;
     font-family: 'Noto Sans TC';
-    letter-spacing: -0.5px;
-    font-weight: 400;
-    line-height: 182px;
+    letter-spacing: 0.25px;
+    font-weight: 700;
+    line-height: 48px;
     user-select: none;
+    background-color: #c65659;
 }
 
 .enter {
     width: 100%;
-    height: 172px;
+    height: 192px;
     position: absolute;
-    top: 202px;
+    top: 64px;
+    background-color: aquamarine;
+}
+
+.wrong {
+    width: 100%;
+    height: 46px;
+    border: 1px solid #c65659;
+    border-radius: 14px;
+    background-color: #f1d5d6;
+    font-size: 16px;
+    line-height: 46px;
+    color: #c65659;
+    font-weight: 500;
+    font-family: 'Noto Sans TC';
+    position: relative;
+    top: 0px;
 }
 
 input {
@@ -266,12 +282,6 @@ input {
 
 input::placeholder {
     color: #b6aeae;
-}
-
-.wrong {
-    margin-top: 6px;
-    width: 92%;
-    height: 22px;
 }
 
 .password {
