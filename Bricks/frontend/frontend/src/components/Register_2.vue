@@ -11,30 +11,32 @@
             </div>
         </div>
         <div class="bg">
-            <div class="middle">
+            <div class="middle" style="background-color: bisque;">
                 <p class="title">註冊</p>
                 <div class="enter">
-                    <input required autofocus class="account" placeholder="請輸入 (規則) 帳號名稱 (後續無法更改)" style="margin-top: 0px;" v-model="account">
-                    <div class="wrong"></div>
+                    <div class="wrong">
+                        <img src="../assets/exclamation.svg" alt="">
+                        <!-- 跳出的錯誤信息在這 -->
+                        <p>錯誤信息隨便寫寫</p>
+                    </div>
+                    <input required type="text" class="email" placeholder="請輸入帳號 (電子信箱)" v-model="email">
                     <input v-if="showpassword_1" required class="password" type="text" placeholder="請輸入 (規則) 密碼" v-model="password1">
                     <input v-else required class="password" type="password" placeholder="請輸入 (規則) 密碼" v-model="password1">
                     <img class="eye1" v-if="showpassword_1" id="eye_on_1" src="../assets/eye/eye_on.svg" alt="" @click="eyebtn_1">
                     <img class="eye1" v-else id="eye_off_1" src="../assets/eye/eye_origin.svg" alt="" @click="eyebtn_1">
-                    <div class="wrong"></div>
                     <input v-if="showpassword_2" required class="password" type="text" placeholder="請再次輸入密碼" v-model="password2">
                     <input v-else required class="password" type="password" placeholder="請再次輸入密碼" v-model="password2">
                     <img class="eye2" v-if="showpassword_2" id="eye_on_2" src="../assets/eye/eye_on.svg" alt="" @click="eyebtn_2">
                     <img class="eye2" v-else id="eye_off_2" src="../assets/eye/eye_origin.svg" alt="" @click="eyebtn_2">
-                    <div class="wrong"></div>
-                    <input required type="text" class="email" placeholder="請填寫聯絡用電子信箱 (可更改)" v-model="email">
-                    <div class="wrong"></div>
+                    <input required autofocus class="account" placeholder="請輸入2~10個字元的使用者名稱 (可更改)" v-model="account">
                 </div>
-                <a href="" class="login_btn" v-if="counter == 4" style="background-color: #b82c30; cursor: pointer;">下一步</a>
-                <div class="login_btn" v-else>下一步</div>
+                <!-- 下面兩個是登入鍵 -->
+                <a href="" class="login_btn" v-if="counter == 4" @click="login" style="background-color: #b82c30; cursor: pointer;">下一步</a>
+                <div class="login_btn" v-else @click="login">下一步</div>
                 <div class="agree">
                     <img src="../assets/checkbox/CheckBox_off.svg" class="agree_checkbox agree_checkbox_off" v-if="checked" @click="check_btn">
                     <img src="../assets/checkbox/CheckBox_on.svg" class="agree_checkbox agree_checkbox_on" v-else @click="check_btn">
-                    <p style="user-select: none;">同意 Bricks 之 <a href="" style="text-decoration: underline; color: #3b3838;">隱私權政策</a></p>
+                    <p style="user-select: none;">我已閱讀 Bricks 之 <a href="" style="text-decoration: underline; color: #3b3838;">隱私權政策</a></p>
                 </div>
                 <div class="line">
                     <div class="left_line"></div>
@@ -96,6 +98,10 @@ export default {
         },
         check_btn() {
             this.checked = !this.checked;
+        },
+        // 登入的事件
+        login() {
+
         },
     },
     watch: {
@@ -205,7 +211,7 @@ export default {
 @media screen and (min-width: 1920px) {
     .middle {
         width: 576px;
-        height: 846px;
+        height: 680px;
         position: absolute;
         top: 105px;
         left: 50%;
@@ -232,7 +238,7 @@ export default {
 @media screen and (min-width: 1600px) and (max-width: 1920px) {
     .middle {
         width: 470px;
-        height: 846px;
+        height: 680px;
         position: absolute;
         top: 105px;
         left: 50%;
@@ -259,7 +265,7 @@ export default {
 @media screen and (max-width: 1600px) {
     .middle {
         width: 416px;
-        height: 846px;
+        height: 680px;
         position: absolute;
         top: 105px;
         left: 50%;
@@ -285,9 +291,9 @@ export default {
 
 .enter {
     width: 100%;
-    height: 364px;
+    height: 336px;
     position: absolute;
-    top: 202px;
+    top: 64px;
 }
 
 input {
@@ -300,7 +306,7 @@ input {
     font-weight: 500;
     letter-spacing: 1.25px;
     text-indent: 33.5px;
-    margin-top: 21px;
+    margin-top: 25.5px;
 }
 
 input::placeholder {
@@ -308,12 +314,35 @@ input::placeholder {
 }
 
 .wrong {
-    margin-top: 6px;
-    width: 92%;
-    height: 22px;
+    width: 100%;
+    height: 46px;
+    border: 1px solid #c65659;
+    border-radius: 14px;
+    background-color: #f1d5d6;
+    font-size: 16px;
+    line-height: 46px;
+    color: #c65659;
+    font-weight: 500;
+    font-family: 'Noto Sans TC';
+    position: relative;
+    top: 0px;
+    letter-spacing: 0.5px;
+    /* visibility: hidden; */
 }
 
-.enter img {
+.wrong p{
+    text-indent: 48px;
+    position: relative;
+    top: -46px;
+}
+
+.wrong img{
+    position: relative;
+    top: 6px;
+    left: 12px;
+}
+
+.enter>img {
     position: absolute;
     right: 28px;
     height: 24px;
@@ -323,11 +352,11 @@ input::placeholder {
 }
 
 .eye1{
-    top: 106px;
+    top: 158px;
 }
 
 .eye2{
-    top: 205px;
+    top: 230px;
 }
 
 #eye_off_1:hover {
@@ -352,7 +381,7 @@ input::placeholder {
     background-color: #c7c2c2;
     border-radius: 14px;
     position: absolute;
-    top: 586px;
+    top: 480px;
     font-size: 18px;
     font-weight: 500;
     font-family: 'Noto Sans TC';
@@ -364,10 +393,10 @@ input::placeholder {
 }
 
 .agree{
-    width: 274px;
+    width: 294px;
     height: 32px;
     position: absolute;
-    top: 642px;
+    top: 424px;
     left: 50%;
     transform: translate(-50%);
     font-size: 18px;
@@ -400,7 +429,7 @@ input::placeholder {
     height: 33px;
     width: 100%;
     position: relative;
-    top: 500px;
+    top: 488px;
     font-size: 18px;
     font-weight: 500;
     font-family: 'Noto Sans TC';
@@ -427,7 +456,7 @@ input::placeholder {
     width: 100%;
     height: 48px;
     position: absolute;
-    top: 730px;
+    top: 584px;
 }
 
 .other_resource div {
@@ -485,13 +514,13 @@ input::placeholder {
 }
 .title {
     width: 100%;
-    height: 182px;
-    font-size: 58px;
+    height: 48px;
+    font-size: 33px;
     text-align: center;
     font-family: 'Noto Sans TC';
-    letter-spacing: -0.5px;
-    font-weight: 400;
-    line-height: 182px;
+    letter-spacing: 0.25px;
+    font-weight: 700;
+    line-height: 48px;
     user-select: none;
 }
 

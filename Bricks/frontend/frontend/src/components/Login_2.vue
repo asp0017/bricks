@@ -12,17 +12,20 @@
             </div>
         </div>
         <div class="bg">
-            <div class="middle" style="background-color: #b6aeae;">
+            <div class="middle">
                 <p class="title">登入</p>
                 <div class="enter">
-                    <div class="wrong"></div>
-                    <input required autofocus class="account" placeholder="帳號/Email">
+                    <div class="wrong">
+                        <img src="../assets/exclamation.svg" alt="">
+                        <!-- 跳出的錯誤信息在這 -->
+                        <p>錯誤信息隨便寫寫</p>
+                    </div>
+                    <input required autofocus class="account" placeholder="帳號">
                     <input v-if="showpassword" required class="password" type="text" placeholder="密碼">
                     <input v-else required class="password" type="password" placeholder="密碼">
                     <img v-if="showpassword" id="eye_on" src="../assets/eye/eye_on.svg" alt="" @click="eyebtn">
                     <img v-else id="eye_off" src="../assets/eye/eye_origin.svg" alt="" @click="eyebtn">
                 </div>
-                <div class="login_btn">登入</div>
                 <div class="keep_login">
                     <img src="../assets/checkbox/CheckBox_off.svg" class="keep_login_checkbox keep_login_checkbox_off"
                         v-if="checked" @click="check_btn">
@@ -30,6 +33,8 @@
                         @click="check_btn">
                     <p style="user-select: none; cursor: pointer;" @click="check_btn">保持登入</p>
                 </div>
+                <!-- 點擊登入按鈕的事件放在這邊 -->
+                <div class="login_btn" @click="login">登入</div>
                 <div class="forget_password">忘記密碼</div>
                 <div class="line">
                     <div class="left_line"></div>
@@ -82,6 +87,10 @@ export default {
         },
         check_btn() {
             this.checked = !this.checked;
+        },
+        // login的事件
+        login(){
+
         },
     },
     created() {
@@ -242,7 +251,6 @@ export default {
     font-weight: 700;
     line-height: 48px;
     user-select: none;
-    background-color: #c65659;
 }
 
 .enter {
@@ -250,7 +258,6 @@ export default {
     height: 192px;
     position: absolute;
     top: 64px;
-    background-color: aquamarine;
 }
 
 .wrong {
@@ -266,6 +273,20 @@ export default {
     font-family: 'Noto Sans TC';
     position: relative;
     top: 0px;
+    letter-spacing: 0.5px;
+    /* visibility: hidden; */
+}
+
+.wrong p{
+    text-indent: 48px;
+    position: relative;
+    top: -46px;
+}
+
+.wrong img{
+    position: relative;
+    top: 6px;
+    left: 12px;
 }
 
 input {
@@ -278,19 +299,16 @@ input {
     font-weight: 500;
     letter-spacing: 1.25px;
     text-indent: 33.5px;
+    margin-top: 25.5px;
 }
 
 input::placeholder {
     color: #b6aeae;
 }
 
-.password {
-    margin-top: 21px;
-}
-
-.enter img {
+.enter>img {
     position: absolute;
-    top: 108px;
+    top: 158px;
     right: 28px;
     height: 24px;
     cursor: pointer;
@@ -312,7 +330,7 @@ input::placeholder {
     background-color: #b82c30;
     border-radius: 14px;
     position: absolute;
-    top: 394px;
+    top: 336px;
     font-size: 18px;
     font-weight: 500;
     font-family: 'Noto Sans TC';
@@ -327,7 +345,7 @@ input::placeholder {
     width: 110px;
     height: 32px;
     position: absolute;
-    top: 450px;
+    top: 280px;
     left: 8px;
     font-size: 18px;
     font-family: 'Noto Sans TC';
@@ -365,7 +383,7 @@ input::placeholder {
     font-size: 18px;
     font-family: 'Noto Sans TC';
     position: absolute;
-    top: 450px;
+    top: 280px;
     right: 8px;
     cursor: pointer;
     font-weight: 500;
@@ -376,7 +394,7 @@ input::placeholder {
     height: 33px;
     width: 100%;
     position: relative;
-    top: 307px;
+    top: 344px;
     font-size: 18px;
     font-weight: 500;
     font-family: 'Noto Sans TC';
@@ -404,7 +422,7 @@ input::placeholder {
     width: 100%;
     height: 48px;
     position: absolute;
-    top: 538px;
+    top: 440px;
 }
 
 .other_resource div {
