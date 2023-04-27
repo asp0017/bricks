@@ -19,7 +19,7 @@
                         <!-- 跳出的錯誤信息在這 -->
                         <p>錯誤信息隨便寫寫</p>
                     </div>
-                    <input required type="text" class="email" placeholder="請輸入帳號 (電子信箱)" v-model="email">
+                    <input autofocus required type="text" class="email" placeholder="請輸入帳號 (電子信箱)" v-model="email">
                     <input v-if="showpassword_1" required class="password" type="text" placeholder="請輸入 (規則) 密碼" v-model="password1">
                     <input v-else required class="password" type="password" placeholder="請輸入 (規則) 密碼" v-model="password1">
                     <img class="eye1" v-if="showpassword_1" id="eye_on_1" src="../assets/eye/eye_on.svg" alt="" @click="eyebtn_1">
@@ -28,11 +28,11 @@
                     <input v-else required class="password" type="password" placeholder="請再次輸入密碼" v-model="password2">
                     <img class="eye2" v-if="showpassword_2" id="eye_on_2" src="../assets/eye/eye_on.svg" alt="" @click="eyebtn_2">
                     <img class="eye2" v-else id="eye_off_2" src="../assets/eye/eye_origin.svg" alt="" @click="eyebtn_2">
-                    <input required autofocus class="account" placeholder="請輸入2~10個字元的使用者名稱 (可更改)" v-model="account">
+                    <input required class="account" placeholder="請輸入2~10個字元的使用者名稱 (可更改)" v-model="account">
                 </div>
                 <!-- 下面兩個是登入鍵 -->
-                <a href="" class="login_btn" v-if="counter == 4" @click="login" style="background-color: #b82c30; cursor: pointer;">下一步</a>
-                <div class="login_btn" v-else @click="login">下一步</div>
+                <a href="./Register_second" class="login_btn" v-if="counter == 4" @click="login" style="background-color: #b82c30; cursor: pointer;">下一步</a>
+                <div class="login_btn" v-else>下一步</div>
                 <div class="agree">
                     <img src="../assets/checkbox/CheckBox_off.svg" class="agree_checkbox agree_checkbox_off" v-if="checked" @click="check_btn">
                     <img src="../assets/checkbox/CheckBox_on.svg" class="agree_checkbox agree_checkbox_on" v-else @click="check_btn">
@@ -76,7 +76,7 @@
 
 <script>
 export default {
-    name: 'Login_2',
+    name: 'Reigster_2',
     data() {
         return {
             showpassword_1: false,

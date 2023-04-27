@@ -7,6 +7,7 @@ import HomePage from "../components/Homepage.vue";
 import Login_2 from "../components/Login_2.vue";
 import Register_2 from "../components/Register_2.vue";
 import Homepage_2 from "../components/Homepage_2.vue";
+import Register_second from "../components/Register_second.vue";
 
 Vue.use(VueRouter);
 
@@ -47,6 +48,11 @@ const routes = [
     path: "/homepage_2",
     name: "Homapage_2",
     component: Homepage_2,
+  },
+  {
+  path: "/register_second",
+  name: "Register_second",
+  component: Register_second,
   },
 ];
 
