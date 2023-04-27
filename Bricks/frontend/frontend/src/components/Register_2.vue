@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="bg">
-            <div class="middle" style="background-color: bisque;">
+            <div class="middle">
                 <p class="title">註冊</p>
                 <div class="enter">
                     <div class="wrong">
