@@ -40,6 +40,7 @@ def login():
             else:
                 response_object['status'] = "failed"
                 response_object['message'] = "登入失敗"
+                print("failed")
                 break
 
     else:

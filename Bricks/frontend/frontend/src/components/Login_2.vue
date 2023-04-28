@@ -15,14 +15,20 @@
             <div class="middle">
                 <p class="title">登入</p>
                 <div class="enter">
-                    <div class="wrong">
+                    <div class="wrong" v-if="error">
                         <img src="../assets/exclamation.svg" alt="">
                         <!-- 跳出的錯誤信息在這 -->
-                        <p>錯誤信息隨便寫寫</p>
+                        <p>{{ errorMessage }}</p>
                     </div>
-                    <input required autofocus class="account" placeholder="帳號">
-                    <input v-if="showpassword" required class="password" type="text" placeholder="密碼">
-                    <input v-else required class="password" type="password" placeholder="密碼">
+                    <div class="wrong" v-else style="opacity: 0">
+                        <!-- style="display: none;" -->
+                        <img src="../assets/exclamation.svg" alt="">
+                        <!-- 跳出的錯誤信息在這 -->
+                        <p></p>
+                    </div>
+                    <input required autofocus class="account" placeholder="帳號" v-model="account">
+                    <input v-if="showpassword" required class="password" type="text" placeholder="密碼" v-model="password">
+                    <input v-else required class="password" type="password" placeholder="密碼" v-model="password">
                     <img v-if="showpassword" id="eye_on" src="../assets/eye/eye_on.svg" alt="" @click="eyebtn">
                     <img v-else id="eye_off" src="../assets/eye/eye_origin.svg" alt="" @click="eyebtn">
                 </div>
@@ -73,12 +79,18 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     name: 'Login_2',
     data() {
         return {
             showpassword: false,
+            error: false, // 錯誤訊息的div顯示
             checked: true,
+            account: "",
+            password: "",
+            errorMessage: "",
+            errorTime: 0,
         };
     },
     methods: {
@@ -89,8 +101,56 @@ export default {
             this.checked = !this.checked;
         },
         // login的事件
-        login(){
+        login() {
+            //前端部分先進行帳號密碼原則檢驗，還有其他條件式
+            if (this.password == "" || this.account == "") {
+                // this.$refs.account.style = "border-color : #e03939";
+                // this.$refs.password.style = "border-color : #e03939";
+                // this.$refs.wrong1.style = "display : block";
+                // this.$refs.wrong2.style = "display : block";
+                this.errorMessage = "請填寫您的帳號與密碼資訊";
+                // this.errorTime = this.errorTime + 1;
+                console.log("前端block");
+            } else {
+                const path = "http://localhost:5000/login";
+                const user = { account: this.account, password: this.password };
+                this.account = "";
+                this.password = "";
+                axios
+                    .post(path, user)
+                    .then((res) => {
+                        console.log(res.data.status);
+                        if (res.data.status == 'success') {
+                            this.errorTime = 0;
+                            console.log("登入成功");
+                            this.goToPersonalPage();
 
+                        } else {
+                            // this.$refs.account.style = "border-color : #e03939";
+                            // this.$refs.password.style = "border-color : #e03939";
+                            // this.$refs.wrong1.style = "display : block";
+                            // this.$refs.wrong2.style = "display : block";
+                            // this.accountError = res.data.accountError;
+                            // this.passwordError = res.data.passwordError;
+                            this.errorTime = this.errorTime + 1;
+                            if (this.errorTime >= 3) {
+                                this.errorMessage = "如果登入時遇到困難，可點擊「忘記密碼」";
+                                this.errorTime = this.errorTime + 1;
+                            } else {
+                                this.errorMessage = "您的帳號或密碼不正確，請再試一次";
+                            }
+
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
+            this.error = true;
+
+        },
+        goToPersonalPage() {
+            console.log("goToPersonalPage");
         },
     },
     created() {
@@ -277,13 +337,13 @@ export default {
     /* visibility: hidden; */
 }
 
-.wrong p{
+.wrong p {
     text-indent: 48px;
     position: relative;
     top: -46px;
 }
 
-.wrong img{
+.wrong img {
     position: relative;
     top: 6px;
     left: 12px;
@@ -533,4 +593,5 @@ input::placeholder {
 
 .photo a {
     color: #c7c2c2;
-}</style>
+}
+</style>
