@@ -1,5 +1,5 @@
 # storybook
-
+> 關於元件的規劃與進度可以參考 [元件地圖](https://github.com/WAFFLE900/bricks/blob/master/Bricks/frontend/storybook/src/stories/overview/components_map.md)
 
 
 ## 初始化專案
