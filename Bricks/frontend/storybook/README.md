@@ -29,7 +29,7 @@ npm run build // the function of build is to build a production-ready app.
 ```
 
 ## 備註: 環境設定
----
+
 ### 使用環境簡介
 
 環境：node.js v18.16.0
