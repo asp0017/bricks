@@ -1,4 +1,4 @@
-# change "components map.mdx" to "components map.md"
+# from "components map.mdx" generate "components map.md"
 
 import os
 
@@ -11,9 +11,10 @@ not_translate_lines = [ 26 ]
 md.write("> 📌 Updated: " + os.popen("date").read())
 def translater(mdx:str)->str:
     md = mdx.replace("- ", "\n- ❌ ")
+    md = md.replace("❌ ***", "🎨 ***")
     md = md.replace("❌ **", "🖥️ **")
     md = md.replace("❌ *", "📌 *")
-    md = md.replace("❌ ***", "🎨 ***")
+    
     return md
 
 for i in range(len(mdx)):
