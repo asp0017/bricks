@@ -1,5 +1,6 @@
 # storybook
 > 關於元件的規劃與進度可以參考 [元件地圖](https://github.com/WAFFLE900/bricks/blob/master/Bricks/frontend/storybook/src/stories/overview/components_map.md)
+
 > 點此查看 [Storybook](https://644cdb54238cc4fa28d2fa00-fxdynpoeut.chromatic.com/?path=/docs/general-%E9%80%9A%E7%94%A8-colors-%E8%89%B2%E5%BD%A9--docs)
 
 ## 初始化專案
