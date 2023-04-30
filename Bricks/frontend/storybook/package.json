@@ -7,7 +7,8 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "chromatic": "npx chromatic --project-token=4f6573d4b40c"
   },
   "dependencies": {
     "core-js": "^3.8.3",
@@ -26,6 +27,7 @@
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
+    "chromatic": "^6.17.3",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
     "file-loader": "^6.2.0",
@@ -60,5 +62,7 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "readme": "ERROR: No README data found!",
+  "_id": "storybook@0.1.0"
 }

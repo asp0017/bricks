@@ -10,10 +10,10 @@ not_translate_lines = [ 26 ]
 
 md.write("> 📌 Updated: " + os.popen("date").read())
 def translater(mdx:str)->str:
-    md = mdx.replace("- ", "\n- ❌ ")
-    md = md.replace("❌ ***", "🎨 ***")
-    md = md.replace("❌ **", "🖥️ **")
-    md = md.replace("❌ *", "📌 *")
+    md = mdx.replace("- ", "\n- ⬛️ ")
+    md = md.replace("⬛️ ***", "🟩 ***")
+    md = md.replace("⬛️ **", "🟦 **")
+    md = md.replace("⬛️ *", "🟥 *")
     
     return md
 
