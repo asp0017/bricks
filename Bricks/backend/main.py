@@ -30,17 +30,14 @@ def login():
     response_object = {'status': 'success'}
     if request.method == "POST":
         post_data = request.get_json()
-        print(post_data.get("account"))
-        print(post_data.get("password"))
+        #print(post_data.get("account"))
+        #print(post_data.get("password"))
+        response_object['status'] = "failed"
+        response_object['message'] = "登入失敗"
         for account_info in DATA:
-            print(account_info)
+            #print(account_info)
             if account_info['account'] == post_data.get("account") and account_info['password'] == post_data.get("password"):
                 response_object['message'] = "登入成功"
-                break
-            else:
-                response_object['status'] = "failed"
-                response_object['message'] = "登入失敗"
-                print("failed")
                 break
 
     else:
@@ -48,7 +45,24 @@ def login():
 
     return jsonify(response_object)
 
-
+@app.route('/register', methods=['POST'])
+def register():
+    response_object = {'status': 'success'}
+    
+    post_data = request.get_json()
+    print(post_data.get("account"))
+    print(post_data.get("password"))
+    for account_info in DATA:
+        #print(account_info)
+        if account_info['account'] == post_data.get("account"):
+            response_object['message'] = "此帳號已註冊過"
+            response_object['status'] = "failed"
+            return jsonify(response_object)
+        
+    DATA.append({"account":post_data.get("account"),"password":post_data.get("password")})
+    print(DATA)
+    response_object['message'] = "註冊成功！"
+    return jsonify(response_object)
 
 
 if __name__ == "__main__":
