@@ -260,7 +260,7 @@ export default{
 }
 
 .multiple_select{
-    width: 100%;
+    width: 130%;
     height: 90px;
     position: relative;
     top: 32px;

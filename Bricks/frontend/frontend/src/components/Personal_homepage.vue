@@ -10,25 +10,40 @@
             </div>
         </div>
         <div class="left_bar">
-            <div class="add_btn">新增專案</div>
-            <div class="plus"></div>
+            <div class="add_btn" @click="add_btn">新增專案</div>
+            <div class="plus" @click="add_btn"></div>
             <div class="three_pointer">
-                <input type="radio" id="overview" class="list" name="list" checked>
-                <label for="overview">專案總覽</label>
+                <input type="radio" id="overview" class="list" name="list" checked value="option1">
+                <label for="overview" @click="change(1)">專案總覽</label>
                 <img src="../assets/icon/icon_file.svg" style="top: 26px">
-                <input type="radio" id="over" class="list" name="list">
-                <label for="over">已結束專案</label>
+                <input type="radio" id="over" class="list" name="list" value="option2">
+                <label for="over" @click="change(2)">已結束專案</label>
                 <img src="../assets/icon/icon_file.svg" style="top: 102px">
-                <input type="radio" id="trash" class="list" name="list">
-                <label for="trash">垃圾桶</label>
+                <input type="radio" id="trash" class="list" name="list" value="option3">
+                <label for="trash"  @click="change(3)">垃圾桶</label>
                 <img src="../assets/icon/icon_trashcan.svg" style="top: 178px">
             </div>
+        </div>
+        <div class="add_proj_box" v-show="add_proj_show">
+            <div class="close_add_proj_box" @click="add_btn"></div>
+            <p class="add_proj_title">新增專案</p>
+            <div class="add_proj_pic">
+                <img src="../assets/add_proj_pic_plus.svg" class="add_proj_pic_plus">
+            </div>
+            <input type="text" placeholder="輸入專案名稱" class="add_proj_name">
+            <select name="" id="" class="add_proj_type" placeholder="選擇專案類型">
+                <option value="" disabled selected hidden style="color: #b6aeae;">選擇專案類型</option>
+                <option value="">社團 / 活動</option>
+                <option value="">社團 / 活動</option>
+                <option value="">社團 / 活動</option>
+            </select>
+            <div class="add_proj_build" @click="add_btn">建立專案</div>
         </div>
         <div class="main_body">
             <div class="bg">
                 <div class="middle">
-                    <div class="overview_page">
-                        <div class="uncategorized" ref="uncategorized">
+                    <div class="overview_page" v-show="middle_show_overview_page">
+                        <div class="uncategorized">
                             <p class="card_title">未分類</p>
                             <div class="title_underline"></div>
                             <div class="box_container" ref="box_container">
@@ -53,8 +68,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="over_page"></div>
-                    <div class="trash_page"></div>
+                    <div class="over_page" v-show="middle_show_over_page"></div>
+                    <div class="trash_page" v-show="middle_show_trash_page"></div>
                 </div>
             </div>
         </div>
@@ -66,7 +81,10 @@ export default{
     name: 'Personal_homepage',
     data() {
         return {
-
+            middle_show_overview_page: true,
+            middle_show_over_page: false,
+            middle_show_trash_page: false,
+            add_proj_show: false,
     };
     },
     computed: {
@@ -75,7 +93,27 @@ export default{
         },
     },
     methods: {
-
+        add_btn(){
+            this.add_proj_show = this.add_proj_show === false ? true:false;
+            console.log(this.add_proj_show)
+        },
+        change(index){
+            if (index === 1){
+                this.middle_show_overview_page = true
+                this.middle_show_over_page = false
+                this.middle_show_trash_page = false
+            }
+            if (index === 2){
+                this.middle_show_over_page = true
+                this.middle_show_overview_page = false
+                this.middle_show_trash_page = false
+            }
+            if (index === 3){
+                this.middle_show_trash_page = true
+                this.middle_show_overview_page = false
+                this.middle_show_over_page = false
+            }
+        },
     },
     created() {
 
@@ -260,6 +298,135 @@ export default{
     -webkit-user-drag: none;
 }
 /* 左側欄的部分 終點 */
+
+/* 新增專案的框框 起點 */
+.add_proj_box{
+    width: 344px;
+    height: 524px;
+    position: fixed;
+    border-radius: 14px;
+    background-color: white;
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.4);
+    top: 244px;
+    left: 924px;
+    z-index: 6;
+}
+.close_add_proj_box{
+    position: relative;
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+    top: 25px;
+    left: 307px;
+}
+.close_add_proj_box::before,.close_add_proj_box::after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2px;
+    height: 17px;
+    background-color: black;
+}
+.close_add_proj_box::before{
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+.close_add_proj_box::after{
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+.add_proj_title{
+    font-size: 23px;
+    font-weight: 700;
+    position: relative;
+    top: 40px;
+    text-align: center;
+    user-select: none;
+}
+.add_proj_pic{
+    width: 280px;
+    height: 140px;
+    border-radius: 14px;
+    background-color: #f2eeee;
+    position: relative;
+    top: 60px;
+    left: 50%;
+    transform: translate(-50%);
+    cursor: pointer;
+    -webkit-user-drag: none;
+}
+.add_proj_pic_plus{
+    position: relative;
+    top: 40px;
+    left: 110px;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+.add_proj_name{
+    width: 278px;
+    height: 38px;
+    border: 1px solid #c7c2c2;
+    border-radius: 12px;
+    font-size: 16px;
+    letter-spacing: 1.25px;
+    line-height: 38px;
+    text-indent: 20px;
+    position: relative;
+    top: 108px;
+    left: 50%;
+    transform: translate(-50%);
+}
+.add_proj_name:hover{
+    border-color: #b6aeae;
+}
+.add_proj_name:focus{
+    border-color: #3b3838;
+}
+.add_proj_name::placeholder{
+    user-select: none;
+    color: #b6aeae;
+}
+.add_proj_type{
+    width: 278px;
+    height: 38px;
+    border: 1px solid #b8b8b8;
+    border-radius: 12px;
+    position: relative;
+    top: 124px;
+    left: 50%;
+    transform: translate(-50%);
+    font-size: 16px;
+    letter-spacing: 1.25px;
+    line-height: 38px;
+    text-indent: 20px;
+    color: black;
+    cursor: pointer;
+    user-select: none;
+}
+.add_proj_type:hover{
+    border-color: #7b7b7b;
+}
+.add_proj_type select option:first-child{
+    display: none;
+}
+.add_proj_build{
+    width: 280px;
+    height: 48px;
+    border-radius: 14px;
+    background-color: #b82c30;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 48px;
+    letter-spacing: 1.25px;
+    text-align: center;
+    position: relative;
+    top: 170px;
+    left: 50%;
+    transform: translate(-50%);
+    cursor: pointer;
+    user-select: none;
+}
+/* 新增專案的框框 終點 */
 
 /* 中間的部分 起點 */
 .bg{
