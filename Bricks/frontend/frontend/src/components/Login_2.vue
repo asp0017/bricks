@@ -21,7 +21,6 @@
                         <p>{{ errorMessage }}</p>
                     </div>
                     <div class="wrong" v-else style="opacity: 0">
-                        <!-- style="display: none;" -->
                         <img src="../assets/exclamation.svg" alt="">
                         <!-- 跳出的錯誤信息在這 -->
                         <p></p>
