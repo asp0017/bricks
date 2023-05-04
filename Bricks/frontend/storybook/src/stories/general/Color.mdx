@@ -1,7 +1,7 @@
 {/* src/stories/general/Color.mdx */}
 
 import { Meta } from '@storybook/blocks';
-import Color from '../../components/Color.json';
+import Colors from '../../components/Color';
 import copyicon from '../../assets/copy.svg';
 
 <Meta title="General 通用/Colors 色彩"/>
@@ -139,8 +139,8 @@ import copyicon from '../../assets/copy.svg';
 
 # Colors 色彩
 
-在你的 `.js` 檔案中，你可以引入 `import Color from '../../components/Color.json';`<img id="copy" src={copyicon} alt="" 
-onClick={(e) => { navigator.clipboard.writeText(`import Color from '../../components/Color.json';`)
+在你的 `.js` 檔案中，你可以引入 `import { Color } from '../../components/Color';`<img id="copy" src={copyicon} alt="" 
+onClick={(e) => { navigator.clipboard.writeText(`import { Color } from '../../components/Color';`)
 .then(() => { // show popup box when copied successfully
   const popupBox = document.getElementById("popup-box");
   popupBox.style.display = "block"; // show popup box
