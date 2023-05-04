@@ -20,7 +20,7 @@
                 <label for="over" @click="change(2)">已結束專案</label>
                 <img src="../assets/icon/icon_file.svg" style="top: 102px">
                 <input type="radio" id="trash" class="list" name="list" value="option3">
-                <label for="trash"  @click="change(3)">垃圾桶</label>
+                <label for="trash" @click="change(3)">垃圾桶</label>
                 <img src="../assets/icon/icon_trashcan.svg" style="top: 178px">
             </div>
         </div>
@@ -37,13 +37,15 @@
                 <option value="">社團 / 活動</option>
                 <option value="">社團 / 活動</option>
             </select>
-            <div class="add_proj_build" @click="add_btn">建立專案</div>
+            <div class="add_proj_build" @click="new_project_btn">建立專案</div>
         </div>
         <div class="main_body">
             <div class="bg">
+                <!-- 背景透明灰色 -->
+                <div class="overlay" v-if="showOverlay"></div>
                 <div class="middle">
                     <div class="overview_page" v-show="middle_show_overview_page">
-                        <div class="uncategorized">
+                        <div class="uncategorized" ref="uncategorized">
                             <p class="card_title">未分類</p>
                             <div class="title_underline"></div>
                             <div class="box_container" ref="box_container">
@@ -74,10 +76,10 @@
             </div>
         </div>
     </div>
-</template>
+</div></template>
 
 <script>
-export default{
+export default {
     name: 'Personal_homepage',
     data() {
         return {
@@ -85,30 +87,37 @@ export default{
             middle_show_over_page: false,
             middle_show_trash_page: false,
             add_proj_show: false,
-    };
+            showOverlay: false,
+        };
     },
     computed: {
-        box_container_height(){
-            return this.$refs.box_container.offsetHeight + 103 +'px';
+        box_container_height() {
+            return this.$refs.box_container.offsetHeight + 103 + 'px';
         },
     },
     methods: {
-        add_btn(){
-            this.add_proj_show = this.add_proj_show === false ? true:false;
+        add_btn() {
+            this.add_proj_show = this.add_proj_show === false ? true : false;
+            this.showOverlay = !this.showOverlay;
             console.log(this.add_proj_show)
         },
-        change(index){
-            if (index === 1){
+        // 建立專案的事件
+        new_project_btn() {
+            this.add_proj_show = this.add_proj_show === false ? true : false;
+            this.showOverlay = false;
+        },
+        change(index) {
+            if (index === 1) {
                 this.middle_show_overview_page = true
                 this.middle_show_over_page = false
                 this.middle_show_trash_page = false
             }
-            if (index === 2){
+            if (index === 2) {
                 this.middle_show_over_page = true
                 this.middle_show_overview_page = false
                 this.middle_show_trash_page = false
             }
-            if (index === 3){
+            if (index === 3) {
                 this.middle_show_trash_page = true
                 this.middle_show_overview_page = false
                 this.middle_show_over_page = false
@@ -118,7 +127,7 @@ export default{
     created() {
 
     },
-    mounted(){
+    mounted() {
         console.log(this.$refs.box_container.offsetHeight);
         console.log(this.$refs.uncategorized.offsetHeight);
         console.log(this.box_container_height)
@@ -127,14 +136,14 @@ export default{
 </script>
 
 <style scoped>
-*{
+* {
     margin: 0;
     padding: 0;
     font-family: 'Noto Sans TC';
 }
 
 /* navigation bar的部分 起點*/
-.nav{
+.nav {
     width: 100vw;
     height: 49px;
     background-color: white;
@@ -152,14 +161,15 @@ export default{
     -webkit-user-drag: none;
 }
 
-.tri_btn{
+.tri_btn {
     width: 340px;
     height: 30px;
     position: absolute;
     right: 50px;
     top: 9.03px;
 }
-.tri_btn input{
+
+.tri_btn input {
     width: 248px;
     height: 28px;
     background-color: #f2eeee;
@@ -173,47 +183,55 @@ export default{
 }
 
 
-.tri_btn input:hover{
+.tri_btn input:hover {
     background-color: #e1dcdc;
 }
-.tri_btn input:focus{
+
+.tri_btn input:focus {
     background-color: white;
     border-color: #c7c2c2;
 }
-.search{
+
+.search {
     position: absolute;
     top: 7px;
     left: 15px;
 }
-.notice{
+
+.notice {
     position: absolute;
     right: 45px;
     cursor: pointer;
     -webkit-user-drag: none;
 }
-.notice:hover{
+
+.notice:hover {
     content: url(../assets/Notice/Notice_Hover.svg);
 }
-.notice:active{
+
+.notice:active {
     content: url(../assets/Notice/Notice_Active.svg);
 }
-.profile{
+
+.profile {
     position: absolute;
     right: 0px;
     cursor: pointer;
     -webkit-user-drag: none;
 }
-.profile:hover{
+
+.profile:hover {
     content: url(../assets/Profile/Profile_Hover.svg);
 }
 
-.profile:active{
+.profile:active {
     content: url(../assets/Profile/Profile_Active.svg);
 }
+
 /* navigation bar的部分 終點 */
 
 /* 左側欄的部分 起點 */
-.left_bar{
+.left_bar {
     width: 272px;
     height: calc(100vh - 48px);
     background-color: #f2eeee;
@@ -223,7 +241,8 @@ export default{
     bottom: 0px;
     z-index: 8;
 }
-.add_btn{
+
+.add_btn {
     width: 174px;
     height: 65px;
     position: relative;
@@ -241,15 +260,17 @@ export default{
     text-indent: 68px;
     user-select: none;
 }
-.plus{
+
+.plus {
     position: relative;
     width: 14px;
     height: 14px;
     background-color: transparent;
     border: 1.5px solid transparent;
 }
+
 .plus::before,
-.plus::after{
+.plus::after {
     content: "";
     position: absolute;
     width: 100%;
@@ -258,22 +279,27 @@ export default{
     top: 50%;
     left: 83px;
 }
-.plus::before{
+
+.plus::before {
     transform: rotate(90deg);
 }
-.plus::after{
+
+.plus::after {
     transform: rotate(0deg);
 }
-.three_pointer{
+
+.three_pointer {
     width: 100%;
     height: 228px;
     position: relative;
     top: 61px;
 }
-.three_pointer input[type='radio']{
+
+.three_pointer input[type='radio'] {
     display: none;
 }
-.three_pointer input[type='radio'] + label{
+
+.three_pointer input[type='radio']+label {
     display: inline-block;
     width: 100%;
     height: 76px;
@@ -286,21 +312,25 @@ export default{
     cursor: pointer;
     user-select: none;
 }
-.three_pointer input[type='radio']:hover+label{
+
+.three_pointer input[type='radio']:hover+label {
     background-color: #e1dcdc;
 }
-.three_pointer input[type='radio']:checked+label{
+
+.three_pointer input[type='radio']:checked+label {
     background-color: #e1dcdc;
 }
-.three_pointer img{
+
+.three_pointer img {
     position: absolute;
     left: 64px;
     -webkit-user-drag: none;
 }
+
 /* 左側欄的部分 終點 */
 
 /* 新增專案的框框 起點 */
-.add_proj_box{
+.add_proj_box {
     width: 344px;
     height: 524px;
     position: fixed;
@@ -311,7 +341,8 @@ export default{
     left: 924px;
     z-index: 6;
 }
-.close_add_proj_box{
+
+.close_add_proj_box {
     position: relative;
     width: 12px;
     height: 12px;
@@ -319,7 +350,9 @@ export default{
     top: 25px;
     left: 307px;
 }
-.close_add_proj_box::before,.close_add_proj_box::after{
+
+.close_add_proj_box::before,
+.close_add_proj_box::after {
     content: "";
     position: absolute;
     top: 50%;
@@ -328,13 +361,16 @@ export default{
     height: 17px;
     background-color: black;
 }
-.close_add_proj_box::before{
+
+.close_add_proj_box::before {
     transform: translate(-50%, -50%) rotate(45deg);
 }
-.close_add_proj_box::after{
+
+.close_add_proj_box::after {
     transform: translate(-50%, -50%) rotate(-45deg);
 }
-.add_proj_title{
+
+.add_proj_title {
     font-size: 23px;
     font-weight: 700;
     position: relative;
@@ -342,7 +378,8 @@ export default{
     text-align: center;
     user-select: none;
 }
-.add_proj_pic{
+
+.add_proj_pic {
     width: 280px;
     height: 140px;
     border-radius: 14px;
@@ -354,14 +391,16 @@ export default{
     cursor: pointer;
     -webkit-user-drag: none;
 }
-.add_proj_pic_plus{
+
+.add_proj_pic_plus {
     position: relative;
     top: 40px;
     left: 110px;
     user-select: none;
     -webkit-user-drag: none;
 }
-.add_proj_name{
+
+.add_proj_name {
     width: 278px;
     height: 38px;
     border: 1px solid #c7c2c2;
@@ -375,17 +414,21 @@ export default{
     left: 50%;
     transform: translate(-50%);
 }
-.add_proj_name:hover{
+
+.add_proj_name:hover {
     border-color: #b6aeae;
 }
-.add_proj_name:focus{
+
+.add_proj_name:focus {
     border-color: #3b3838;
 }
-.add_proj_name::placeholder{
+
+.add_proj_name::placeholder {
     user-select: none;
     color: #b6aeae;
 }
-.add_proj_type{
+
+.add_proj_type {
     width: 278px;
     height: 38px;
     border: 1px solid #b8b8b8;
@@ -402,13 +445,16 @@ export default{
     cursor: pointer;
     user-select: none;
 }
-.add_proj_type:hover{
+
+.add_proj_type:hover {
     border-color: #7b7b7b;
 }
-.add_proj_type select option:first-child{
+
+.add_proj_type select option:first-child {
     display: none;
 }
-.add_proj_build{
+
+.add_proj_build {
     width: 280px;
     height: 48px;
     border-radius: 14px;
@@ -426,10 +472,24 @@ export default{
     cursor: pointer;
     user-select: none;
 }
+
 /* 新增專案的框框 終點 */
 
+
+
+/* 背景灰色 */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(59, 56, 56, 0.5);
+    z-index: 999;
+}
+
 /* 中間的部分 起點 */
-.bg{
+.bg {
     width: calc(100vw - 272px);
     height: calc(100vh - 48px);
     position: fixed;
@@ -439,7 +499,8 @@ export default{
     overflow-x: auto;
     overflow-y: hidden;
 }
-.middle{
+
+.middle {
     width: 1448px;
     height: 1000px;
     position: absolute;
@@ -448,21 +509,25 @@ export default{
     top: 40px;
     left: 96px;
 }
-::-webkit-scrollbar{
+
+::-webkit-scrollbar {
     display: none;
 }
-.uncategorized{
+
+.uncategorized {
     width: calc(100% - 10px);
+    /* height: 300px; */
     height: var(--box_container_height);
     min-height: 218px;
-    height: calc(100% + 77px);
+    /* height: calc(100% + 77px); */
     background-color: #f2eeee;
     border-radius: 14px;
     border: 1px solid #e1dcdc;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     margin-bottom: 20px;
 }
-.card_title{
+
+.card_title {
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
@@ -471,14 +536,16 @@ export default{
     top: 22px;
     left: 96px;
 }
-.title_underline{
+
+.title_underline {
     width: 304px;
     border-bottom: 1px solid #c7c2c2;
     position: absolute;
     top: 55px;
     left: 80px;
 }
-.box_container{
+
+.box_container {
     width: 1280px;
     height: auto;
     position: relative;
@@ -486,7 +553,8 @@ export default{
     left: 80px;
     overflow: hidden;
 }
-.box{
+
+.box {
     width: 301px;
     height: 44px;
     border: 1.5px solid #e1dcdc;
