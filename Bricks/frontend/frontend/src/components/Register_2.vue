@@ -14,41 +14,43 @@
         <div class="bg">
             <div class="middle">
                 <p class="title">註冊</p>
+                    <div class="wrong">
+                        <img src="../assets/exclamation.svg" alt="">
+                        <!-- 跳出的錯誤信息在這 -->
+                        <p>{{ errorMessage }}</p>
+                    </div>
+                    <div class="wrong">
+                        <img src="../assets/exclamation.svg" alt="">
+                        <!-- 跳出的錯誤信息在這 -->
+                        <p>{{ errorMessage }}</p>
+                    </div>
+                    <div class="wrong">
+                        <img src="../assets/exclamation.svg" alt="">
+                        <!-- 跳出的錯誤信息在這 -->
+                        <p>{{ errorMessage }}</p>
+                    </div>
                 <div class="enter">
-                    <div class="wrong">
-                        <img src="../assets/exclamation.svg" alt="">
-                        <!-- 跳出的錯誤信息在這 -->
-                        <p>{{ errorMessage }}</p>
-                    </div>
-                    <div class="wrong">
-                        <img src="../assets/exclamation.svg" alt="">
-                        <!-- 跳出的錯誤信息在這 -->
-                        <p>{{ errorMessage }}</p>
-                    </div>
-                    <div class="wrong">
-                        <img src="../assets/exclamation.svg" alt="">
-                        <!-- 跳出的錯誤信息在這 -->
-                        <p>{{ errorMessage }}</p>
-                    </div>
                     <input autofocus required type="text" class="email" placeholder="請輸入帳號 (電子信箱)" v-model="email">
-                    <input v-if="showpassword_1" required class="password" type="text" placeholder="請輸入 (規則) 密碼"
-                        v-model="password1">
-                    <input v-else required class="password" type="password" placeholder="請輸入 (規則) 密碼" v-model="password1">
-                    <img class="eye1" v-if="showpassword_1" id="eye_on_1" src="../assets/eye/eye_on.svg" alt=""
-                        @click="eyebtn_1">
-                    <img class="eye1" v-else id="eye_off_1" src="../assets/eye/eye_origin.svg" alt="" @click="eyebtn_1">
-                    <input v-if="showpassword_2" required class="password" type="text" placeholder="請再次輸入密碼"
-                        v-model="password2">
-                    <input v-else required class="password" type="password" placeholder="請再次輸入密碼" v-model="password2">
-                    <img class="eye2" v-if="showpassword_2" id="eye_on_2" src="../assets/eye/eye_on.svg" alt=""
-                        @click="eyebtn_2">
-                    <img class="eye2" v-else id="eye_off_2" src="../assets/eye/eye_origin.svg" alt="" @click="eyebtn_2">
+                    <div v-if="showpassword_1" class="input_password">
+                        <input  required class="password" type="text" placeholder="請輸入 (規則) 密碼" v-model="password1">
+                        <img class="eye1" v-if="showpassword_1" id="eye_on_1" src="../assets/eye/eye_on.svg" alt="" @click="eyebtn_1">
+                        <img class="eye1" v-else id="eye_off_1" src="../assets/eye/eye_origin.svg" alt="" @click="eyebtn_1">
+                    </div>
+                    <div v-else class="input_password">
+                        <input required class="password" type="password" placeholder="請輸入 (規則) 密碼" v-model="password1">
+                        <img class="eye1" v-if="showpassword_1" id="eye_on_1" src="../assets/eye/eye_on.svg" alt="" @click="eyebtn_1">
+                        <img class="eye1" v-else id="eye_off_1" src="../assets/eye/eye_origin.svg" alt="" @click="eyebtn_1">
+                    </div>
+                    <div v-if="showpassword_2" class="input_password">
+                        <input required class="password" type="text" placeholder="請再次輸入密碼" v-model="password2">
+                        <img class="eye2" v-if="showpassword_2" id="eye_on_2" src="../assets/eye/eye_on.svg" alt="" @click="eyebtn_2">
+                    </div>
+                    <div v-else class="input_password">
+                        <input required class="password" type="password" placeholder="請再次輸入密碼" v-model="password2">
+                        <img class="eye2" id="eye_off_2" src="../assets/eye/eye_origin.svg" alt="" @click="eyebtn_2">
+                    </div>
                     <input required class="account" placeholder="請輸入2~10個字元的使用者名稱 (可更改)" v-model="account">
                 </div>
-                <!-- 下面兩個是登入鍵 -->
-                <a class="login_btn" v-if="counter == 4" @click="register_next"
-                    style="background-color: #b82c30; cursor: pointer;">下一步</a>
-                <div class="login_btn" v-else>下一步</div>
                 <div class="agree">
                     <img src="../assets/checkbox/CheckBox_off.svg" class="agree_checkbox agree_checkbox_off" v-if="checked"
                         @click="check_btn">
@@ -57,6 +59,9 @@
                     <p style="user-select: none;">我已閱讀 Bricks 之 <a href=""
                             style="text-decoration: underline; color: #3b3838;">隱私權政策</a></p>
                 </div>
+                <!-- 下面兩個是登入鍵 -->
+                <a class="login_btn" v-if="counter == 4" @click="register_next" style="background-color: #b82c30; cursor: pointer; display: inline-block;">下一步</a>
+                <div class="login_btn" v-else>下一步</div>
                 <div class="line">
                     <div class="left_line"></div>
                     <div class="right_line"></div>
@@ -341,7 +346,7 @@ export default {
 @media screen and (min-width: 1920px) {
     .middle {
         width: 576px;
-        height: 680px;
+        height: auto;
         position: absolute;
         top: 105px;
         left: 50%;
@@ -368,7 +373,7 @@ export default {
 @media screen and (min-width: 1600px) and (max-width: 1920px) {
     .middle {
         width: 470px;
-        height: 680px;
+        height: auto;
         position: absolute;
         top: 105px;
         left: 50%;
@@ -395,7 +400,7 @@ export default {
 @media screen and (max-width: 1600px) {
     .middle {
         width: 416px;
-        height: 680px;
+        height: auto;
         position: absolute;
         top: 105px;
         left: 50%;
@@ -421,12 +426,12 @@ export default {
 
 .enter {
     width: 100%;
-    height: 336px;
-    position: absolute;
-    top: 64px;
+    height: auto;
+    position: relative;
+    margin-top: 24px;
 }
 
-input {
+.enter input {
     width: 99.8%;
     height: 45px;
     border: 1.5px solid #c7c2c2;
@@ -436,7 +441,7 @@ input {
     font-weight: 500;
     letter-spacing: 1.25px;
     text-indent: 33.5px;
-    margin-top: 25.5px;
+    margin-bottom: 25.5px;
 }
 
 input::placeholder {
@@ -472,22 +477,19 @@ input::placeholder {
     left: 12px;
 }
 
-.enter>img {
-    position: absolute;
-    right: 28px;
-    height: 24px;
+.input_password{
+    height: 75px;
+}
+.input_password img {
     cursor: pointer;
-    z-index: 90;
+    z-index: 9;
     user-select: none;
+    position: relative;
+    top: -64px;
+    left: 90%;
+    display: block;
 }
 
-.eye1 {
-    top: 158px;
-}
-
-.eye2 {
-    top: 230px;
-}
 
 #eye_off_1:hover {
     content: url(../assets/eye/eye_origin_hover.svg);
@@ -510,8 +512,7 @@ input::placeholder {
     height: 48px;
     background-color: #c7c2c2;
     border-radius: 14px;
-    position: absolute;
-    top: 480px;
+    position: relative;
     font-size: 18px;
     font-weight: 500;
     font-family: 'Noto Sans TC';
@@ -520,15 +521,16 @@ input::placeholder {
     text-align: center;
     user-select: none;
     text-decoration: none;
+    margin-bottom: 16px;
 }
 
 .agree {
     width: 294px;
     height: 32px;
-    position: absolute;
-    top: 424px;
+    position: relative;
     left: 50%;
     transform: translate(-50%);
+    margin-bottom: 24px;
     font-size: 18px;
     font-family: 'Noto Sans TC';
     line-height: 32px;
@@ -560,7 +562,6 @@ input::placeholder {
     height: 33px;
     width: 100%;
     position: relative;
-    top: 488px;
     font-size: 18px;
     font-weight: 500;
     font-family: 'Noto Sans TC';
@@ -568,6 +569,7 @@ input::placeholder {
     color: #b6aeae;
     text-align: center;
     user-select: none;
+    margin-bottom: 8px;
 }
 
 .left_line {
@@ -587,8 +589,8 @@ input::placeholder {
 .other_resource {
     width: 100%;
     height: 48px;
-    position: absolute;
-    top: 584px;
+    position: relative;
+    margin-bottom: 16px;
 }
 
 .other_resource div {
@@ -624,7 +626,7 @@ input::placeholder {
 .login {
     width: 201px;
     height: 32px;
-    position: absolute;
+    position: relative;
     bottom: 0px;
     left: 50%;
     transform: translate(-50%);
