@@ -19,6 +19,8 @@ module.exports = defineConfig({
               .loader('vue-pug-loader')
               .end()
             .end();
+
+    
   }
   
 })

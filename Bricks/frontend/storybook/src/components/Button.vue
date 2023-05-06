@@ -1,14 +1,17 @@
 <template lang="pug">
 div(:class="classes" @click="onClick" :style="style" tabindex="0")
-  img(v-if="icon" src="../assets/plus24.svg" alt="")
+  my-icon(v-if="icon" :name="icon" :size="iconsize" :color="iconcolor")
   span(v-if="label") {{label}}
 </template>
 
 <script>
 import "./Button.sass";
+import MyIcon from "./Icons.vue";
+import { Icons } from "./Icons.js";
 
 export default {
   name: 'my-button',
+  components: { MyIcon },
   props: {
     label: { 
       type: String,
@@ -16,9 +19,8 @@ export default {
     },
     icon: {
       type: String,
-      default: '',
       validator: function (value) {
-        return ['', 'plus'].indexOf(value) !== -1;
+        return Icons.indexOf(value) !== -1;
       },
     },
     theme: {
@@ -51,6 +53,28 @@ export default {
     style() {
       return {
       };
+    },
+    iconsize() {
+      switch (this.size) {
+        case 'small':
+          return 16;
+        case 'medium':
+          return 16;
+        case 'large':
+          return 24;
+      }
+    },
+    iconcolor() {
+      switch (this.theme) {
+        case 'filled':
+          return 'white';
+        case 'outline':
+          return 'black';
+        case 'floating':
+          return 'white';
+        case 'flat':
+          return 'black';
+      }
     },
   },
 
