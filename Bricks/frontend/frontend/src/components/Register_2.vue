@@ -20,16 +20,7 @@
                         <!-- 跳出的錯誤信息在這 -->
                         <p>{{ errorMessage }}</p>
                     </div>
-                    <div class="wrong">
-                        <img src="../assets/exclamation.svg" alt="">
-                        <!-- 跳出的錯誤信息在這 -->
-                        <p>{{ errorMessage }}</p>
-                    </div>
-                    <div class="wrong">
-                        <img src="../assets/exclamation.svg" alt="">
-                        <!-- 跳出的錯誤信息在這 -->
-                        <p>{{ errorMessage }}</p>
-                    </div>
+
                     <input autofocus required type="text" class="email" placeholder="請輸入帳號 (電子信箱)" v-model="email">
                     <input v-if="showpassword_1" required class="password" type="text" placeholder="請輸入 (規則) 密碼"
                         v-model="password1">

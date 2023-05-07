@@ -61,12 +61,12 @@
                                 <div class="box">實驗2</div>
                                 <div class="box">實驗2</div>
                                 <div class="box">實驗2</div>
+                                <!-- <div class="box">實驗2</div>
                                 <div class="box">實驗2</div>
                                 <div class="box">實驗2</div>
                                 <div class="box">實驗2</div>
                                 <div class="box">實驗2</div>
-                                <div class="box">實驗2</div>
-                                <div class="box">實驗2</div>
+                                <div class="box">實驗2</div> -->
                             </div>
                         </div>
                     </div>
@@ -495,7 +495,7 @@ export default {
     position: fixed;
     bottom: 0px;
     right: 0px;
-    background-image: url(../assets/bricks_bg.svg);
+    background-image: url(../assets/bricks_bg_small.svg);
     overflow-x: auto;
     overflow-y: hidden;
 }
@@ -516,8 +516,8 @@ export default {
 
 .uncategorized {
     width: calc(100% - 10px);
-    /* height: 300px; */
-    height: var(--box_container_height);
+    height: 300px;
+    /* height: var(--box_container_height); */
     min-height: 218px;
     /* height: calc(100% + 77px); */
     background-color: #f2eeee;
