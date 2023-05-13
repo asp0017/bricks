@@ -2,8 +2,8 @@
 
 import os
 
-mdx = open("Bricks/frontend/storybook/src/stories/overview/components_map.mdx", "r").readlines()
-md = open("Bricks/frontend/storybook/src/stories/overview/components_map.md", "w")
+mdx = open("src/stories/overview/components_map.mdx", "r").readlines()
+md = open("src/stories/overview/components_map.md", "w")
 
 dismiss_lines = range(1,20)
 not_translate_lines = [ 26 ]

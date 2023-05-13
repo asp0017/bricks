@@ -1,8 +1,6 @@
 // src/stories/general/Button.stories.js
 
-import { Controls } from '@storybook/blocks';
 import MyButton from '../../components/Button.vue';
-import ButtonTemplate from './Button.storytemplate.pug'
 
 // More on how to set up stories at: https://storybook.js.org/docs/vue/writing-stories/introduction
 export default {
@@ -13,7 +11,7 @@ export default {
   render: (args, { argTypes }) => ({
     props: Object.keys(argTypes),
     components: { MyButton },
-    template: ButtonTemplate,
+    template: `my-button(@onClick="onClick" v-bind="$props")`,
   }),
 
   argTypes: {
@@ -22,6 +20,9 @@ export default {
     },
     theme: {
       control: { type: 'select' },
+    },
+    disabled: {
+      control: { type: 'boolean' },
     },
   },
 };

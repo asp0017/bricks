@@ -1,6 +1,5 @@
 import { Controls } from '@storybook/blocks';
 import MyIcon from '../../components/Icons.vue';
-import IconsTemplate from './Icons.storytemplate.pug';
 
 
 // More on how to set up stories at: https://storybook.js.org/docs/vue/writing-stories/introduction
@@ -12,7 +11,7 @@ export default {
   render: (args, { argTypes }) => ({
     props: Object.keys(argTypes),
     components: { MyIcon },
-    template: IconsTemplate,
+    template: `<my-icon v-bind="$props"/>`,
   }),
 
   argTypes: {
@@ -24,7 +23,8 @@ export default {
     },
     name: {
       control: { type: 'select' },
-    }
+    },
+
   },
 };
 

@@ -39,7 +39,9 @@ export default {
     },
     classes() {
       return {
-        
+        'my-icon': true,
+        [`my-icon--name-${this.name}`]: true,
+        [`my-icon--size-${this.size}`]: true,
       };
     },
     style() {
