@@ -1,14 +1,13 @@
 <template>
-<div :class="classes" @click="onClick" :style="style" tabindex="0" :disabled="disabled">
-  <my-icon v-if="icon" :name="icon" :size="iconsize" :color="iconcolor"></my-icon>
+<button :class="classes" @click="onClick" :style="style" :disabled="disabled">
+  <my-icon v-if="icon" :name="icon" :size="iconsize" :color="iconcolor"/>
   <span v-if="label">{{label}}</span>
-</div>
+</button>
 </template>
 
 <script>
 
 import MyIcon from "./Icons.vue";
-import { Icons } from "./Icons.js";
 
 export default {
   name: 'my-button',
@@ -20,9 +19,7 @@ export default {
     },
     icon: {
       type: String,
-      validator: function (value) {
-        return Icons.indexOf(value) !== -1;
-      },
+      default: '',
     },
     theme: {
       type: String,

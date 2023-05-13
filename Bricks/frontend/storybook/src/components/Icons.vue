@@ -1,9 +1,8 @@
-<template lang="pug">
-embed(:src="svgPath" :style="style" :class="classes")
+<template>
+  <component :is="getIcon" />
 </template>
 
 <script>
-import { Icons } from "./Icons.js";
 import { Colors, ColorsArray } from "./Colors.js";
 
 export default {
@@ -16,26 +15,21 @@ export default {
         return [16, 24].indexOf(value) !== -1;
       }
     },
-    color: {
+    color: {  
       type: String,
       default: "black",
       validator: function(c) {
-        return ["white", "black"].indexOf(c) !== -1;
+        return ColorsArray.indexOf(c) !== -1;
       },
     },
     name: {
       type: String,
-      validator: function(value) {
-        return Icons.indexOf(value) !== -1;
-      }
-    }
+      required: true,
+    },
   },
   computed: {
-    colorhex: function() {
+    colorhex() {
       return Colors[this.color];
-    },
-    svgPath: function() {
-      return require(`../assets/Icons-${this.size}/${this.name}.svg`);
     },
     classes() {
       return {
@@ -45,17 +39,14 @@ export default {
       };
     },
     style() {
-      if (this.color == "white") {
-        return {
-          filter: `invert(100%)`
-        };
-      }
       return {
-        filter: `invert(0%)`
+        stroke: this.colorhex,
       };
-    }
+    },
+    getIcon() {
+      return () => import(`../Icons/${this.name}.vue`);
+    },
   }
-
 };
 
 </script>

@@ -1,6 +1,7 @@
 // src/stories/general/Button.stories.js
 
 import MyButton from '../../components/Button.vue';
+import { IconNames } from '../../components/IconNames.js';
 
 // More on how to set up stories at: https://storybook.js.org/docs/vue/writing-stories/introduction
 export default {
@@ -11,15 +12,19 @@ export default {
   render: (args, { argTypes }) => ({
     props: Object.keys(argTypes),
     components: { MyButton },
-    template: `my-button(@onClick="onClick" v-bind="$props")`,
+    template: `<my-button @onClick="onClick" v-bind="$props"/>`,
   }),
 
   argTypes: {
     size: {
-      control: { type: 'select' },
+      control: { type: 'radio' },
     },
     theme: {
+      control: { type: 'radio'},
+    },
+    icon: {
       control: { type: 'select' },
+      options: IconNames,
     },
     disabled: {
       control: { type: 'boolean' },

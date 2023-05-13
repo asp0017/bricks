@@ -1,5 +1,5 @@
-import { Controls } from '@storybook/blocks';
 import MyIcon from '../../components/Icons.vue';
+import { IconNames } from '../../components/IconNames.js';
 
 
 // More on how to set up stories at: https://storybook.js.org/docs/vue/writing-stories/introduction
@@ -15,16 +15,16 @@ export default {
   }),
 
   argTypes: {
+    name: {
+      control: { type: 'select' },
+      options: IconNames,
+    },
     size: {
       control: { type: 'inline-radio' },
     },
     color: {
       control: { type: 'select' },
     },
-    name: {
-      control: { type: 'select' },
-    },
-
   },
 };
 
