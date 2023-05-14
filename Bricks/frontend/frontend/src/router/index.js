@@ -51,9 +51,9 @@ const routes = [
     component: Homepage_2,
   },
   {
-  path: "/register_second",
-  name: "Register_second",
-  component: Register_second,
+    path: "/register_second",
+    name: "Register_second",
+    component: Register_second,
   },
   {
     path: "/personal_homepage",
