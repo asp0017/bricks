@@ -14,36 +14,39 @@
         <div class="bg">
             <div class="middle">
                 <p class="title">註冊</p>
-                    <div class="wrong">
-                        <img src="../assets/exclamation.svg" alt="">
-                        <!-- 跳出的錯誤信息在這 -->
-                        <p>{{ errorMessage }}</p>
-                    </div>
-                    <div class="wrong">
-                        <img src="../assets/exclamation.svg" alt="">
-                        <!-- 跳出的錯誤信息在這 -->
-                        <p>{{ errorMessage }}</p>
-                    </div>
-                    <div class="wrong">
-                        <img src="../assets/exclamation.svg" alt="">
-                        <!-- 跳出的錯誤信息在這 -->
-                        <p>{{ errorMessage }}</p>
-                    </div>
+                <div class="wrong">
+                    <img src="../assets/exclamation.svg" alt="">
+                    <!-- 跳出的錯誤信息在這 -->
+                    <p>{{ errorMessage }}</p>
+                </div>
+                <div class="wrong">
+                    <img src="../assets/exclamation.svg" alt="">
+                    <!-- 跳出的錯誤信息在這 -->
+                    <p>{{ errorMessage }}</p>
+                </div>
+                <div class="wrong">
+                    <img src="../assets/exclamation.svg" alt="">
+                    <!-- 跳出的錯誤信息在這 -->
+                    <p>{{ errorMessage }}</p>
+                </div>
                 <div class="enter">
                     <input autofocus required type="text" class="email" placeholder="請輸入帳號 (電子信箱)" v-model="email">
                     <div v-if="showpassword_1" class="input_password">
-                        <input  required class="password" type="text" placeholder="請輸入 (規則) 密碼" v-model="password1">
-                        <img class="eye1" v-if="showpassword_1" id="eye_on_1" src="../assets/eye/eye_on.svg" alt="" @click="eyebtn_1">
+                        <input required class="password" type="text" placeholder="請輸入 (規則) 密碼" v-model="password1">
+                        <img class="eye1" v-if="showpassword_1" id="eye_on_1" src="../assets/eye/eye_on.svg" alt=""
+                            @click="eyebtn_1">
                         <img class="eye1" v-else id="eye_off_1" src="../assets/eye/eye_origin.svg" alt="" @click="eyebtn_1">
                     </div>
                     <div v-else class="input_password">
                         <input required class="password" type="password" placeholder="請輸入 (規則) 密碼" v-model="password1">
-                        <img class="eye1" v-if="showpassword_1" id="eye_on_1" src="../assets/eye/eye_on.svg" alt="" @click="eyebtn_1">
+                        <img class="eye1" v-if="showpassword_1" id="eye_on_1" src="../assets/eye/eye_on.svg" alt=""
+                            @click="eyebtn_1">
                         <img class="eye1" v-else id="eye_off_1" src="../assets/eye/eye_origin.svg" alt="" @click="eyebtn_1">
                     </div>
                     <div v-if="showpassword_2" class="input_password">
                         <input required class="password" type="text" placeholder="請再次輸入密碼" v-model="password2">
-                        <img class="eye2" v-if="showpassword_2" id="eye_on_2" src="../assets/eye/eye_on.svg" alt="" @click="eyebtn_2">
+                        <img class="eye2" v-if="showpassword_2" id="eye_on_2" src="../assets/eye/eye_on.svg" alt=""
+                            @click="eyebtn_2">
                     </div>
                     <div v-else class="input_password">
                         <input required class="password" type="password" placeholder="請再次輸入密碼" v-model="password2">
@@ -60,7 +63,8 @@
                             style="text-decoration: underline; color: #3b3838;">隱私權政策</a></p>
                 </div>
                 <!-- 下面兩個是登入鍵 -->
-                <a class="login_btn" v-if="counter == 4" @click="register_next" style="background-color: #b82c30; cursor: pointer; display: inline-block;">下一步</a>
+                <a class="login_btn" v-if="counter == 4" @click="register_next"
+                    style="background-color: #b82c30; cursor: pointer; display: inline-block;">下一步</a>
                 <div class="login_btn" v-else>下一步</div>
                 <div class="line">
                     <div class="left_line"></div>
@@ -477,9 +481,10 @@ input::placeholder {
     left: 12px;
 }
 
-.input_password{
+.input_password {
     height: 75px;
 }
+
 .input_password img {
     cursor: pointer;
     z-index: 9;
@@ -713,5 +718,4 @@ input::placeholder {
 
 .photo a {
     color: #c7c2c2;
-}
-</style>
+}</style>
