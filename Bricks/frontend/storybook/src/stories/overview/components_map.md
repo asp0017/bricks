@@ -1,4 +1,4 @@
-> 📌 Updated: Sat Apr 29 15:38:46 CST 2023
+> 📌 Updated: Sun May 14 19:58:37 CST 2023
 
 # Components Map 元件地圖
 
@@ -18,7 +18,7 @@
 
 - 🟦 **Button 按鈕**
 
-- 🟥 *Icon 圖標*
+- 🟦 **Icon 圖標**
 
 - 🟥 *Typography 排版*
 ## Layout 布局
@@ -78,7 +78,7 @@
 - ⬛️ TreeSelect 樹選擇
 
 - ⬛️ Upload 上傳
-## Data Display 數據
+## Data Display 數據呈現
 
 - ⬛️ Avatar 頭像
 

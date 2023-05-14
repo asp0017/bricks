@@ -52,7 +52,7 @@ const routes = [
     component: Homepage_2,
   },
   {
-    path: "/register_second/:id",
+    path: "/register_second",
     name: "Register_second",
     component: Register_second,
   },

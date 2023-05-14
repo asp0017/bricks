@@ -19,21 +19,6 @@ module.exports = async ({ config }) => {
       ],
     },
     {
-      test: /\.pug$/,
-      oneOf: [
-        {
-          exclude: /\.vue$/,
-          use:[
-              'raw-loader',
-              'pug-plain-loader'
-          ]
-        },
-        {
-          use: 'vue-pug-loader'
-        }
-      ]
-    },
-    {
       test: /\.(png|jpe?g|gif)$/i,
       use: [
         {
@@ -44,7 +29,7 @@ module.exports = async ({ config }) => {
   );
 
   // 解析文件擴展名
-  config.resolve.extensions.push('.pug', '.sass');
+  config.resolve.extensions.push('.sass');
 
   // 返回修改後的配置
   return config;

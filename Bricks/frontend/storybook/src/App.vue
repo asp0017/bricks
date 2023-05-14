@@ -1,15 +1,16 @@
 <template lang="pug">
 #app 
-  //HelloWorld(msg="Welcome to Your Vue.js App")
+  my-switch(v-model="switchValue")
 </template>
 
 <script>
-//import HelloWorld from './components/HelloWorld.vue'
+
+import MySwitch from './components/Switch.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    MySwitch
   }
 }
 </script>
