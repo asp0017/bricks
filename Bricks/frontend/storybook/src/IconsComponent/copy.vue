@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-copy',
   props: {
     width: {
       type: String,

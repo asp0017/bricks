@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-alert-triangle',
   props: {
     width: {
       type: String,

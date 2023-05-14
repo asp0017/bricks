@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-skip-forward',
   props: {
     width: {
       type: String,

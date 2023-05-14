@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-thumbs-down',
   props: {
     width: {
       type: String,

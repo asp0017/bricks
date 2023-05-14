@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-trending-down',
   props: {
     width: {
       type: String,

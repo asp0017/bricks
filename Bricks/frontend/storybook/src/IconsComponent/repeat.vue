@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-repeat',
   props: {
     width: {
       type: String,

@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-shield-off',
   props: {
     width: {
       type: String,

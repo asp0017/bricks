@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-phone-outgoing',
   props: {
     width: {
       type: String,

@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-shuffle',
   props: {
     width: {
       type: String,

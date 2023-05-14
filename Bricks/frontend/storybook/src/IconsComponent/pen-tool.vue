@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-pen-tool',
   props: {
     width: {
       type: String,

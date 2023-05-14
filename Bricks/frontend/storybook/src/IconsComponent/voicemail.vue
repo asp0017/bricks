@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-voicemail',
   props: {
     width: {
       type: String,

@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-more-vertical',
   props: {
     width: {
       type: String,

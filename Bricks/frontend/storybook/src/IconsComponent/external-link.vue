@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-external-link',
   props: {
     width: {
       type: String,

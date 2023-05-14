@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-map-pin',
   props: {
     width: {
       type: String,

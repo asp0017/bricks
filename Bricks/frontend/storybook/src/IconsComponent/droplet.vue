@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-droplet',
   props: {
     width: {
       type: String,

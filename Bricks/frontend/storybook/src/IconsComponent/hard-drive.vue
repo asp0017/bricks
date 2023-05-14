@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-hard-drive',
   props: {
     width: {
       type: String,

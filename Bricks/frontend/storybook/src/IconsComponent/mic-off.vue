@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-mic-off',
   props: {
     width: {
       type: String,

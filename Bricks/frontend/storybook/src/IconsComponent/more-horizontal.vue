@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-more-horizontal',
   props: {
     width: {
       type: String,

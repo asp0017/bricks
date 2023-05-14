@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-shopping-bag',
   props: {
     width: {
       type: String,

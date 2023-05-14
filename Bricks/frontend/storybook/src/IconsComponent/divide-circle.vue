@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-divide-circle',
   props: {
     width: {
       type: String,

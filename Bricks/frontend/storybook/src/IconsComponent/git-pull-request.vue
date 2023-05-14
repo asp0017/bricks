@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-git-pull-request',
   props: {
     width: {
       type: String,

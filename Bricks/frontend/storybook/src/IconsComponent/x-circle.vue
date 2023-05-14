@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-x-circle',
   props: {
     width: {
       type: String,

@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-edit-3',
   props: {
     width: {
       type: String,

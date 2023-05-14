@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-navigation',
   props: {
     width: {
       type: String,

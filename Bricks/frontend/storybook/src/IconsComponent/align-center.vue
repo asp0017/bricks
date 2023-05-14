@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-align-center',
   props: {
     width: {
       type: String,

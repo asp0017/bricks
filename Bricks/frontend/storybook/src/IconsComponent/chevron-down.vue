@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-chevron-down',
   props: {
     width: {
       type: String,

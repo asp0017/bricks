@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-gitlab',
   props: {
     width: {
       type: String,

@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-toggle-left',
   props: {
     width: {
       type: String,

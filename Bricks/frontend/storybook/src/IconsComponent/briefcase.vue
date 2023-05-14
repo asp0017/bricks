@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-briefcase',
   props: {
     width: {
       type: String,

@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-folder-minus',
   props: {
     width: {
       type: String,

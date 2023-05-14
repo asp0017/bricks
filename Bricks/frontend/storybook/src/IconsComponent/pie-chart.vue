@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-pie-chart',
   props: {
     width: {
       type: String,

@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-refresh-ccw',
   props: {
     width: {
       type: String,

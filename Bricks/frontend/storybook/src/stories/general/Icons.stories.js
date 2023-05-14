@@ -28,9 +28,9 @@ export default {
   },
 };
 
-export const facebook = {
+export const example = {
   args: {
-    name: 'facebook',
+    name: 'activity',
     size: 16
   },
 };

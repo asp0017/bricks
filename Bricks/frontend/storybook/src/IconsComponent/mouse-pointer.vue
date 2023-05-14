@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-mouse-pointer',
   props: {
     width: {
       type: String,

@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-bar-chart-2',
   props: {
     width: {
       type: String,

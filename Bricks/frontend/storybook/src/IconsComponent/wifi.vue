@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'icon',
+  name: 'icon-wifi',
   props: {
     width: {
       type: String,
