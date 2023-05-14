@@ -1,4 +1,4 @@
-> 📌 Updated: Sat May 13 10:05:24 CST 2023
+> 📌 Updated: Sun May 14 19:58:37 CST 2023
 
 # Components Map 元件地圖
 
@@ -78,7 +78,7 @@
 - ⬛️ TreeSelect 樹選擇
 
 - ⬛️ Upload 上傳
-## Data Display 數據
+## Data Display 數據呈現
 
 - ⬛️ Avatar 頭像
 

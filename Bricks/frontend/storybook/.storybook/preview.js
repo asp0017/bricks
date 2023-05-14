@@ -8,6 +8,10 @@ const preview = {
         date: /Date$/,
       },
     },
+    storySort: {
+      method: 'alphabetical',
+      order: ['Overview 總覽', 'General 一般', 'Layout 佈局', 'Navigation 導航', 'Data Entry 數據錄入', 'Data Display 數據呈現', 'Feedback 反饋', 'Other 其他'],
+    }
   },
 };
 
