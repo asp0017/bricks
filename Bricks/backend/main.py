@@ -9,8 +9,9 @@ app.config.from_object(__name__)
 
 DATA = [
     {
-    "account":"RuCiCa",
-    "password": "RuCiCa0307"
+    "account":"RuCiCa@email.com",
+    "password": "RuCiCa0307",
+    "id": 3
     }
 ]
 INFO = [
@@ -56,22 +57,23 @@ def login():
 def register():
     response_object = {'status': 'success'}
     
-    post_data = request.get_json()
-    #print(post_data.get("account"))
-    #print(post_data.get("password"))
-    for account_info in DATA:
-        #print(account_info)
-        if account_info['account'] == post_data.get("account"):
-            response_object['message'] = "此信箱已註冊過"
-            response_object['status'] = "failed"
-            return jsonify(response_object)
+    # post_data = request.get_json()
+    # #print(post_data.get("account"))
+    # #print(post_data.get("password"))
+    # for account_info in DATA:
+    #     #print(account_info)
+    #     if account_info['account'] == post_data.get("account"):
+    #         response_object['message'] = "此信箱已註冊過"
+    #         response_object['status'] = "failed"
+    #         return jsonify(response_object)
         
-    DATA.append({
-        "account":post_data.get("account"),
-        "password":post_data.get("password")
-    })
+    # DATA.append({
+    #     "account":post_data.get("account"),
+    #     "password":post_data.get("password")
+    # })
     #print(DATA)
     response_object['message'] = "註冊成功！"
+    response_object['items'] = DATA
     return jsonify(response_object)
 
 @app.route('/register/survey', methods=['POST'])

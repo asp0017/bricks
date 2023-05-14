@@ -6,7 +6,8 @@
             </a>
             <div class="tribtn">
                 <a href="" class="btn">試用</a>
-                <a href="./login_2" class="btn nav_login_btn" style="background-color: #b82c30; border-color: #b82c30; color: #ffffff;">登入</a>
+                <a href="./login_2" class="btn nav_login_btn"
+                    style="background-color: #b82c30; border-color: #b82c30; color: #ffffff;">登入</a>
                 <a href="./register_2" class="btn" style="margin-right: 0px;">註冊</a>
             </div>
         </div>
@@ -35,7 +36,7 @@
                         <p>二、您的身分 (單選)</p>
                         <div class="multiple_select">
                             <input type="radio" id="two_one" name="two">
-                            <label for="two_one" style="margin-left: 0px; width: 276px;" >高中職 (含) 以下</label>
+                            <label for="two_one" style="margin-left: 0px; width: 276px;">高中職 (含) 以下</label>
                             <input type="radio" id="two_two" name="two">
                             <label for="two_two" style="margin-left: 20.5px; width: 276px;">大專院校</label>
                             <input type="radio" id="two_three" name="two">
@@ -69,7 +70,7 @@
                         <div>略過問卷</div>
                     </a>
                     <a href="" class="complete">
-                        <div style="background-color: #b82c30; color: white;">完成</div>
+                        <div style="background-color: #b82c30; color: white;" @click="complete_btn">完成</div>
                     </a>
                 </div>
             </div>
@@ -84,15 +85,27 @@
 </template>
 
 <script>
-export default{
+export default {
     name: 'Register_second',
+    // props: {
+    //     email,
+    //     password
+    // },
     data() {
         return {
 
-    };
+        };
     },
     methods: {
-
+        complete_btn() {
+            console.log(userId());
+            // console.log(this.password);
+        }
+    },
+    computed: {
+        userId() {
+            return this.$route.params.id
+        }
     },
     created() {
 
@@ -149,12 +162,12 @@ export default{
     color: black;
 }
 
-.btn:hover{
+.btn:hover {
     background-color: rgba(242, 238, 238, 1);
 }
 
-.nav_login_btn:hover{
-    background-color: rgba(212, 128, 131, 1)!important;
+.nav_login_btn:hover {
+    background-color: rgba(212, 128, 131, 1) !important;
 }
 
 .bg {
@@ -162,13 +175,13 @@ export default{
 }
 
 .middle {
-        width: 576px;
-        height: 739px;
-        position: absolute;
-        top: 105px;
-        left: 50%;
-        transform: translate(-50%);
-    }
+    width: 576px;
+    height: 739px;
+    position: absolute;
+    top: 105px;
+    left: 50%;
+    transform: translate(-50%);
+}
 
 @media screen and (min-width: 1920px) {
     .bg {
@@ -237,19 +250,19 @@ export default{
     user-select: none;
 }
 
-.select{
+.select {
     width: 100%;
     height: 523px;
     margin-top: 32px;
 }
 
-.card{
+.card {
     width: 100%;
     height: 153px;
     margin-top: 32px;
 }
 
-.card>p{
+.card>p {
     height: 23px;
     font-size: 19px;
     letter-spacing: 0.15px;
@@ -259,22 +272,22 @@ export default{
     top: 8px;
 }
 
-.multiple_select{
+.multiple_select {
     width: 130%;
     height: 90px;
     position: relative;
     top: 32px;
 }
 
-.card input[type="checkbox"]{
+.card input[type="checkbox"] {
     display: none;
 }
 
-.card input[type="radio"]{
+.card input[type="radio"] {
     display: none;
 }
 
-.card input[type="checkbox"] + label{
+.card input[type="checkbox"]+label {
     display: inline-block;
     background-color: white;
     cursor: pointer;
@@ -293,7 +306,7 @@ export default{
     margin-bottom: 10px;
 }
 
-.card input[type="radio"] + label{
+.card input[type="radio"]+label {
     display: inline-block;
     background-color: white;
     cursor: pointer;
@@ -312,39 +325,39 @@ export default{
     margin-bottom: 10px;
 }
 
-.card input[type="checkbox"]:hover + label{
+.card input[type="checkbox"]:hover+label {
     background-color: #f2eeee;
 }
 
-.card input[type="radio"]:hover + label{
+.card input[type="radio"]:hover+label {
     background-color: #f2eeee;
 }
 
-.card input[type="checkbox"]:active + label{
+.card input[type="checkbox"]:active+label {
     background-color: #f1d5d6;
 }
 
-.card input[type="radio"]:active + label{
+.card input[type="radio"]:active+label {
     background-color: #f1d5d6;
 }
 
-.card input[type="checkbox"]:checked + label{
+.card input[type="checkbox"]:checked+label {
     background-color: #f1d5d6;
 }
 
-.card input[type="radio"]:checked + label{
+.card input[type="radio"]:checked+label {
     background-color: #f1d5d6;
 }
 
 
-.next{
+.next {
     width: 100%;
     height: 48px;
     position: relative;
     top: 24px;
 }
 
-.next a div{
+.next a div {
     width: 262px;
     height: 46px;
     border: 1px solid #b6aeae;
@@ -357,31 +370,31 @@ export default{
     font-weight: 500;
 }
 
-.skip{
+.skip {
     float: left;
     color: #b6aeae;
     text-decoration: none;
 }
 
-.skip div:hover{
+.skip div:hover {
     background-color: #f2eeee;
 }
 
-.skip div:active{
+.skip div:active {
     background-color: #f1d5d6;
 }
 
-.complete{
+.complete {
     float: right;
     border-color: #b82c30;
     text-decoration: none;
 }
 
-.complete div:hover{
+.complete div:hover {
     background-color: #d48083 !important;
 }
 
-.complete div:active{
+.complete div:active {
     background-color: #932326 !important;
 }
 

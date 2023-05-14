@@ -1,5 +1,6 @@
 <template>
     <div>
+
         <div class="nav">
             <a href="./homepage_2">
                 <img src="../assets/brickslogo.svg" alt="">
@@ -14,20 +15,30 @@
         <div class="bg">
             <div class="middle">
                 <p class="title">註冊</p>
-                <div class="wrong">
+                <div class="wrong" v-if="errorMessage1">
                     <img src="../assets/exclamation.svg" alt="">
                     <!-- 跳出的錯誤信息在這 -->
-                    <p>{{ errorMessage }}</p>
+                    <p>帳號或密碼格式錯誤</p>
                 </div>
-                <div class="wrong">
+                <div class="wrong" v-if="errorMessage2">
                     <img src="../assets/exclamation.svg" alt="">
                     <!-- 跳出的錯誤信息在這 -->
-                    <p>{{ errorMessage }}</p>
+                    <p>您輸入的兩個密碼並不相符，請再試一次</p>
                 </div>
-                <div class="wrong">
+                <div class="wrong" v-if="errorMessage3">
                     <img src="../assets/exclamation.svg" alt="">
                     <!-- 跳出的錯誤信息在這 -->
-                    <p>{{ errorMessage }}</p>
+                    <p>請輸入2~10個字元的使用者名稱</p>
+                </div>
+                <div class="wrong" v-if="errorMessage4">
+                    <img src="../assets/exclamation.svg" alt="">
+                    <!-- 跳出的錯誤信息在這 -->
+                    <p>請勾選隱私權政策</p>
+                </div>
+                <div class="wrong" v-if="errorMessage5">
+                    <img src="../assets/exclamation.svg" alt="">
+                    <!-- 跳出的錯誤信息在這 -->
+                    <p>此信箱已被註冊</p>
                 </div>
                 <div class="enter">
                     <input autofocus required type="text" class="email" placeholder="請輸入帳號 (電子信箱)" v-model="email">
@@ -99,12 +110,18 @@
             <div class="photo"># Photo by <a href="https://unsplash.com/@charlesdeluvio">charlesdeluvio</a> on Unsplash
             </div>
         </div>
+
+        <!-- <component :is="currentPage" v-if="page2"></component> -->
     </div>
 </template>
 
 <script>
+// import Register_second from './Register_second.vue'
 export default {
     name: 'Reigster_2',
+    // components: {
+    //     Register_second
+    // },
     data() {
         return {
             showpassword_1: false,
@@ -115,8 +132,15 @@ export default {
             password2: "",
             email: "",
             counter: 0,
-            errorMessage: "",
-            frontBlock: [false, false, false, false, false] // false表示沒有違反
+            errorMessage1: false,
+            errorMessage2: false,
+            errorMessage3: false,
+            errorMessage4: false,
+            errorMessage5: false,
+            userId: 0,  // 0 就等於沒有使用者id
+            // page1: true,
+            // page2: false,
+            // currentPage: "Register_second",
         };
     },
     methods: {
@@ -131,11 +155,69 @@ export default {
         },
         // 註冊的下一步事件
         register_next() {
+            this.errorMessage5 = false;
             if (this.email.indexOf('@') == -1 || this.email.indexOf('@') == 0 || this.email.indexOf('@') == this.email.length - 1) {
-                this.errorMessage = "帳號或密碼格式錯誤";
+                this.errorMessage1 = true;
                 console.log("@", this.email.indexOf('@'));
+            } else {
+                this.errorMessage1 = false;
             }
 
+            if (this.password1 !== this.password2) {
+                this.errorMessage2 = true;
+            } else {
+                this.errorMessage2 = false;
+            }
+
+            if (this.account.length < 2 || this.account.length > 10) {
+                this.errorMessage3 = true;
+            } else {
+                this.errorMessage3 = false;
+            }
+
+            if (this.checked) {
+                this.errorMessage4 = true;
+                // console.log("t", this.errorMessage4);
+            } else {
+                this.errorMessage4 = false;
+                // console.log("f", this.errorMessage4);
+            }
+
+            if (!(this.errorMessage1 || this.errorMessage2 || this.errorMessage3 || this.errorMessage4)) {
+                // this.page1 = false;
+                // this.page2 = true;
+                console.log("success");
+                const path = "http://localhost:5000/register";
+                const user = { email: this.email, password: this.password };
+                this.email = "";
+                this.password = "";
+                axios
+                    .post(path, user)
+                    .then((res) => {
+                        console.log(res.data.status);
+                        if (res.data.status == 'success') {
+                            this.userId = res.data.items[0].id;
+                            console.log("註冊成功");
+                            this.$router.push({ path: '/register_second/' + this.userId });
+
+                        } else {
+                            // this.$refs.account.style = "border-color : #e03939";
+                            // this.$refs.password.style = "border-color : #e03939";
+                            // this.$refs.wrong1.style = "display : block";
+                            // this.$refs.wrong2.style = "display : block";
+                            // this.accountError = res.data.accountError;
+                            // this.passwordError = res.data.passwordError;
+                            this.errorMessage5 = true;
+
+
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            } else {
+                console.log("failure");
+            }
             // href="./Register_second" 
 
 
@@ -718,4 +800,5 @@ input::placeholder {
 
 .photo a {
     color: #c7c2c2;
-}</style>
+}
+</style>

@@ -44,6 +44,7 @@ const routes = [
     path: "/register_2",
     name: "Register_2",
     component: Register_2,
+    // props: { email: "", password: "" }
   },
   {
     path: "/homepage_2",
@@ -51,15 +52,15 @@ const routes = [
     component: Homepage_2,
   },
   {
-  path: "/register_second",
-  name: "Register_second",
-  component: Register_second,
+    path: "/register_second/:id",
+    name: "Register_second",
+    component: Register_second,
   },
   {
     path: "/personal_homepage",
     name: "Personal_homepage",
     component: Personal_homepage,
-    },
+  },
 ];
 
 
