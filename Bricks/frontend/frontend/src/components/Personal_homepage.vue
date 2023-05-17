@@ -31,8 +31,8 @@
                 <img src="../assets/add_proj_pic_plus.svg" class="add_proj_pic_plus">
             </div>
             <input type="text" placeholder="輸入專案名稱" class="add_proj_name" v-model="add_proj_name">
-            <div class="add_proj_type" @click="add_proj_type_btn" :style="{background: add_proj_type_arrow, color:proj_type_color}" ref="test">{{proj_type}}</div>
-            <div class="add_proj_type_list" v-show="show_add_proj_type_list">
+            <div class="add_proj_type" @click="add_proj_type_btn" :style="{background: add_proj_type_arrow, color:proj_type_color}" ref="add_proj_type">{{proj_type}}</div>
+            <div class="add_proj_type_list" v-show="show_add_proj_type_list" ref="add_proj_type_list">
                 <div class="add_proj_type_option" @click="type_not_choose">未分類</div>
                 <div v-for="(option,index) in add_proj_type_options" :key="index" class="add_proj_type_option" @click="type_choosen(option)">
                     {{ option }}
@@ -48,23 +48,37 @@
                 <!-- 背景透明灰色 -->
                 <div class="overlay" v-if="showOverlay"></div>
                 <div class="middle">
+                    <!-- 專案總攬 -->
                     <div class="overview_page" v-show="middle_show_overview_page">
                         <div class="uncategorized cart" ref="uncategorized">
                             <p class="cart_title">未分類</p>
                             <div class="title_underline"></div>
                             <div class="box_container">
-                                <div class="box" v-for="(proj_name,index) in uncategorized_projs" :key="index">{{ proj_name }}</div>
+                                <div class="box" v-for="(proj_name,index) in uncategorized_projs" :key="index" @contextmenu.prevent="right_click_box">{{ proj_name }}</div>
                             </div>
                         </div>
-                        <div v-for="(cart,index) in carts" :key="index">
-                            <cart :title_word="cart.title_word"/>
+                        <div v-for="(cart,index1) in carts" :key="index1" >
+                            <div class="cart">
+                                <p class="cart_title" style="height: 0px">{{ cart.title_word }}</p>
+                                <img src="../assets/cart_drag_icon.svg" alt="" class="cart_drag_icon">
+                                <div class="title_underline"></div>
+                                <div class="box_container">
+                                    <div class="box" v-for="(proj_name,index2) in carts[index1].project_box" :key="index2" @contextmenu.prevent="right_click_box">{{ proj_name }}</div>
+                                </div>
+                            </div>
                         </div>
                         <div class="new_type cart" :class="{'new_type_highlight': isFocused }">
                             <input class="cart_title_input" placeholder="新增類型" @focus="new_type_focus" @blur="new_type_blur" @keyup.enter="add_a_cart" v-model="cart_title_input">
                             <div class="title_underline"></div>
                             <div class="box_container"></div>
                         </div>
+                        <div class="right_click_box_overview" :style="{top: mouseTop +'px', left: mouseLeft + 'px'}" v-show="right_click_box_overview_show" ref="right_click_box_overview">
+                            <div class="right_click_box_overview_option">重新命名</div>
+                            <div class="add_proj_type_list_line"></div>
+                            <div class="right_click_box_overview_option" @click="delete_project">刪除專案</div>
+                        </div>
                     </div>
+                    <!-- 已結束專案 -->
                     <div class="over_page" v-show="middle_show_over_page">
                         <div class="uncategorized cart" ref="uncategorized">
                             <p class="cart_title">未分類</p>
@@ -73,15 +87,18 @@
                                 <div class="box" v-for="(proj_name,index) in uncategorized_projs" :key="index">{{ proj_name }}</div>
                             </div>
                         </div>
-                        <div v-for="(cart,index) in carts" :key="index">
-                            <cart :title_word="cart.title_word"/>
-                        </div>
-                        <div class="new_type cart" :class="{'new_type_highlight': isFocused }">
-                            <input class="cart_title_input" placeholder="新增類型" @focus="new_type_focus" @blur="new_type_blur" @keyup.enter="add_a_cart" v-model="cart_title_input">
-                            <div class="title_underline"></div>
-                            <div class="box_container"></div>
+                        <div v-for="(cart,index1) in carts" :key="index1">
+                            <div class="cart">
+                                <p class="cart_title">{{ cart.title_word }}</p>
+                                <img src="../assets/cart_drag_icon.svg" alt="" class="cart_drag_icon">
+                                <div class="title_underline"></div>
+                                <div class="box_container">
+                                    <div class="box" v-for="(proj_name,index2) in carts[index1].project_box" :key="index2">{{ proj_name }}</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <!-- 垃圾桶 -->
                     <div class="trash_page" v-show="middle_show_trash_page">
                         <div class="trash_page_middle">
                             <div class="last_30_days">
@@ -127,14 +144,13 @@
 </template>
 
 <script>
-import cart from './subcomponents/cart.vue';
 export default {
     name: 'Personal_homepage',
     data() {
         return {
-            middle_show_overview_page: false,
+            middle_show_overview_page: true,
             middle_show_over_page: false,
-            middle_show_trash_page: true,
+            middle_show_trash_page: false,
             add_proj_show: false,
             showOverlay: false,
             add_proj_type: '',
@@ -151,7 +167,6 @@ export default {
             add_proj_type_text: '',
             add_proj_name: '',
             uncategorized_projs: [],
-            porjects: [],
             cart_box_name_list: [],
             trash_boxes: [],
             checked_trash_box: [],
@@ -160,6 +175,9 @@ export default {
             recovered: false,
             forever_delete_confirm: false,
             showOverlay_trash: false,
+            mouseTop: 0,
+            mouseLeft: 0,
+            right_click_box_overview_show: false,
         };
     },
     methods: {
@@ -171,10 +189,13 @@ export default {
             this.add_proj_name = '';
             this.forever_delete_confirm = false;
             this.showOverlay_trash = false;
+            this.add_proj_type_text = '';
+            this.show_add_proj_type_list = false;
         },
         close_add_proj(){
             this.show_add_proj_type_list = false;
             this.proj_type_color = '#b6aeae';
+            this.add_proj_type_text = '';
         },
         // 建立專案的事件
         new_project_btn() {
@@ -192,10 +213,19 @@ export default {
                     this.add_proj_name = '';
                 }
                 else if(this.add_proj_type_options.includes(this.proj_type) === true){
-                    this.porjects.push(this.add_proj_name);
+                    this.carts[this.add_proj_type_options.indexOf(this.proj_type)].project_box.push(this.add_proj_name);
                     this.add_proj_name = '';
                 }
+                else if(this.add_proj_type_options.includes(this.proj_type) === false){
+                    const new_cart={
+                        title_word: this.proj_type,
+                        project_box: [this.add_proj_name],
+                    }
+                    this.carts.push(new_cart);
+                    this.add_proj_type_options.push(new_cart.title_word)
+                }
             }
+            this.add_proj_type_text = '';
         },
         change(index) {
             if (index === 1) {
@@ -226,10 +256,11 @@ export default {
         },
         add_a_cart(){
             if(this.cart_title_input !==''){
-                const cart={
+                const new_cart={
                     title_word: this.cart_title_input,
+                    project_box: [],
                 };
-                this.carts.push(cart);
+                this.carts.push(new_cart);
                 this.add_proj_type_options.push(this.cart_title_input)
                 this.cart_title_input = '';
             }
@@ -237,11 +268,6 @@ export default {
         add_proj_type_btn(){
             this.show_add_proj_type_list = this.show_add_proj_type_list === false ? true : false;
             this.add_proj_type_arrow = 'url(../assets/dropdown_arrow/dropdown_arrow_down.svg) no-repeat center right;';
-            const div = this.$refs.test;
-            const computedStyle = window.getComputedStyle(div);
-            const backgroundImage = computedStyle.getPropertyValue('background-image');
-            console.log(backgroundImage);
-            console.log(this.add_proj_type_arrow)
         },
         type_choosen(option){
             this.show_add_proj_type_list = false;
@@ -298,9 +324,32 @@ export default {
             this.forever_delete_confirm =false;
             this.showOverlay_trash = false;
         },
+        right_click_box(event){
+            event.preventDefault();
+            this.right_click_box_overview_show = true;
+            this.mouseTop = event.clientY - 49;
+            this.mouseLeft = event.clientX - 368;
+        },
+        handleClickOutside(){
+            if(this.right_click_box_overview_show === true && !this.$refs.right_click_box_overview.contains(event.target)){
+                this.right_click_box_overview_show = false
+            }
+            else if(this.show_add_proj_type_list === true && !this.$refs.add_proj_type_list.contains(event.target)){
+                if(!this.$refs.add_proj_type.contains(event.target)){
+                    this.show_add_proj_type_list = false;
+                    this.add_proj_type_text = '';
+                }
+            }
+        },
+        delete_project(){
+            
+        },
     },
-    components: {
-        cart
+    mounted() {
+        window.addEventListener('click' , this.handleClickOutside);
+    },
+    beforeUnmount() {
+        window.removeEventListener('click', this.handleClickOutside);
     },
 }
 </script>
@@ -761,12 +810,13 @@ export default {
 
 .middle {
     width: 1448px;
-    height: 1000px;
+    height: calc(100vh - 49px);
     position: absolute;
     overflow-y: auto;
     overflow-x: hidden;
-    top: 40px;
+    top: 0px;
     left: 96px;
+    padding-bottom: 20px;
 }
 
 ::-webkit-scrollbar {
@@ -781,25 +831,37 @@ export default {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     margin-bottom: 20px;
 }
+
 .uncategorized {
+    margin-top: 60px;
     background-color: #f2eeee;
+    display: inline-block;
 }
 
 .cart_title {
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
+    height: 24px;
     letter-spacing: 0.5px;
     position: relative;
     top: 22px;
     left: 96px;
+    /* display: inline-block; */
 }
-
+.cart_drag_icon{
+    position: relative;
+    -webkit-user-drag: none;
+    user-select: none;
+    top: 22px;
+    left: 32px;
+    display: inline-block;
+}   
 .title_underline {
     width: 304px;
     border-bottom: 1px solid #c7c2c2;
     position: relative;
-    top: 34px;
+    top: 30px;
     left: 80px;
 }
 
@@ -843,6 +905,31 @@ export default {
 .new_type_highlight{
     border: 2px solid #C7C2C2;
 }
+.right_click_box_overview{
+    width: 214px;
+    height: 106px;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3), 0px 2px 15px rgba(0, 0, 0, 0.15);
+    border-radius: 14px;
+    background-color: white;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    position: absolute;
+}
+.right_click_box_overview_option{
+    width: 100%;
+    height: 45px;
+    font-size: 16px;
+    line-height: 45px;
+    letter-spacing: 1.25px;
+    color: rgba(59, 56, 56, 1);
+    font-weight: 500;
+    text-indent: 16px;
+    user-select: none;
+    cursor: pointer;
+}
+.right_click_box_overview_option:hover{
+    background-color: #F2EEEE;
+}
 /* 中間的部分 終點 */
 
 /* 垃圾桶的部分 起點 */
@@ -853,6 +940,7 @@ export default {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 14px;
     background-color: white;
+    margin-top: 40px;
 }
 .last_30_days{
     width: 1264px;
