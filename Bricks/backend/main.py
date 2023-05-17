@@ -22,12 +22,12 @@ CORS(app, resources={r"/*": {'origins': "*"}})
 app.config['SECRET_KEY'] = 'secret'
 
 #連線到伺服器上的 MySQL
-db_url = f"mysql+pymysql://{db_username}:{db_password}@{db_host}:{db_port}/{db_name}"
+#db_url = f"mysql+pymysql://{db_username}:{db_password}@{db_host}:{db_port}/{db_name}"
+db_url = "mysql+pymysql://gdsc:NCCUgdsc1234!@34.81.186.58:3306/bricksdata?charset=utf8mb4"
 engine = create_engine(db_url)
 
 app.config.from_object(__name__)
 auth = HTTPTokenAuth(scheme='Bearer')
-
 
 #hash password
 def hash_password(password):
@@ -35,7 +35,6 @@ def hash_password(password):
     sha256.update(password.encode('utf-8'))
     hashed_password = sha256.hexdigest()
     return hashed_password
-
 
 #verify token
 @auth.verify_token
@@ -98,10 +97,11 @@ def login():
         user_password = result_list[0][1]
         if user_password != post_data.get("user_password"):
             response_object['status'] = "failure"
-            response_object['message'] = "您的帳號或密碼不正確，請再試一次"
+            response_object['message'] = "您的密碼不正確，請再試一次"
+            return jsonify(response_object)
     except IndexError:
         response_object['status'] = "failure"
-        response_object['message'] = "您的帳號或密碼不正確，請再試一次"
+        response_object['message'] = "您的帳號不正確，請再試一次"
         return jsonify(response_object)
     except:
         response_object['status'] = "failure"
