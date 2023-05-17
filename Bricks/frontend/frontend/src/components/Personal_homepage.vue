@@ -77,6 +77,18 @@
                             <div class="add_proj_type_list_line"></div>
                             <div class="right_click_box_overview_option" @click="delete_project">刪除專案</div>
                         </div>
+                        <div class="delete_confirm" v-show="delete_confirm">
+                            <div class="close_delete_confirm" @click="close_delete_confirm"></div>
+                            <p class="delete_confirm_first_text">刪除專案</p>
+                            <img src="../assets/delete_icon.svg" alt="">
+                            <p class="delete_confirm_second_text">確定刪除專案？</p>
+                            <p class="delete_confirm_third_text">刪除後若需還原，請至「垃圾桶」查看</p>
+                            <div class="delete_confirm_btn_container">
+                                <button class="forever_delete_confirm_btn forever_delete_confirm_btn_cancel" @click="close_delete_confirm()">取消</button>
+                                <button class="forever_delete_confirm_btn forever_delete_confirm_btn_delete" @click="close_delete_confirm()">刪除</button>
+                            </div>
+                        </div>
+                        <div class="overlay" v-if="showOverlay_delete"></div>
                     </div>
                     <!-- 已結束專案 -->
                     <div class="over_page" v-show="middle_show_over_page">
@@ -89,7 +101,7 @@
                         </div>
                         <div v-for="(cart,index1) in carts" :key="index1">
                             <div class="cart">
-                                <p class="cart_title">{{ cart.title_word }}</p>
+                                <p class="cart_title" style="height: 0px">{{ cart.title_word }}</p>
                                 <img src="../assets/cart_drag_icon.svg" alt="" class="cart_drag_icon">
                                 <div class="title_underline"></div>
                                 <div class="box_container">
@@ -178,6 +190,8 @@ export default {
             mouseTop: 0,
             mouseLeft: 0,
             right_click_box_overview_show: false,
+            delete_confirm: false,
+            showOverlay_delete: false,
         };
     },
     methods: {
@@ -191,6 +205,8 @@ export default {
             this.showOverlay_trash = false;
             this.add_proj_type_text = '';
             this.show_add_proj_type_list = false;
+            this.delete_confirm = false;
+            this.showOverlay_delete = false;
         },
         close_add_proj(){
             this.show_add_proj_type_list = false;
@@ -331,7 +347,7 @@ export default {
             this.mouseLeft = event.clientX - 368;
         },
         handleClickOutside(){
-            if(this.right_click_box_overview_show === true && !this.$refs.right_click_box_overview.contains(event.target)){
+            if(this.right_click_box_overview_show === true && !this.$refs.right_click_box_overview.contains(event.target) && this.showOverlay_delete === false){
                 this.right_click_box_overview_show = false
             }
             else if(this.show_add_proj_type_list === true && !this.$refs.add_proj_type_list.contains(event.target)){
@@ -342,7 +358,12 @@ export default {
             }
         },
         delete_project(){
-            
+            this.delete_confirm = true;
+            this.showOverlay_delete = true;
+        },
+        close_delete_confirm(){
+            this.delete_confirm = false;
+            this.showOverlay_delete = false;
         },
     },
     mounted() {
@@ -929,6 +950,121 @@ export default {
 }
 .right_click_box_overview_option:hover{
     background-color: #F2EEEE;
+}
+.delete_confirm{
+    width: 412px;
+    height: 372px;
+    position: absolute;
+    top: 20%;
+    left: 520px;
+    background-color: white;
+    border: 1.5px solid #C7C2C2;
+    box-shadow: 0px 0px 5px 1px rgba(65, 65, 65, 0.25);
+    border-radius: 14px;
+    z-index: 8;
+}
+.delete_confirm_first_text{
+    width: 104px;
+    height: 28px;
+    position: relative;
+    top: 28px;
+    left: 50%;
+    transform: translate(-50%);
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 28px;
+    user-select: none;
+}
+.close_delete_confirm {
+    position: relative;
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+    top: 25px;
+    left: 375px;
+}
+
+.close_delete_confirm::before,
+.close_delete_confirm::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1.5px;
+    height: 17px;
+    background-color: black;
+}
+
+.close_delete_confirm::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.close_delete_confirm::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+.delete_confirm img{
+    -webkit-user-drag: none;
+    user-select: none;
+    position: relative;
+    top: 56px;
+    left: 50%;
+    transform: translate(-50%);
+}
+.delete_confirm_second_text{
+    position: relative;
+    color: #3B3838;
+    font-weight: 400;
+    font-size: 14px;
+    height: 21px;
+    line-height: 21px;
+    letter-spacing: 0.25px;
+    user-select: none;
+    top: 83px;
+    left: 50%;
+    transform: translate(-50%);
+    width: 100px;
+}
+.delete_confirm_third_text{
+    position: relative;
+    color: #3B3838;
+    font-weight: 400;
+    font-size: 14px;
+    height: 21px;
+    line-height: 21px;
+    letter-spacing: 0.25px;
+    user-select: none;
+    top: 83px;
+    left: 50%;
+    transform: translate(-50%);
+    width: 243px;
+}
+.delete_confirm_btn_container{
+    width: 332px;
+    height: 48px;
+    position: relative;
+    top: 108px;
+    left: 50%;
+    transform: translate(-50%);
+}
+.forever_delete_confirm_btn{
+    width: 150px;
+    height: 48px;
+    border-radius: 14px;
+    cursor: pointer;
+    background-color: #B82C30;
+    color: white;
+    font-size: 18px;
+    letter-spacing: 1.25px;
+    font-weight: 500;
+    line-height: 48px;
+    border: none;
+    float: right;
+    user-select: none;
+}
+.forever_delete_confirm_btn_cancel{
+    background-color: white;
+    color: #120405;
+    float: left !important;
 }
 /* 中間的部分 終點 */
 
