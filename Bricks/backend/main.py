@@ -22,8 +22,7 @@ CORS(app, resources={r"/*": {'origins': "*"}})
 app.config['SECRET_KEY'] = 'secret'
 
 #連線到伺服器上的 MySQL
-#db_url = f"mysql+pymysql://{db_username}:{db_password}@{db_host}:{db_port}/{db_name}"
-db_url = "mysql+pymysql://gdsc:NCCUgdsc1234!@34.81.186.58:3306/bricksdata?charset=utf8mb4"
+db_url = f"mysql+pymysql://{db_username}:{db_password}@{db_host}:{db_port}/{db_name}"
 engine = create_engine(db_url)
 
 app.config.from_object(__name__)
