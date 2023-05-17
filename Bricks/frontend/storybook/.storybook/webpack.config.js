@@ -1,36 +1,23 @@
 const path = require('path');
 
-module.exports = async ({ config }) => {
-  // 添加對 Pug 和 Sass 的支持
-  config.module.rules.push(
-    {
-      test: /\.sass$/,
-      use:[
-        require.resolve('vue-style-loader'),
-        require.resolve('css-loader'),
-        {
-          loader: require.resolve('sass-loader'),
-          options: {
-            sassOptions: {
-              indentedSyntax: true// 使用縮排語法
-            }
-          }
-        }
-      ],
-    },
-    {
-      test: /\.(png|jpe?g|gif)$/i,
-      use: [
-        {
-          loader: "file-loader",
-        },
-      ],
-    },
-  );
+module.exports = ({ config, mode }) => {
+  // handle scss resource in vue file
+  const sassRule = {
+    test: /\.scss$/,
+    oneOf: [
+      {
+        resourceQuery: /\?vue/,
+        use: ["vue-style-loader", "css-loader", "postcss-loader", "sass-loader"]
+      }
+    ]
+  };
 
-  // 解析文件擴展名
-  config.resolve.extensions.push('.sass');
+  // Handle js resource
+  const jsRule = {
+    test: /\.js$/,
+    use: [{ loader: "babel-loader" }]
+  };
 
-  // 返回修改後的配置
+  config.module.rules.push(jsRule, sassRule);
   return config;
 };
