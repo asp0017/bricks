@@ -1,19 +1,60 @@
+from dotenv import load_dotenv
 from flask import Flask, jsonify, request, url_for
 from flask_cors import CORS
+from flask_httpauth import HTTPTokenAuth
+import hashlib
+import jwt
 import logging
-from flask_sqlalchemy import SQLAlchemy
+import os
 from sqlalchemy import create_engine, text
+from time import time
+
+load_dotenv()
+
+db_username = os.environ.get('DB_USERNAME')
+db_password = os.environ.get('DB_PASSWORD')
+db_host = os.environ.get('DB_HOST')
+db_port = os.environ.get('DB_PORT')
+db_name = os.environ.get('DB_NAME')
 
 app = Flask(__name__)
 CORS(app, resources={r"/*":{'origins':"*"}})
-
-# app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://gdsc:NCCUgdsc1234!@34.81.186.58:3306/bricksdata"
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = 'secret'
 
 #連線到伺服器上的 MySQL
-engine = create_engine("mysql+pymysql://gdsc:NCCUgdsc1234!@34.81.186.58:3306/bricksdata")
+db_url = f"mysql+pymysql://{db_username}:{db_password}@{db_host}:{db_port}/{db_name}"
+engine = create_engine(db_url)
 
 app.config.from_object(__name__)
+auth = HTTPTokenAuth(scheme='Bearer')
+
+#hash password
+def hash_password(password):
+    sha256 = hashlib.sha256()
+    sha256.update(password.encode('utf-8'))
+    hashed_password = sha256.hexdigest()
+    return hashed_password
+
+#verify token
+@auth.verify_token
+def verify_token(token):
+    conn = engine.connect()
+    print(jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256']))
+    try:
+        data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
+    except: 
+        return False
+    # return True
+
+    selectUserEmail = f""""
+        SELECT user_email FROM users
+        WHERE user_email = "{data['user_email']}";
+    """
+    ret = conn.execute(text(selectUserEmail))
+    ret_list = ret.fetchall()
+    if ret_list is None:
+        return False
+    return data['user_email']
 
 # hello world route
 @app.route('/', methods=['GET'])
@@ -41,7 +82,7 @@ def testMySQL():
     selectUserId = f"""
             SELECT id, user_password FROM users
             WHERE user_email = "test1@gmail.com";
-        """
+    """
     test = conn.execute(text(selectUserId))
     #執行SQL指令
     # test = conn.execute(text(testquery))
@@ -56,7 +97,6 @@ def testMySQL():
     #關閉連線
     test.close()
     conn.close()
-    print(data1)
     # return jsonify(data)
     return jsonify("0")
 
@@ -74,7 +114,7 @@ def login():
         response_object['status'] = "failure"
         response_object['message'] = "資料庫連線失敗"
         return jsonify(response_object)
-    
+
     #取得檔案
     post_data = request.get_json()
 
@@ -94,13 +134,21 @@ def login():
     except IndexError:
         response_object['status'] = "failure"
         response_object['message'] = "您的帳號或密碼不正確，請再試一次"
+        return jsonify(response_object)
     except:
         response_object['status'] = "failure"
         response_object['message'] = "SELECT user_id 失敗"
-    
+        return jsonify(response_object)
+
+    token = jwt.encode({
+        'user_email' : post_data.get("user_email"),
+        'exp' : int(time() + 60 * 60 * 24 * 30),
+        'status' : "success",
+        'message' : "登入成功"
+    }, app.config['SECRET_KEY'], algorithm='HS256')
     result.close()
     conn.close()
-    return jsonify(response_object)
+    return token 
 
 #註冊 --> 對比信箱及存入信箱、密碼及使用者名稱
 @app.route('/register', methods=['POST'])
@@ -125,17 +173,19 @@ def register():
         result = conn.execute(text(isRegisted))
         result_list = result.fetchall()
         if  (result_list[0][0]==0):
+            hashed_password = hash_password(post_data.get("user_password"))
             addAccount = f"""
             INSERT INTO users (user_email, user_password, user_name)
-            VALUES ("{post_data.get("user_email")}", "{post_data.get("user_password")}"," {post_data.get("user_name")}");
+            VALUES ("{post_data.get("user_email")}", "{hashed_password}"," {post_data.get("user_name")}");
             """
+            print(hashed_password)
             conn.execute(text(addAccount))
             conn.execute(text("COMMIT;"))
         else:
             response_object['status'] = "failure"
             response_object['message'] = "此信箱已被註冊過"
             return jsonify(response_object)
-        
+
         selectUserId = f"""
             SELECT id FROM users
             WHERE user_email = "{post_data.get("user_email")}";
@@ -148,7 +198,7 @@ def register():
         response_object['status'] = "failure"
         response_object['message'] = "SELECT user_id 失敗 或 INSERT 失敗"
         return jsonify(response_object)
-    
+
     result.close()
     result2.close()
     conn.close()
@@ -186,7 +236,7 @@ def register_survey():
         response_object['status'] = "failure"
         response_object['message'] = "INSERT userInfo 失敗"
         logging.exception('Error at %s', 'division', exc_info=e)
-          
+
     conn.close()
     return jsonify(response_object)
 
