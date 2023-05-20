@@ -10,7 +10,7 @@
     </div>
 </template>
   
-<style>
+<style scoped>
 #app {
     display: flex;
     justify-content: center;
