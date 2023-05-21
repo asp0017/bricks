@@ -54,12 +54,12 @@ const routes = [
     component: Homepage_2,
   },
   {
-    path: "/register_second",
+    path: "/register_second/:user_id",
     name: "Register_second",
     component: Register_second,
   },
   {
-    path: "/personal_homepage",
+    path: "/personal_homepage/:user_email",
     name: "Personal_homepage",
     component: Personal_homepage,
   },

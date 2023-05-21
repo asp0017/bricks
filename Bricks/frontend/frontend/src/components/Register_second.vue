@@ -16,62 +16,62 @@
                 <p class="title">註冊</p>
                 <div class="select">
                     <div class="card" style="margin-top: 0px;">
-                        <p>一、使用 BRICKS 的用途 (多選)</p>
+                        <p>一、使用 BRICKS 的用途 (多選) {{ userId }}</p>
                         <div class="multiple_select">
-                            <input type="checkbox" id="one_one" name="one">
+                            <input type="checkbox" id="one_one" name="one" v-model="is_1_1_Checked">
                             <label for="one_one" style="margin-left: 0px;">課堂作業</label>
-                            <input type="checkbox" id="one_two" name="one">
+                            <input type="checkbox" id="one_two" name="one" v-model="is_1_2_Checked">
                             <label for="one_two">營隊</label>
-                            <input type="checkbox" id="one_three" name="one">
+                            <input type="checkbox" id="one_three" name="one" v-model="is_1_3_Checked">
                             <label for="one_three">社團</label>
-                            <input type="checkbox" id="one_four" name="one">
+                            <input type="checkbox" id="one_four" name="one" v-model="is_1_4_Checked">
                             <label for="one_four" style="margin-left: 0px;">個人筆記</label>
-                            <input type="checkbox" id="one_five" name="one">
+                            <input type="checkbox" id="one_five" name="one" v-model="is_1_5_Checked">
                             <label for="one_five">競賽</label>
-                            <input type="checkbox" id="one_six" name="one">
+                            <input type="checkbox" id="one_six" name="one" v-model="is_1_6_Checked">
                             <label for="one_six">其它</label>
                         </div>
                     </div>
                     <div class="card">
                         <p>二、您的身分 (單選)</p>
                         <div class="multiple_select">
-                            <input type="radio" id="two_one" name="two">
+                            <input type="radio" id="two_one" name="two" value="高中職 (含) 以下" v-model="identity">
                             <label for="two_one" style="margin-left: 0px; width: 276px;">高中職 (含) 以下</label>
-                            <input type="radio" id="two_two" name="two">
+                            <input type="radio" id="two_two" name="two" value="大專院校" v-model="identity">
                             <label for="two_two" style="margin-left: 20.5px; width: 276px;">大專院校</label>
-                            <input type="radio" id="two_three" name="two">
+                            <input type="radio" id="two_three" name="two" value="碩士" v-model="identity">
                             <label for="two_three" style="margin-left: 0px;">碩士</label>
-                            <input type="radio" id="two_four" name="two">
+                            <input type="radio" id="two_four" name="two" value="博士" v-model="identity">
                             <label for="two_four">博士</label>
-                            <input type="radio" id="two_five" name="two">
+                            <input type="radio" id="two_five" name="two" value="社會人士" v-model="identity">
                             <label for="two_five">社會人士</label>
                         </div>
                     </div>
                     <div class="card">
                         <p>三、是否用過其餘專案軟體工具 (多選)</p>
                         <div class="multiple_select">
-                            <input type="checkbox" id="three_one" name="three">
+                            <input type="checkbox" id="three_one" name="three" v-model="is_3_1_Checked">
                             <label for="three_one" style="margin-left: 0px;">Google 雲端</label>
-                            <input type="checkbox" id="three_two" name="three">
+                            <input type="checkbox" id="three_two" name="three" v-model="is_3_2_Checked">
                             <label for="three_two">Notion</label>
-                            <input type="checkbox" id="three_three" name="three">
+                            <input type="checkbox" id="three_three" name="three" v-model="is_3_3_Checked">
                             <label for="three_three">Trello</label>
-                            <input type="checkbox" id="three_four" name="three">
+                            <input type="checkbox" id="three_four" name="three" v-model="is_3_4_Checked">
                             <label for="three_four" style="margin-left: 0px;">Evernote</label>
-                            <input type="checkbox" id="three_five" name="three">
+                            <input type="checkbox" id="three_five" name="three" v-model="is_3_5_Checked">
                             <label for="three_five">Asana</label>
-                            <input type="checkbox" id="three_six" name="three">
+                            <input type="checkbox" id="three_six" name="three" v-model="is_3_6_Checked">
                             <label for="three_six">其它</label>
                         </div>
                     </div>
                 </div>
                 <div class="next">
-                    <a href="" class="skip">
+                    <div class="skip">
                         <div>略過問卷</div>
-                    </a>
-                    <a href="" class="complete">
+                    </div>
+                    <div class="complete">
                         <div style="background-color: #b82c30; color: white;" @click="complete_btn">完成</div>
-                    </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -85,6 +85,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     name: 'Register_second',
     // props: {
@@ -93,19 +94,157 @@ export default {
     // },
     data() {
         return {
+            is_1_1_Checked: false,
+            is_1_2_Checked: false,
+            is_1_3_Checked: false,
+            is_1_4_Checked: false,
+            is_1_5_Checked: false,
+            is_1_6_Checked: false,
+            purpose: [],
+            identity: "",
+            is_3_1_Checked: false,
+            is_3_2_Checked: false,
+            is_3_3_Checked: false,
+            is_3_4_Checked: false,
+            is_3_5_Checked: false,
+            is_3_6_Checked: false,
+            otherTool: [],
+            userId: this.$route.params.user_id,
+            user_email: "",
 
         };
     },
     methods: {
+        question_1_checked() {
+            if (this.is_1_1_Checked) {
+                this.purpose.push("課堂作業");
+            }
+            if (this.is_1_2_Checked) {
+                this.purpose.push("營隊");
+            }
+            if (this.is_1_3_Checked) {
+                this.purpose.push("社團");
+            }
+            if (this.is_1_4_Checked) {
+                this.purpose.push("個人筆記");
+            }
+            if (this.is_1_5_Checked) {
+                this.purpose.push("競賽");
+            }
+            if (this.is_1_6_Checked) {
+                this.purpose.push("其他");
+            }
+        },
+        question_3_checked() {
+            if (this.is_3_1_Checked) {
+                this.otherTool.push("Google 雲端");
+            }
+            if (this.is_3_2_Checked) {
+                this.otherTool.push("Notion");
+            }
+            if (this.is_3_3_Checked) {
+                this.otherTool.push("Trello");
+            }
+            if (this.is_3_4_Checked) {
+                this.otherTool.push("Evernote");
+            }
+            if (this.is_3_5_Checked) {
+                this.otherTool.push("Asana");
+            }
+            if (this.is_3_6_Checked) {
+                this.otherTool.push("其他");
+            }
+        },
+        complete() {
+            this.question_1_checked();
+            this.question_3_checked();
+            const user_survey = { user_id: this.userId, user_purpose: this.purpose, user_identity: this.identity, user_otherTool: this.otherTool };
+            // console.log(user);
+            console.log(user_survey);
+        },
         complete_btn() {
-            console.log(userId());
-            // console.log(this.password);
-        }
+            const path = "http://34.81.186.58:5000/register/survey";
+            this.question_1_checked();
+            this.question_3_checked();
+            const user_survey = { user_id: this.userId, user_purpose: this.purpose, user_identity: this.identity, user_otherTool: this.otherTool };
+            // console.log(user);
+            console.log(user_survey);
+
+            // 不確定要不要清空
+            // this.userId = "";
+            // this.purpose = [];
+            // this.identity = "";
+            // this.otherTool = [];
+            axios
+                .post(path, user_survey)
+                .then((res) => {
+                    // console.log(res.data.user_email);
+                    if (res.data.status == 'success') {
+                        this.user_email = res.data.user_email;
+                        console.log("email ", res.data.user_email);
+                        // console.log(user_survey);
+                        this.$router.push({ name: 'Personal_homepage', params: { user_email: this.user_email } });
+                    } else {
+                        console.log(res.data.user_email);
+                        console.log(this.user_survey);
+
+                    }
+
+
+
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+
+
+
+        },
     },
+    // watch: {
+    //     is_1_1_Checked: function () {
+    //         this.question_1[0] = !this.question_1[0];
+    //     },
+    //     is_1_2_Checked: function () {
+    //         this.question_1[1] = !this.question_1[1];
+    //     },
+    //     is_1_3_Checked: function () {
+    //         this.question_1[2] = !this.question_1[2];
+    //     },
+    //     is_1_4_Checked: function () {
+    //         this.question_1[3] = !this.question_1[3];
+    //     },
+    //     is_1_5_Checked: function () {
+    //         this.question_1[4] = !this.question_1[4];
+    //     },
+    //     is_1_6_Checked: function () {
+    //         this.question_1[5] = !this.question_1[5];
+    //     },
+
+    //     is_3_1_Checked: function () {
+    //         this.question_3[0] = !this.question_3[0];
+    //     },
+    //     is_3_2_Checked: function () {
+    //         this.question_3[1] = !this.question_3[1];
+    //     },
+    //     is_3_3_Checked: function () {
+    //         this.question_3[2] = !this.question_3[2];
+    //     },
+    //     is_3_4_Checked: function () {
+    //         this.question_3[3] = !this.question_3[3];
+    //     },
+    //     is_3_5_Checked: function () {
+    //         this.question_3[4] = !this.question_3[4];
+    //     },
+    //     is_3_6_Checked: function () {
+    //         this.question_3[5] = !this.question_3[5];
+    //     },
+
+    // },
     computed: {
-        userId() {
-            return this.$route.params.id
-        }
+        // userId() {
+        //     return this.$route.params.id
+        // }
     },
     created() {
 
@@ -357,7 +496,7 @@ export default {
     top: 24px;
 }
 
-.next a div {
+.next div div {
     width: 262px;
     height: 46px;
     border: 1px solid #b6aeae;

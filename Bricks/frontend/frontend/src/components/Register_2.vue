@@ -117,6 +117,7 @@
 
 <script>
 // import Register_second from './Register_second.vue'
+import axios from 'axios';
 export default {
     name: 'Reigster_2',
     // components: {
@@ -186,19 +187,28 @@ export default {
             if (!(this.errorMessage1 || this.errorMessage2 || this.errorMessage3 || this.errorMessage4)) {
                 // this.page1 = false;
                 // this.page2 = true;
+
+                // 先測試跳轉頁面並傳輸資料
+                // this.$router.push({ name: 'Register_second', params: { user_id: 111 } });
+
+
                 console.log("success");
-                const path = "http://localhost:5000/register";
-                const user = { email: this.email, password: this.password };
+                const path = "http://34.81.186.58:5000/register";
+                const user = { user_email: this.email, user_password: this.password1, user_name: this.account };
+                // console.log(user);
                 this.email = "";
-                this.password = "";
+                this.password1 = "";
+                this.password2 = "";
+                this.account = "";
                 axios
                     .post(path, user)
                     .then((res) => {
                         console.log(res.data.status);
                         if (res.data.status == 'success') {
-                            this.userId = res.data.items[0].id;
+                            this.userId = res.data.user_id;
+                            console.log(this.userId);
                             console.log("註冊成功");
-                            this.$router.push({ path: '/register_second/' + this.userId });
+                            this.$router.push({ name: 'Register_second', params: { user_id: this.userId } });
 
                         } else {
                             // this.$refs.account.style = "border-color : #e03939";
@@ -207,6 +217,7 @@ export default {
                             // this.$refs.wrong2.style = "display : block";
                             // this.accountError = res.data.accountError;
                             // this.passwordError = res.data.passwordError;
+                            console.log(res.data.message);
                             this.errorMessage5 = true;
 
 
@@ -548,6 +559,7 @@ input::placeholder {
     position: relative;
     top: 0px;
     letter-spacing: 0.5px;
+    margin-top: 24px;
     /* visibility: hidden; */
 }
 
