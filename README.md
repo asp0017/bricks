@@ -38,6 +38,14 @@
         2. 手動進行修改，並按右上角的儲存
 
         3. 回到 PR conversation 頁面，點選 merge commit 即可
+
+參考資料
+    
+[理解如何在Github使用Pull Request (PR)](https://hackmd.io/@judyyutong/understandPR#4-%E7%99%BC%E9%80%81-Pull-Request-%E8%AB%8B%E6%B1%82%E5%90%88%E4%BD%B5)
+    
+[猴子都能懂得Git入門指南-進階篇](https://backlog.com/git-tutorial/tw/stepup/stepup1_4.html)
+
+[Git Flow 是什麼？為什麼需要這種東西？](https://gitbook.tw/chapters/gitflow/why-need-git-flow)
        
 # :link: Install Instruction #
 
