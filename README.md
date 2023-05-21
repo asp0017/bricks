@@ -1,5 +1,44 @@
 # bricks
 
+# :link: Git 規則 #
+
+1. 分支簡介：
+    
+    - master：正式發布版本
+
+    - development：開發階段，合併版本測試
+
+    - <頁面名>：該頁面功能的版本測試
+
+    - <功能>：該功能的版本測試（影響到整個系統的功能故須獨立出分支）
+2. 分支建立：
+    
+    `git branch 分支名`
+
+3. PR(Pull Request) 步驟：
+   
+    1. 切換到想要 push 的分支： `git checkout 分支名`
+   
+    2. 將檔案加入： `git add .`
+
+    3. 設定版本名稱： `git commit -m "版本名稱"`
+
+    4. push 上去分支： `git push origin 分支名`
+
+4. Merge 分支步驟：
+
+    1. 點選頁首 pull requests
+
+    假如可以 auto merge(出現綠色字時)，直接按 merge commit
+    
+    假如有版本衝突，不能 auto merge(出現灰色字時)：
+    
+        1. 點選 PR conversation 中 merge conflict 方框的右上角檢視衝突的地方
+  
+        2. 手動進行修改，並按右上角的儲存
+
+        3. 回到 PR conversation 頁面，點選 merge commit 即可
+       
 # :link: Install Instruction #
 
 1. Install [Git](https://git-scm.com/)
