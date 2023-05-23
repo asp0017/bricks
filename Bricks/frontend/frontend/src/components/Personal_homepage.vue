@@ -48,7 +48,7 @@
                 <!-- 背景透明灰色 -->
                 <div class="overlay" v-if="showOverlay"></div>
                 <div class="middle">
-                    <!-- 專案總攬 -->
+                    <!-- 專案總覽 -->
                     <div class="overview_page" v-show="middle_show_overview_page">
                         <div class="uncategorized cart" ref="uncategorized">
                             <p class="cart_title">未分類</p>
@@ -73,9 +73,9 @@
                             <div class="box_container"></div>
                         </div>
                         <div class="right_click_box_overview" :style="{top: mouseTop +'px', left: mouseLeft + 'px'}" v-show="right_click_box_overview_show" ref="right_click_box_overview">
-                            <div class="right_click_box_overview_option">重新命名</div>
+                            <div class="right_click_box_overview_option" style="border-top-left-radius: 5px; border-top-right-radius: 5px;">重新命名</div>
                             <div class="add_proj_type_list_line"></div>
-                            <div class="right_click_box_overview_option" @click="delete_project">刪除專案</div>
+                            <div class="right_click_box_overview_option" style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;" @click="delete_project">刪除專案</div>
                         </div>
                         <div class="delete_confirm" v-show="delete_confirm">
                             <div class="close_delete_confirm" @click="close_delete_confirm"></div>
@@ -123,7 +123,7 @@
                                 <div class="trash_box_container">
                                     <div class="trash_box" v-for="(trash_box,index) in trash_boxes" :key="index">
                                         <input type="checkbox" :id="'trash_box-' + index" v-model="checked_trash_box[index]" @change="selected_trash_box(index)">
-                                        <label :for="'trash_box-' + index">{{trash_box.text}}</label>
+                                        <label :for="'trash_box-' + index" @contextmenu.prevent="right_click_box_trash">{{trash_box.text}}</label>
                                     </div>
                                 </div>
                             </div>
@@ -147,6 +147,11 @@
                                 </div>
                             </div>
                             <div class="overlay" v-if="showOverlay_trash"></div>
+                            <div class="right_click_box_overview" :style="{top: mouseTop +'px', left: mouseLeft + 'px'}" v-show="right_click_box_trash_show" ref="right_click_box_trash">
+                                <div class="right_click_box_overview_option" style="border-top-left-radius: 5px; border-top-right-radius: 5px;" @click="recover_project">還原專案</div>
+                                <div class="add_proj_type_list_line"></div>
+                                <div class="right_click_box_overview_option" style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;" @click="forever_delete_project">刪除專案</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -192,9 +197,11 @@ export default {
             right_click_box_overview_show: false,
             delete_confirm: false,
             showOverlay_delete: false,
+            right_click_box_trash_show: false,
         };
     },
     methods: {
+        // 點擊左上角新增專案
         add_btn() {
             this.add_proj_show = this.add_proj_show === false ? true : false;
             this.showOverlay = !this.showOverlay;
@@ -208,12 +215,13 @@ export default {
             this.delete_confirm = false;
             this.showOverlay_delete = false;
         },
+        // 新增專案彈窗裡面的叉叉
         close_add_proj(){
             this.show_add_proj_type_list = false;
             this.proj_type_color = '#b6aeae';
             this.add_proj_type_text = '';
         },
-        // 建立專案的事件
+        // 新增專案彈窗裡點擊建立專案
         new_project_btn() {
             this.add_proj_show = this.add_proj_show === false ? true : false;
             this.showOverlay = false;
@@ -243,6 +251,7 @@ export default {
             }
             this.add_proj_type_text = '';
         },
+        // 左邊總攬、已結束、垃圾桶切換
         change(index) {
             if (index === 1) {
                 this.middle_show_overview_page = true
@@ -260,16 +269,20 @@ export default {
                 this.middle_show_over_page = false
             }
         },
+        // 我忘了
         blurSelect() {
             this.$refs.select.blur();
         },
+        // 滑鼠點擊新增專案的輸入框使其border變寬
         new_type_focus(){
             this.isFocused = true;
         },
+        // 滑鼠離開新增專案的輸入框使其border還原
         new_type_blur(){
             this.isFocused = false;
             this.cart_title_input = '';
         },
+        // 從新增專案的輸入框直接新增一個類型
         add_a_cart(){
             if(this.cart_title_input !==''){
                 const new_cart={
@@ -281,22 +294,26 @@ export default {
                 this.cart_title_input = '';
             }
         },
+        // 新增專案彈窗裡點擊選擇專案類型
         add_proj_type_btn(){
             this.show_add_proj_type_list = this.show_add_proj_type_list === false ? true : false;
             this.add_proj_type_arrow = 'url(../assets/dropdown_arrow/dropdown_arrow_down.svg) no-repeat center right;';
         },
+        // 新增專案彈窗裡的選擇專案類型選擇其中一個已有專案
         type_choosen(option){
             this.show_add_proj_type_list = false;
             this.proj_type = option;
             this.proj_type_color = 'black';
             this.add_proj_type_text = '';
         },
+        // 新增專案彈窗裡的選擇專案類型沒有選擇其中一個已有專案
         type_not_choose(){
             this.show_add_proj_type_list = false;
             this.proj_type = '未分類';
             this.proj_type_color = 'black';
             this.add_proj_type_text = '';
         },
+        // 新增專案彈窗裡的選擇專案類型直接打字輸入新的專案
         list_add_a_cart(){
             if(this.add_proj_type_text !== ''){
                 this.show_add_proj_type_list = false;
@@ -305,12 +322,14 @@ export default {
                 this.add_proj_type_text = '';
             }
         },
+        // 實驗用，點擊bricks logo後垃圾桶跑一個專案
         test_btn(){
             const trash_box={
                 text : '實驗',
             };
             this.trash_boxes.push(trash_box);
         },
+        // 點擊垃圾桶裡的專案後又上兩個按鈕變色
         selected_trash_box(index){
             const allFalse = this.checked_trash_box.every(function(element){
                 return element === false
@@ -324,6 +343,7 @@ export default {
                 this.trashcan = false;
             }
         },
+        // 垃圾桶點擊還原專案
         recover_project(){
             this.recovered = true;
             setTimeout(() => {
@@ -332,38 +352,56 @@ export default {
             this.recover = true;
             this.trashcan = true;
         },
+        // 垃圾桶點選永久刪除
         forever_delete_project(){
             this.forever_delete_confirm = true;
             this.showOverlay_trash = true;
         },
+        // 關閉永久刪除彈窗
         close_forever_delete_confirm(){
             this.forever_delete_confirm =false;
             this.showOverlay_trash = false;
         },
+        // 專案總覽右鍵點擊專案
         right_click_box(event){
             event.preventDefault();
             this.right_click_box_overview_show = true;
             this.mouseTop = event.clientY - 49;
             this.mouseLeft = event.clientX - 368;
         },
+        // 當滑鼠點擊非指定區域時關閉彈窗
         handleClickOutside(){
+            // 專案總覽右鍵彈窗
             if(this.right_click_box_overview_show === true && !this.$refs.right_click_box_overview.contains(event.target) && this.showOverlay_delete === false){
                 this.right_click_box_overview_show = false
             }
+            // 新增專案彈窗裡的選擇新增專案類型彈窗
             else if(this.show_add_proj_type_list === true && !this.$refs.add_proj_type_list.contains(event.target)){
                 if(!this.$refs.add_proj_type.contains(event.target)){
                     this.show_add_proj_type_list = false;
                     this.add_proj_type_text = '';
                 }
             }
+            else if(this.right_click_box_trash_show === true && !this.$refs.right_click_box_trash.contains(event.target) && this.showOverlay_trash === false){
+                this.right_click_box_trash_show = false
+            }
         },
+        // 專案總覽右鍵選擇刪除專案
         delete_project(){
             this.delete_confirm = true;
             this.showOverlay_delete = true;
         },
+        // 關閉刪除按鈕彈窗
         close_delete_confirm(){
             this.delete_confirm = false;
             this.showOverlay_delete = false;
+        },
+        // 垃圾桶右鍵點擊專案
+        right_click_box_trash(event){
+            event.preventDefault();
+            this.right_click_box_trash_show = true;
+            this.mouseTop = event.clientY - 49;
+            this.mouseLeft = event.clientX - 368;
         },
     },
     mounted() {
@@ -911,6 +949,10 @@ export default {
     letter-spacing: 1.25px;
     text-indent: 69.67px;
     user-select: none;
+}
+.box:hover{
+    background-color: #E1DCDC;
+    border-color: #C7C2C2;
 }
 .cart_title_input{
     font-size: 16px;
