@@ -1,15 +1,16 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Bricks from "../components/BricksTest.vue";
-<<<<<<< HEAD
 import Login from "../components/Login.vue";
 import Register from "../components/Register.vue";
 import HomePage from "../components/Homepage.vue";
 import Login_2 from "../components/Login_2.vue";
 import Register_2 from "../components/Register_2.vue";
 import Homepage_2 from "../components/Homepage_2.vue";
-=======
->>>>>>> d452783 (蔡杞祥在試著Merge)
+import Register_second from "../components/Register_second.vue";
+import Personal_homepage from "../components/Personal_homepage.vue";
+import who_the_hell_is_詹子儁 from "../components/who_the_hell_is_詹子儁.vue";
+import test from "../components/test.vue";
 
 Vue.use(VueRouter);
 
@@ -20,7 +21,6 @@ const routes = [
     path: "/bricks",
     name: "BricksTest",
     component: Bricks,
-<<<<<<< HEAD
   },
   {
     path: "/register",
@@ -46,13 +46,32 @@ const routes = [
     path: "/register_2",
     name: "Register_2",
     component: Register_2,
+    // props: { email: "", password: "" }
   },
   {
     path: "/homepage_2",
     name: "Homapage_2",
     component: Homepage_2,
-=======
->>>>>>> d452783 (蔡杞祥在試著Merge)
+  },
+  {
+    path: "/register_second/:user_id",
+    name: "Register_second",
+    component: Register_second,
+  },
+  {
+    path: "/personal_homepage/:user_email",
+    name: "Personal_homepage",
+    component: Personal_homepage,
+  },
+  {
+    path: "/test",
+    name: "test",
+    component: test,
+  },
+  {
+    path: "/who_the_hell_is",
+    name: "who_the_hell_is_詹子儁",
+    component: who_the_hell_is_詹子儁,
   },
 ];
 

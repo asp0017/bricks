@@ -85,7 +85,7 @@ export default {
                     .then((res) => {
                         if (res.data.status = 'success') {
                             this.goToPersonalPage();
-                            this.loginTest =  res.data.message;
+                            this.loginTest = res.data.message;
                         } else {
                             this.$refs.account.style = "border-color : #e03939";
                             this.$refs.password.style = "border-color : #e03939";

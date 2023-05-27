@@ -6,7 +6,8 @@
             </a>
             <div class="tribtn">
                 <div class="btn">試用</div>
-                <a href="./login_2" class="btn nav_login_btn" style="background-color: #b82c30; border-color: #b82c30; color: #ffffff;">登入</a>
+                <a href="./login_2" class="btn nav_login_btn"
+                    style="background-color: #b82c30; border-color: #b82c30; color: #ffffff;">登入</a>
                 <a href="./register_2" class="btn" style="margin-right: 0px;">註冊</a>
             </div>
         </div>
@@ -14,20 +15,31 @@
             <div class="middle">
                 <p class="title">登入</p>
                 <div class="enter">
-                    <input required autofocus class="account" placeholder="帳號/Email">
-                    <div class="wrong"></div>
-                    <input v-if="showpassword" required class="password" type="text" placeholder="密碼">
-                    <input v-else required class="password" type="password" placeholder="密碼">
+                    <div class="wrong" v-if="error">
+                        <img src="../assets/exclamation.svg" alt="">
+                        <!-- 跳出的錯誤信息在這 -->
+                        <p>{{ errorMessage }}</p>
+                    </div>
+                    <div class="wrong" v-else style="opacity: 0">
+                        <img src="../assets/exclamation.svg" alt="">
+                        <!-- 跳出的錯誤信息在這 -->
+                        <p></p>
+                    </div>
+                    <input required autofocus class="account" placeholder="帳號" v-model="account">
+                    <input v-if="showpassword" required class="password" type="text" placeholder="密碼" v-model="password">
+                    <input v-else required class="password" type="password" placeholder="密碼" v-model="password">
                     <img v-if="showpassword" id="eye_on" src="../assets/eye/eye_on.svg" alt="" @click="eyebtn">
                     <img v-else id="eye_off" src="../assets/eye/eye_origin.svg" alt="" @click="eyebtn">
-                    <div class="wrong"></div>
                 </div>
-                <div class="login_btn">登入</div>
                 <div class="keep_login">
-                    <img src="../assets/checkbox/CheckBox_off.svg" class="keep_login_checkbox keep_login_checkbox_off" v-if="checked" @click="check_btn">
-                    <img src="../assets/checkbox/CheckBox_on.svg" class="keep_login_checkbox keep_login_checkbox_on" v-else @click="check_btn">
+                    <img src="../assets/checkbox/CheckBox_off.svg" class="keep_login_checkbox keep_login_checkbox_off"
+                        v-if="checked" @click="check_btn">
+                    <img src="../assets/checkbox/CheckBox_on.svg" class="keep_login_checkbox keep_login_checkbox_on" v-else
+                        @click="check_btn">
                     <p style="user-select: none; cursor: pointer;" @click="check_btn">保持登入</p>
                 </div>
+                <!-- 點擊登入按鈕的事件放在這邊 -->
+                <div class="login_btn" @click="login">登入</div>
                 <div class="forget_password">忘記密碼</div>
                 <div class="line">
                     <div class="left_line"></div>
@@ -66,12 +78,18 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     name: 'Login_2',
     data() {
         return {
             showpassword: false,
+            error: false, // 錯誤訊息的div顯示
             checked: true,
+            account: "",
+            password: "",
+            errorMessage: "",
+            errorTime: 0,
         };
     },
     methods: {
@@ -80,6 +98,58 @@ export default {
         },
         check_btn() {
             this.checked = !this.checked;
+        },
+        // login的事件
+        login() {
+            //前端部分先進行帳號密碼原則檢驗，還有其他條件式
+            if (this.password == "" || this.account == "") {
+                // this.$refs.account.style = "border-color : #e03939";
+                // this.$refs.password.style = "border-color : #e03939";
+                // this.$refs.wrong1.style = "display : block";
+                // this.$refs.wrong2.style = "display : block";
+                this.errorMessage = "請填寫您的帳號與密碼資訊";
+                // this.errorTime = this.errorTime + 1;
+                console.log("前端block");
+            } else {
+                const path = "http://localhost:5000/login";
+                const user = { account: this.account, password: this.password };
+                this.account = "";
+                this.password = "";
+                axios
+                    .post(path, user)
+                    .then((res) => {
+                        console.log(res.data.status);
+                        if (res.data.status == 'success') {
+                            this.errorTime = 0;
+                            console.log("登入成功");
+                            this.goToPersonalPage();
+
+                        } else {
+                            // this.$refs.account.style = "border-color : #e03939";
+                            // this.$refs.password.style = "border-color : #e03939";
+                            // this.$refs.wrong1.style = "display : block";
+                            // this.$refs.wrong2.style = "display : block";
+                            // this.accountError = res.data.accountError;
+                            // this.passwordError = res.data.passwordError;
+                            this.errorTime = this.errorTime + 1;
+                            if (this.errorTime >= 3) {
+                                this.errorMessage = "如果登入時遇到困難，可點擊「忘記密碼」";
+                                this.errorTime = this.errorTime + 1;
+                            } else {
+                                this.errorMessage = "您的帳號或密碼不正確，請再試一次";
+                            }
+
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
+            this.error = true;
+
+        },
+        goToPersonalPage() {
+            console.log("goToPersonalPage");
         },
     },
     created() {
@@ -136,12 +206,12 @@ export default {
     color: black;
 }
 
-.btn:hover{
+.btn:hover {
     background-color: rgba(242, 238, 238, 1);
 }
 
-.nav_login_btn:hover{
-    background-color: rgba(212, 128, 131, 1)!important;
+.nav_login_btn:hover {
+    background-color: rgba(212, 128, 131, 1) !important;
 }
 
 
@@ -152,7 +222,7 @@ export default {
 @media screen and (min-width: 1920px) {
     .middle {
         width: 576px;
-        height: 654px;
+        height: 536px;
         position: absolute;
         top: 145px;
         left: 50%;
@@ -179,7 +249,7 @@ export default {
 @media screen and (min-width: 1600px) and (max-width: 1920px) {
     .middle {
         width: 470px;
-        height: 654px;
+        height: 536px;
         position: absolute;
         top: 145px;
         left: 50%;
@@ -206,7 +276,7 @@ export default {
 @media screen and (max-width: 1600px) {
     .middle {
         width: 416px;
-        height: 654px;
+        height: 536px;
         position: absolute;
         top: 145px;
         left: 50%;
@@ -232,21 +302,50 @@ export default {
 
 .title {
     width: 100%;
-    height: 182px;
-    font-size: 58px;
+    height: 48px;
+    font-size: 33px;
     text-align: center;
     font-family: 'Noto Sans TC';
-    letter-spacing: -0.5px;
-    font-weight: 400;
-    line-height: 182px;
+    letter-spacing: 0.25px;
+    font-weight: 700;
+    line-height: 48px;
     user-select: none;
 }
 
 .enter {
     width: 100%;
-    height: 172px;
+    height: 192px;
     position: absolute;
-    top: 202px;
+    top: 64px;
+}
+
+.wrong {
+    width: 100%;
+    height: 46px;
+    border: 1px solid #c65659;
+    border-radius: 14px;
+    background-color: #f1d5d6;
+    font-size: 16px;
+    line-height: 46px;
+    color: #c65659;
+    font-weight: 500;
+    font-family: 'Noto Sans TC';
+    position: relative;
+    top: 0px;
+    letter-spacing: 0.5px;
+    /* visibility: hidden; */
+}
+
+.wrong p {
+    text-indent: 48px;
+    position: relative;
+    top: -46px;
+}
+
+.wrong img {
+    position: relative;
+    top: 6px;
+    left: 12px;
 }
 
 input {
@@ -259,25 +358,16 @@ input {
     font-weight: 500;
     letter-spacing: 1.25px;
     text-indent: 33.5px;
+    margin-top: 25.5px;
 }
 
 input::placeholder {
     color: #b6aeae;
 }
 
-.wrong {
-    margin-top: 6px;
-    width: 92%;
-    height: 22px;
-}
-
-.password {
-    margin-top: 21px;
-}
-
-.enter img {
+.enter>img {
     position: absolute;
-    top: 108px;
+    top: 158px;
     right: 28px;
     height: 24px;
     cursor: pointer;
@@ -299,7 +389,7 @@ input::placeholder {
     background-color: #b82c30;
     border-radius: 14px;
     position: absolute;
-    top: 394px;
+    top: 336px;
     font-size: 18px;
     font-weight: 500;
     font-family: 'Noto Sans TC';
@@ -314,7 +404,7 @@ input::placeholder {
     width: 110px;
     height: 32px;
     position: absolute;
-    top: 450px;
+    top: 280px;
     left: 8px;
     font-size: 18px;
     font-family: 'Noto Sans TC';
@@ -325,20 +415,20 @@ input::placeholder {
     color: #3b3838;
 }
 
-.keep_login_checkbox{
+.keep_login_checkbox {
     float: left;
     margin-top: 7px;
     margin-left: 8px;
     cursor: pointer;
 }
 
-.keep_login_checkbox_off:hover{
+.keep_login_checkbox_off:hover {
     content: url(../assets/checkbox/CheckBox_off_hover.svg);
     margin-top: 2px;
     margin-left: 3px;
 }
 
-.keep_login_checkbox_on:hover{
+.keep_login_checkbox_on:hover {
     content: url(../assets/checkbox/CheckBox_on_hover.svg);
     margin-top: 2px;
     margin-left: 3px;
@@ -352,7 +442,7 @@ input::placeholder {
     font-size: 18px;
     font-family: 'Noto Sans TC';
     position: absolute;
-    top: 450px;
+    top: 280px;
     right: 8px;
     cursor: pointer;
     font-weight: 500;
@@ -363,7 +453,7 @@ input::placeholder {
     height: 33px;
     width: 100%;
     position: relative;
-    top: 307px;
+    top: 344px;
     font-size: 18px;
     font-weight: 500;
     font-family: 'Noto Sans TC';
@@ -391,7 +481,7 @@ input::placeholder {
     width: 100%;
     height: 48px;
     position: absolute;
-    top: 538px;
+    top: 440px;
 }
 
 .other_resource div {

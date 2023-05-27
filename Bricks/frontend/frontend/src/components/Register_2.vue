@@ -1,41 +1,82 @@
 <template>
     <div>
+
         <div class="nav">
             <a href="./homepage_2">
                 <img src="../assets/brickslogo.svg" alt="">
             </a>
             <div class="tribtn">
                 <a href="" class="btn">試用</a>
-                <a href="./login_2" class="btn" style="background-color: #b82c30; border-color: #b82c30; color: #ffffff;">登入</a>
+                <a href="./login_2" class="btn nav_login_btn"
+                    style="background-color: #b82c30; border-color: #b82c30; color: #ffffff;">登入</a>
                 <a href="./register_2" class="btn" style="margin-right: 0px;">註冊</a>
             </div>
         </div>
         <div class="bg">
             <div class="middle">
                 <p class="title">註冊</p>
+                <div class="wrong" v-if="errorMessage1">
+                    <img src="../assets/exclamation.svg" alt="">
+                    <!-- 跳出的錯誤信息在這 -->
+                    <p>帳號或密碼格式錯誤</p>
+                </div>
+                <div class="wrong" v-if="errorMessage2">
+                    <img src="../assets/exclamation.svg" alt="">
+                    <!-- 跳出的錯誤信息在這 -->
+                    <p>您輸入的兩個密碼並不相符，請再試一次</p>
+                </div>
+                <div class="wrong" v-if="errorMessage3">
+                    <img src="../assets/exclamation.svg" alt="">
+                    <!-- 跳出的錯誤信息在這 -->
+                    <p>請輸入2~10個字元的使用者名稱</p>
+                </div>
+                <div class="wrong" v-if="errorMessage4">
+                    <img src="../assets/exclamation.svg" alt="">
+                    <!-- 跳出的錯誤信息在這 -->
+                    <p>請勾選隱私權政策</p>
+                </div>
+                <div class="wrong" v-if="errorMessage5">
+                    <img src="../assets/exclamation.svg" alt="">
+                    <!-- 跳出的錯誤信息在這 -->
+                    <p>此信箱已被註冊</p>
+                </div>
                 <div class="enter">
-                    <input required autofocus class="account" placeholder="請輸入 (規則) 帳號名稱 (後續無法更改)" style="margin-top: 0px;" v-model="account">
-                    <div class="wrong"></div>
-                    <input v-if="showpassword_1" required class="password" type="text" placeholder="請輸入 (規則) 密碼" v-model="password1">
-                    <input v-else required class="password" type="password" placeholder="請輸入 (規則) 密碼" v-model="password1">
-                    <img class="eye1" v-if="showpassword_1" id="eye_on_1" src="../assets/eye/eye_on.svg" alt="" @click="eyebtn_1">
-                    <img class="eye1" v-else id="eye_off_1" src="../assets/eye/eye_origin.svg" alt="" @click="eyebtn_1">
-                    <div class="wrong"></div>
-                    <input v-if="showpassword_2" required class="password" type="text" placeholder="請再次輸入密碼" v-model="password2">
-                    <input v-else required class="password" type="password" placeholder="請再次輸入密碼" v-model="password2">
-                    <img class="eye2" v-if="showpassword_2" id="eye_on_2" src="../assets/eye/eye_on.svg" alt="" @click="eyebtn_2">
-                    <img class="eye2" v-else id="eye_off_2" src="../assets/eye/eye_origin.svg" alt="" @click="eyebtn_2">
-                    <div class="wrong"></div>
-                    <input required type="text" class="email" placeholder="請填寫聯絡用電子信箱 (可更改)" v-model="email">
-                    <div class="wrong"></div>
+                    <input autofocus required type="text" class="email" placeholder="請輸入帳號 (電子信箱)" v-model="email">
+                    <div v-if="showpassword_1" class="input_password">
+                        <input required class="password" type="text" placeholder="請輸入 (規則) 密碼" v-model="password1">
+                        <img class="eye1" v-if="showpassword_1" id="eye_on_1" src="../assets/eye/eye_on.svg" alt=""
+                            @click="eyebtn_1">
+                        <img class="eye1" v-else id="eye_off_1" src="../assets/eye/eye_origin.svg" alt="" @click="eyebtn_1">
+                    </div>
+                    <div v-else class="input_password">
+                        <input required class="password" type="password" placeholder="請輸入 (規則) 密碼" v-model="password1">
+                        <img class="eye1" v-if="showpassword_1" id="eye_on_1" src="../assets/eye/eye_on.svg" alt=""
+                            @click="eyebtn_1">
+                        <img class="eye1" v-else id="eye_off_1" src="../assets/eye/eye_origin.svg" alt="" @click="eyebtn_1">
+                    </div>
+                    <div v-if="showpassword_2" class="input_password">
+                        <input required class="password" type="text" placeholder="請再次輸入密碼" v-model="password2">
+                        <img class="eye2" v-if="showpassword_2" id="eye_on_2" src="../assets/eye/eye_on.svg" alt=""
+                            @click="eyebtn_2">
+                    </div>
+                    <div v-else class="input_password">
+                        <input required class="password" type="password" placeholder="請再次輸入密碼" v-model="password2">
+                        <img class="eye2" id="eye_off_2" src="../assets/eye/eye_origin.svg" alt="" @click="eyebtn_2">
+                    </div>
+                    <input required class="account" placeholder="請輸入2~10個字元的使用者名稱 (可更改)" v-model="account">
                 </div>
-                <a href="" class="login_btn" v-if="counter == 4" style="background-color: #b82c30; cursor: pointer;">下一步</a>
-                <div class="login_btn" v-else>下一步</div>
                 <div class="agree">
-                    <img src="../assets/checkbox/CheckBox_off.svg" class="agree_checkbox agree_checkbox_off" v-if="checked" @click="check_btn">
-                    <img src="../assets/checkbox/CheckBox_on.svg" class="agree_checkbox agree_checkbox_on" v-else @click="check_btn">
-                    <p style="user-select: none;">同意 Bricks 之 <a href="" style="text-decoration: underline; color: #3b3838;">隱私權政策</a></p>
+                    <img src="../assets/checkbox/CheckBox_off.svg" class="agree_checkbox agree_checkbox_off" v-if="checked"
+                        @click="check_btn">
+                    <img src="../assets/checkbox/CheckBox_on.svg" class="agree_checkbox agree_checkbox_on" v-else
+                        @click="check_btn">
+                    <p style="user-select: none;">我已閱讀 Bricks 之 <a href=""
+                            style="text-decoration: underline; color: #3b3838;">隱私權政策</a></p>
                 </div>
+                <!-- 下面兩個是登入鍵 -->
+                <a class="login_btn" v-if="counter == 4" @click="register_next"
+                    style="background-color: #b82c30; cursor: pointer; display: inline-block;">下一步</a>
+                <div class="login_btn" v-else>下一步</div>
                 <div class="line">
                     <div class="left_line"></div>
                     <div class="right_line"></div>
@@ -69,12 +110,19 @@
             <div class="photo"># Photo by <a href="https://unsplash.com/@charlesdeluvio">charlesdeluvio</a> on Unsplash
             </div>
         </div>
+
+        <!-- <component :is="currentPage" v-if="page2"></component> -->
     </div>
 </template>
 
 <script>
+// import Register_second from './Register_second.vue'
+import axios from 'axios';
 export default {
-    name: 'Login_2',
+    name: 'Reigster_2',
+    // components: {
+    //     Register_second
+    // },
     data() {
         return {
             showpassword_1: false,
@@ -85,6 +133,15 @@ export default {
             password2: "",
             email: "",
             counter: 0,
+            errorMessage1: false,
+            errorMessage2: false,
+            errorMessage3: false,
+            errorMessage4: false,
+            errorMessage5: false,
+            userId: 0,  // 0 就等於沒有使用者id
+            // page1: true,
+            // page2: false,
+            // currentPage: "Register_second",
         };
     },
     methods: {
@@ -97,45 +154,226 @@ export default {
         check_btn() {
             this.checked = !this.checked;
         },
+        // 註冊的下一步事件
+        register_next() {
+            this.errorMessage5 = false;
+            if (this.email.indexOf('@') == -1 || this.email.indexOf('@') == 0 || this.email.indexOf('@') == this.email.length - 1) {
+                this.errorMessage1 = true;
+                console.log("@", this.email.indexOf('@'));
+            } else {
+                this.errorMessage1 = false;
+            }
+
+            if (this.password1 !== this.password2) {
+                this.errorMessage2 = true;
+            } else {
+                this.errorMessage2 = false;
+            }
+
+            if (this.account.length < 2 || this.account.length > 10) {
+                this.errorMessage3 = true;
+            } else {
+                this.errorMessage3 = false;
+            }
+
+            if (this.checked) {
+                this.errorMessage4 = true;
+                // console.log("t", this.errorMessage4);
+            } else {
+                this.errorMessage4 = false;
+                // console.log("f", this.errorMessage4);
+            }
+
+            if (!(this.errorMessage1 || this.errorMessage2 || this.errorMessage3 || this.errorMessage4)) {
+                // this.page1 = false;
+                // this.page2 = true;
+
+                // 先測試跳轉頁面並傳輸資料
+                // this.$router.push({ name: 'Register_second', params: { user_id: 111 } });
+
+
+                console.log("success");
+                const path = "http://34.81.186.58:5000/register";
+                const user = { user_email: this.email, user_password: this.password1, user_name: this.account };
+                // console.log(user);
+                this.email = "";
+                this.password1 = "";
+                this.password2 = "";
+                this.account = "";
+                axios
+                    .post(path, user)
+                    .then((res) => {
+                        console.log(res.data.status);
+                        if (res.data.status == 'success') {
+                            this.userId = res.data.user_id;
+                            console.log(this.userId);
+                            console.log("註冊成功");
+                            this.$router.push({ name: 'Register_second', params: { user_id: this.userId } });
+
+                        } else {
+                            // this.$refs.account.style = "border-color : #e03939";
+                            // this.$refs.password.style = "border-color : #e03939";
+                            // this.$refs.wrong1.style = "display : block";
+                            // this.$refs.wrong2.style = "display : block";
+                            // this.accountError = res.data.accountError;
+                            // this.passwordError = res.data.passwordError;
+                            console.log(res.data.message);
+                            this.errorMessage5 = true;
+
+
+                        }
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            } else {
+                console.log("failure");
+            }
+            // href="./Register_second" 
+
+
+
+
+        },
     },
     watch: {
-        account(newaccount,oldaccount){
-            if(newaccount != '' & oldaccount == ''){
+        account(newaccount, oldaccount) {
+            if (newaccount != '' & oldaccount == '') {
                 this.counter += 1;
             }
-            if(newaccount == '' & oldaccount != ''){
+            if (newaccount == '' & oldaccount != '') {
                 this.counter -= 1;
             }
             window.console.log(this.counter)
         },
-        password1(newpassword1,oldpassword1){
-            if(newpassword1 != '' & oldpassword1 == ''){
+        password1(newpassword1, oldpassword1) {
+            if (newpassword1 != '' & oldpassword1 == '') {
                 this.counter += 1;
             }
-            if(newpassword1 == '' & oldpassword1 != ''){
+            if (newpassword1 == '' & oldpassword1 != '') {
                 this.counter -= 1;
             }
             window.console.log(this.counter)
         },
-        password2(newpassword2,oldpassword2){
-            if(newpassword2 != '' & oldpassword2 == ''){
+        password2(newpassword2, oldpassword2) {
+            if (newpassword2 != '' & oldpassword2 == '') {
                 this.counter += 1;
             }
-            if(newpassword2 == '' & oldpassword2 != ''){
+            if (newpassword2 == '' & oldpassword2 != '') {
                 this.counter -= 1;
             }
             window.console.log(this.counter)
         },
-        email(newemail,oldemail){
-            if(newemail != '' & oldemail == ''){
+        email(newemail, oldemail) {
+            if (newemail != '' & oldemail == '') {
                 this.counter += 1;
             }
-            if(newemail == '' & oldemail != ''){
+            if (newemail == '' & oldemail != '') {
                 this.counter -= 1;
             }
             window.console.log(this.counter)
         },
+        check_btn(newValue, oldValue) {
+            if (newValue) {
+                this.frontBlock[4] = true;
+                // this.errorMessage = "請勾選隱私權政策";
+            } else {
+                this.frontBlock[4] = false;
+            }
+        },
+        // frontBlock(newValue, oldValue) {
+        //     if (newValue[0]) {
+        //         this.errorMessage = "請填寫所有欄位";
+        //     } else if (newValue[1]) {
+        //         this.errorMessage = "帳號或密碼格式錯誤";
+        //     } else if (newValue[2]) {
+        //         this.errorMessage = "您輸入的兩個密碼並不相符，請再試一次";
+        //     } else if (newValue[3]) {
+        //         this.errorMessage = "請輸入2~10個字元的使用者名稱";
+        //     } else if (newValue[4]) {
+        //         this.errorMessage = "請勾選隱私權政策";
+        //     } else {
+        //         this.errorMessage = "pass";
+        //     }
+        // },
+        // account(newValue, oldValue) {
+        //     if (newValue.length < 2 || newValue.length > 10) {
+        //         this.frontBlock[3] = true;
+        //         // this.errorMessage = "請輸入2~10個字元的使用者名稱";
+        //     } else {
+        //         this.frontBlock[3] = false;
+        //     }
+        // },
+        // password2(newValue, oldValue) {
+        //     if (this.password1 !== newValue) {
+        //         this.frontBlock[2] = true;
+        //         console.log(this.frontBlock);
+        //         // this.errorMessage = "您輸入的兩個密碼並不相符，請再試一次";
+        //     } else {
+        //         this.frontBlock[2] = false;
+        //     }
+        // },
+        // email(newValue, oldValue) {
+        //     if (newValue.indexOf('@') == -1 || newValue.indexOf('@') == 0 || newValue.indexOf('@') == newValue.length - 1) {
+        //         this.frontBlock[1] = true;
+        //         // this.errorMessage = "帳號或密碼格式錯誤";
+        //         console.log("@", this.email.indexOf('@'));
+        //         console.log(this.frontBlock);
+        //     } else {
+        //         this.frontBlock[1] = false;
+        //     }
+        // },
+        // counter(newValue, oldValue) {
+        //     console.log("cc ", this.counter)
+        //     if (newValue != 4) {
+        //         this.frontBlock[0] = true;
+        //         // this.errorMessage = "請填寫所有欄位";
+        //     } else {
+        //         this.frontBlock[0] = false;
+        //     }
+        // }else{
+        //     this.errorMessage = "pass";
+        // }
+        //     // 帳號（信箱）一定要包含@且，@一定不能在第一個或最後一個
+        // } else if (this.email.indexOf('@') == -1 || this.email.indexOf('@') == 0 || this.email.indexOf('@') == this.email.length - 1) {
+        //     this.errorMessage = "帳號或密碼格式錯誤";
+        //     console.log("@", this.email.indexOf('@'));
+
+        // } else if (this.password1 !== this.password2) {
+        //     this.errorMessage = "您輸入的兩個密碼並不相符，請再試一次";
+        // } else if (this.account.length < 2 || this.account.length > 10) {
+        //     this.errorMessage = "請輸入2~10個字元的使用者名稱";
+        // } else if (checked) {
+        //     this.errorMessage = "請勾選隱私權政策";
+        // } else {
+        //     this.errorMessage = "pass";
+        // }
+
+        // }
+
+
     },
+    // computed: {
+    //     front_block() {
+    //         if (this.counter != 4) {
+    //             this.errorMessage = "請填寫所有欄位";
+
+    //             // 帳號（信箱）一定要包含@且，@一定不能在第一個或最後一個
+    //         } else if (this.email.indexOf('@') == -1 || this.email.indexOf('@') == 0 || this.email.indexOf('@') == this.email.length - 1) {
+    //             this.errorMessage = "帳號或密碼格式錯誤";
+
+    //         } else if (this.password1 !== this.password2) {
+    //             this.errorMessage = "您輸入的兩個密碼並不相符，請再試一次";
+    //         } else if (this.account.length < 2 || this.account.length > 10) {
+    //             this.errorMessage = "請輸入2~10個字元的使用者名稱";
+    //         } else if (checked) {
+    //             this.errorMessage = "請勾選隱私權政策";
+    //         } else {
+    //             this.errorMessage = "pass";
+    //         }
+    //     },
+
+    // },
     created() {
 
     }
@@ -190,10 +428,13 @@ export default {
     color: black;
 }
 
-.btn:hover{
+.btn:hover {
     background-color: rgba(242, 238, 238, 1);
 }
 
+.nav_login_btn:hover {
+    background-color: rgba(212, 128, 131, 1) !important;
+}
 
 .bg {
     background-image: url(../assets/bricks_bg.svg);
@@ -202,7 +443,7 @@ export default {
 @media screen and (min-width: 1920px) {
     .middle {
         width: 576px;
-        height: 846px;
+        height: auto;
         position: absolute;
         top: 105px;
         left: 50%;
@@ -229,7 +470,7 @@ export default {
 @media screen and (min-width: 1600px) and (max-width: 1920px) {
     .middle {
         width: 470px;
-        height: 846px;
+        height: auto;
         position: absolute;
         top: 105px;
         left: 50%;
@@ -256,7 +497,7 @@ export default {
 @media screen and (max-width: 1600px) {
     .middle {
         width: 416px;
-        height: 846px;
+        height: auto;
         position: absolute;
         top: 105px;
         left: 50%;
@@ -282,12 +523,12 @@ export default {
 
 .enter {
     width: 100%;
-    height: 364px;
-    position: absolute;
-    top: 202px;
+    height: auto;
+    position: relative;
+    margin-top: 24px;
 }
 
-input {
+.enter input {
     width: 99.8%;
     height: 45px;
     border: 1.5px solid #c7c2c2;
@@ -297,7 +538,7 @@ input {
     font-weight: 500;
     letter-spacing: 1.25px;
     text-indent: 33.5px;
-    margin-top: 21px;
+    margin-bottom: 25.5px;
 }
 
 input::placeholder {
@@ -305,27 +546,49 @@ input::placeholder {
 }
 
 .wrong {
-    margin-top: 6px;
-    width: 92%;
-    height: 22px;
+    width: 100%;
+    height: 46px;
+    border: 1px solid #c65659;
+    border-radius: 14px;
+    background-color: #f1d5d6;
+    font-size: 16px;
+    line-height: 46px;
+    color: #c65659;
+    font-weight: 500;
+    font-family: 'Noto Sans TC';
+    position: relative;
+    top: 0px;
+    letter-spacing: 0.5px;
+    margin-top: 24px;
+    /* visibility: hidden; */
 }
 
-.enter img {
-    position: absolute;
-    right: 28px;
-    height: 24px;
+.wrong p {
+    text-indent: 48px;
+    position: relative;
+    top: -46px;
+}
+
+.wrong img {
+    position: relative;
+    top: 6px;
+    left: 12px;
+}
+
+.input_password {
+    height: 75px;
+}
+
+.input_password img {
     cursor: pointer;
-    z-index: 90;
+    z-index: 9;
     user-select: none;
+    position: relative;
+    top: -64px;
+    left: 90%;
+    display: block;
 }
 
-.eye1{
-    top: 106px;
-}
-
-.eye2{
-    top: 205px;
-}
 
 #eye_off_1:hover {
     content: url(../assets/eye/eye_origin_hover.svg);
@@ -348,8 +611,7 @@ input::placeholder {
     height: 48px;
     background-color: #c7c2c2;
     border-radius: 14px;
-    position: absolute;
-    top: 586px;
+    position: relative;
     font-size: 18px;
     font-weight: 500;
     font-family: 'Noto Sans TC';
@@ -358,15 +620,16 @@ input::placeholder {
     text-align: center;
     user-select: none;
     text-decoration: none;
+    margin-bottom: 16px;
 }
 
-.agree{
-    width: 274px;
+.agree {
+    width: 294px;
     height: 32px;
-    position: absolute;
-    top: 642px;
+    position: relative;
     left: 50%;
     transform: translate(-50%);
+    margin-bottom: 24px;
     font-size: 18px;
     font-family: 'Noto Sans TC';
     line-height: 32px;
@@ -375,19 +638,20 @@ input::placeholder {
     text-align: right;
     color: #3b3838;
 }
-.agree_checkbox{
+
+.agree_checkbox {
     float: left;
     margin-top: 7px;
     cursor: pointer;
 }
 
-.agree_checkbox_off:hover{
+.agree_checkbox_off:hover {
     content: url(../assets/checkbox/CheckBox_off_hover.svg);
     margin-top: 2px;
     margin-left: -4.5px;
 }
 
-.agree_checkbox_on:hover{
+.agree_checkbox_on:hover {
     content: url(../assets/checkbox/CheckBox_on_hover.svg);
     margin-top: 2px;
     margin-left: -4.5px;
@@ -397,7 +661,6 @@ input::placeholder {
     height: 33px;
     width: 100%;
     position: relative;
-    top: 500px;
     font-size: 18px;
     font-weight: 500;
     font-family: 'Noto Sans TC';
@@ -405,6 +668,7 @@ input::placeholder {
     color: #b6aeae;
     text-align: center;
     user-select: none;
+    margin-bottom: 8px;
 }
 
 .left_line {
@@ -420,11 +684,12 @@ input::placeholder {
     border-bottom: 1px solid #b6aeae;
     float: right;
 }
+
 .other_resource {
     width: 100%;
     height: 48px;
-    position: absolute;
-    top: 730px;
+    position: relative;
+    margin-bottom: 16px;
 }
 
 .other_resource div {
@@ -460,7 +725,7 @@ input::placeholder {
 .login {
     width: 201px;
     height: 32px;
-    position: absolute;
+    position: relative;
     bottom: 0px;
     left: 50%;
     transform: translate(-50%);
@@ -480,15 +745,16 @@ input::placeholder {
 .login a p {
     color: #c65659;
 }
+
 .title {
     width: 100%;
-    height: 182px;
-    font-size: 58px;
+    height: 48px;
+    font-size: 33px;
     text-align: center;
     font-family: 'Noto Sans TC';
-    letter-spacing: -0.5px;
-    font-weight: 400;
-    line-height: 182px;
+    letter-spacing: 0.25px;
+    font-weight: 700;
+    line-height: 48px;
     user-select: none;
 }
 
