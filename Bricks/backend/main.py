@@ -17,6 +17,7 @@ db_host = os.environ.get('DB_HOST')
 db_port = os.environ.get('DB_PORT')
 db_name = os.environ.get('DB_NAME')
 
+
 app = Flask(__name__)
 CORS(app, resources={r"/*": {'origins': "*"}})
 app.config['SECRET_KEY'] = 'secret'
@@ -57,6 +58,13 @@ def verify_token(token):
     if ret_list is None:
         return False
     return data['user_email']
+
+DATA = [
+    {
+    'account':'RuCiCa',
+    'password': 'RuCiCa0307'
+    }
+]
 
 DATA = [
     {
@@ -575,6 +583,30 @@ def lcs(data):
                 dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
 
     return dp[str2_len][str1_len]
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    response_object = {'status': 'success'}
+    if request.method == "POST":
+        post_data = request.get_json()
+        print(post_data.get("account"))
+        print(post_data.get("password"))
+        for account_info in DATA:
+            print(account_info)
+            if account_info['account'] == post_data.get("account") and account_info['password'] == post_data.get("password"):
+                response_object['message'] = "登入成功"
+                break
+            else:
+                response_object['status'] = "failed"
+                response_object['message'] = "登入失敗"
+                break
+
+    else:
+        response_object['items'] = DATA
+
+    return jsonify(response_object)
+
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
