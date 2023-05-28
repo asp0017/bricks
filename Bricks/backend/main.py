@@ -340,6 +340,8 @@ def add_project():
         conn = engine.connect()
         post_data = request.get_json()
 
+
+
         Inquery = """
             INSERT INTO project (project_type, project_image, project_name, project_trashcan, project_ended, project_edit, project_visible, project_comment, user_id)
             VALUES 
@@ -369,11 +371,32 @@ def add_type():
         conn = engine.connect()
         post_data = request.get_json()
 
+        get_last_query = """
+                    SELECT MAX(project_type_sort) AS max_sort FROM project_sort
+                    WHERE user_id = {} AND project_ended = {};
+        """.format(post_data.get("user_id"), post_data.get("project_ended"))
+
+        last = conn.execute(text(get_last_query))
+        keys = list(last.keys())
+        last = [dict(zip(keys, row)) for row in last.fetchall()]
+
+        get_last_id_query = """
+                    SELECT MAX(type_id) AS max_sort FROM project_sort
+                    WHERE user_id = {} AND project_ended = {};
+        """.format(post_data.get("user_id"), post_data.get("project_ended"))
+
+        last_id = conn.execute(text(get_last_id_query))
+        keys = list(last_id.keys())
+        last_id = [dict(zip(keys, row)) for row in last_id.fetchall()]
+
+        sort = last[0]["max_sort"] + 1
+        id = last_id[0]["max_sort"] + 1
+
         Inquery = """
             INSERT INTO project_sort (type_id, project_type, project_type_sort, user_id, project_ended)
             VALUES 
             ({}, "{}", {}, {}, {});
-        """.format(post_data.get("type_id"), post_data.get("project_type"), post_data.get("project_type_sort"), post_data.get("user_id"), post_data.get("project_ended"))
+        """.format(id, post_data.get("project_type"), sort, post_data.get("user_id"), post_data.get("project_ended"))
 
         #執行SQL指令
         conn.execute(text(Inquery))
@@ -396,7 +419,7 @@ def set_type():
         conn = engine.connect()
         post_data = request.get_json()
         set_query = """
-                        UPDATE project SET project_type = '{}' WHERE project_id = {};
+                        UPDATE project SET project_type = '{}' WHERE id = {};
                     """.format(post_data.get("project_type"), post_data.get("project_id"))
         conn.execute(text(set_query))
         conn.execute(text("COMMIT;"))
@@ -418,7 +441,7 @@ def recover():
         post_data = request.get_json()
         set_query = """
                         UPDATE project SET project_trashcan = 0
-                        WHERE project_id = {};
+                        WHERE id = {};
                     """.format(post_data.get("project_id"))
         conn.execute(text(set_query))
         conn.execute(text("COMMIT;"))
@@ -466,7 +489,7 @@ def trashcan():
         post_data = request.get_json()
         set_query = """
                         UPDATE project SET project_trashcan = 1
-                        WHERE project_id = {};
+                        WHERE id = {};
                     """.format(post_data.get("project_id"))
         conn.execute(text(set_query))
         conn.execute(text("COMMIT;"))
@@ -583,52 +606,6 @@ def lcs(data):
                 dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
 
     return dp[str2_len][str1_len]
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    response_object = {'status': 'success'}
-    if request.method == "POST":
-        post_data = request.get_json()
-        print(post_data.get("account"))
-        print(post_data.get("password"))
-        for account_info in DATA:
-            print(account_info)
-            if account_info['account'] == post_data.get("account") and account_info['password'] == post_data.get("password"):
-                response_object['message'] = "登入成功"
-                break
-            else:
-                response_object['status'] = "failed"
-                response_object['message'] = "登入失敗"
-                break
-
-    else:
-        response_object['items'] = DATA
-
-    return jsonify(response_object)
-
-
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    response_object = {'status': 'success'}
-    if request.method == "POST":
-        post_data = request.get_json()
-        print(post_data.get("account"))
-        print(post_data.get("password"))
-        for account_info in DATA:
-            print(account_info)
-            if account_info['account'] == post_data.get("account") and account_info['password'] == post_data.get("password"):
-                response_object['message'] = "登入成功"
-                break
-            else:
-                response_object['status'] = "failed"
-                response_object['message'] = "登入失敗"
-                break
-
-    else:
-        response_object['items'] = DATA
-
-    return jsonify(response_object)
 
 
 
