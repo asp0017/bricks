@@ -17,7 +17,6 @@ db_host = os.environ.get('DB_HOST')
 db_port = os.environ.get('DB_PORT')
 db_name = os.environ.get('DB_NAME')
 
-
 app = Flask(__name__)
 CORS(app, resources={r"/*": {'origins': "*"}})
 app.config['SECRET_KEY'] = 'secret'
@@ -29,12 +28,14 @@ engine = create_engine(db_url)
 app.config.from_object(__name__)
 auth = HTTPTokenAuth(scheme='Bearer')
 
+
 #hash password
 def hash_password(password):
     sha256 = hashlib.sha256()
     sha256.update(password.encode('utf-8'))
     hashed_password = sha256.hexdigest()
     return hashed_password
+
 
 #verify token
 @auth.verify_token
@@ -58,20 +59,6 @@ def verify_token(token):
     if ret_list is None:
         return False
     return data['user_email']
-
-DATA = [
-    {
-    'account':'RuCiCa',
-    'password': 'RuCiCa0307'
-    }
-]
-
-DATA = [
-    {
-    'account':'RuCiCa',
-    'password': 'RuCiCa0307'
-    }
-]
 
 
 # hello world route
@@ -131,6 +118,7 @@ def login():
         },
         app.config['SECRET_KEY'],
         algorithm='HS256')
+
     result.close()
     conn.close()
     return token
@@ -236,18 +224,12 @@ def get_project():
     response_object = {"status": "success"}
     post_data = request.get_json()
     found = False
-    
+
     if post_data.get("project_status") == "normal":
         nor_query = """
-                    SELECT p.*
-                    FROM project p
-                    JOIN project_sort ps ON p.project_type = ps.project_type
-                    WHERE p.user_id = {}
-                    AND p.project_trashcan = 0
-                    AND p.project_ended = 0
-                    AND ps.user_id = {}
-                    ORDER BY ps.project_type_sort ASC, p.project_edit_date DESC;
-                """.format(post_data.get("user_id"), post_data.get("user_id"))
+                    SELECT * FROM project WHERE user_id = {} AND project_trashcan = 0 AND project_ended = 0
+                    ORDER BY project_type;
+                """.format(post_data.get("user_id"))
         SQL_data = conn.execute(text(nor_query))
         keys = list(SQL_data.keys())
         data = [dict(zip(keys, row)) for row in SQL_data.fetchall()]
@@ -258,15 +240,9 @@ def get_project():
 
     if post_data.get("project_status") == "ended":
         end_query = """
-                    SELECT p.*
-                    FROM project p
-                    JOIN project_sort ps ON p.project_type = ps.project_type
-                    WHERE p.user_id = {}
-                    AND p.project_trashcan = 0
-                    AND p.project_ended = 1
-                    AND ps.user_id = {}
-                    ORDER BY ps.project_type_sort ASC, p.project_edit_date DESC;
-                """.format(post_data.get("user_id"), post_data.get("user_id"))
+                    SELECT * FROM project WHERE user_id = {} AND project_trashcan = 0 AND project_ended = 1
+                    ORDER BY project_type;
+                """.format(post_data.get("user_id"))
         SQL_data = conn.execute(text(end_query))
         keys = list(SQL_data.keys())
         data = [dict(zip(keys, row)) for row in SQL_data.fetchall()]
@@ -274,37 +250,18 @@ def get_project():
         response_object["items"] = data
         conn.close()
 
-
     if post_data.get("project_status") == "trashcan":
-        month_query = """
-                    SELECT *
-                    FROM project
-                    WHERE user_id = {} AND project_trashcan = 1
-                        AND project_edit_date >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
-                    ORDER BY project_edit_date DESC;
+        trash_query = """
+                    SELECT * FROM project WHERE user_id = {} AND project_trashcan = 1
+                    ORDER BY project_type;
                 """.format(post_data.get("user_id"))
-        not_month_query = """
-                    SELECT *
-                    FROM project
-                    WHERE user_id = {} AND project_trashcan = 1
-                        AND project_edit_date < DATE_SUB(NOW(), INTERVAL 1 MONTH)
-                    ORDER BY project_edit_date DESC;
-        """.format(post_data.get("user_id"))
-
-        month = conn.execute(text(month_query))
-        keys = list(month.keys())
-        month_data = [dict(zip(keys, row)) for row in month.fetchall()]
-
-        not_month = conn.execute(text(not_month_query))
-        keys = list(not_month.keys())
-        not_month_data = [dict(zip(keys, row)) for row in not_month.fetchall()]
-
+        SQL_data = conn.execute(text(trash_query))
+        keys = list(SQL_data.keys())
+        data = [dict(zip(keys, row)) for row in SQL_data.fetchall()]
         found = True
-        response_object["in_month"] = month_data
-        response_object["not_in_month"] = not_month_data
+        response_object["items"] = data
         conn.close()
-        response_object["message"] = "垃圾桶"
-    
+
     if found == False:
         response_object["status"] = "failed"
         response_object["message"] = "沒找到"
@@ -312,7 +269,7 @@ def get_project():
     return jsonify(response_object)
 
 
-@app.route("/set_project_end", methods=["POST"])
+@app.route('/set_project_end', methods=['POST'])
 def set_end():
     response_object = {"status": "success"}
     try:
@@ -340,22 +297,27 @@ def add_project():
         conn = engine.connect()
         post_data = request.get_json()
 
-
-
         Inquery = """
             INSERT INTO project (project_type, project_image, project_name, project_trashcan, project_ended, project_edit, project_visible, project_comment, user_id)
             VALUES 
             ("{}", "{}", "{}", {}, {}, {}, {}, {}, {});
-        """.format(post_data.get("project_type"), post_data.get("project_image"), post_data.get("project_name"), post_data.get("project_trashcan"), post_data.get("project_ended"), 
-                post_data.get("project_isEdit"), post_data.get("project_isVisible"), post_data.get("project_isComment"), post_data.get("user_id"))
-
+        """.format(post_data.get("project_type"),
+                   post_data.get("project_image"),
+                   post_data.get("project_name"),
+                   post_data.get("project_trashcan"),
+                   post_data.get("project_ended"),
+                   post_data.get("project_isEdit"),
+                   post_data.get("project_isVisible"),
+                   post_data.get("project_isComment"),
+                   post_data.get("user_id"))
 
         #執行SQL指令
         conn.execute(text(Inquery))
         conn.execute(text("COMMIT;"))
         #關閉連線
         conn.close()
-        response_object["message"] = "新增{}成功".format(post_data.get("project_name"))
+        response_object["message"] = "新增{}成功".format(
+            post_data.get("project_name"))
 
     except Exception as e:
         response_object["status"] = "failed"
@@ -364,63 +326,16 @@ def add_project():
     return jsonify(response_object)
 
 
-@app.route("/add_type", methods=["POST"])
+@app.route('/add_type', methods=['PUT'])
 def add_type():
-    response_object = {"status": "success"}
-    try:
-        conn = engine.connect()
-        post_data = request.get_json()
-
-        get_last_query = """
-                    SELECT MAX(project_type_sort) AS max_sort FROM project_sort
-                    WHERE user_id = {} AND project_ended = {};
-        """.format(post_data.get("user_id"), post_data.get("project_ended"))
-
-        last = conn.execute(text(get_last_query))
-        keys = list(last.keys())
-        last = [dict(zip(keys, row)) for row in last.fetchall()]
-
-        get_last_id_query = """
-                    SELECT MAX(type_id) AS max_sort FROM project_sort
-                    WHERE user_id = {} AND project_ended = {};
-        """.format(post_data.get("user_id"), post_data.get("project_ended"))
-
-        last_id = conn.execute(text(get_last_id_query))
-        keys = list(last_id.keys())
-        last_id = [dict(zip(keys, row)) for row in last_id.fetchall()]
-
-        sort = last[0]["max_sort"] + 1
-        id = last_id[0]["max_sort"] + 1
-
-        Inquery = """
-            INSERT INTO project_sort (type_id, project_type, project_type_sort, user_id, project_ended)
-            VALUES 
-            ({}, "{}", {}, {}, {});
-        """.format(id, post_data.get("project_type"), sort, post_data.get("user_id"), post_data.get("project_ended"))
-
-        #執行SQL指令
-        conn.execute(text(Inquery))
-        conn.execute(text("COMMIT;"))
-        #關閉連線
-        conn.close()
-        response_object["message"] = "新增成功"
-
-    except Exception as e:
-        response_object["status"] = "failed"
-        response_object["message"] = str(e)
-
-    return jsonify(response_object)
-
-
-@app.route("/edit_type", methods=["POST"])
-def set_type():
     response_object = {"status": "success"}
     try:
         conn = engine.connect()
         post_data = request.get_json()
         set_query = """
                         UPDATE project SET project_type = '{}' WHERE id = {};
-                    """.format(post_data.get("project_type"), post_data.get("project_id"))
+                    """.format(post_data.get("project_type"),
+                               post_data.get("project_id"))
         conn.execute(text(set_query))
         conn.execute(text("COMMIT;"))
         conn.close()
@@ -433,83 +348,13 @@ def set_type():
     return jsonify(response_object)
 
 
-@app.route("/trashcan_recover", methods=["POST"])
-def recover():
-    response_object = {"status": "success"}
-    try:
-        conn = engine.connect()
-        post_data = request.get_json()
-        set_query = """
-                        UPDATE project SET project_trashcan = 0
-                        WHERE id = {};
-                    """.format(post_data.get("project_id"))
-        conn.execute(text(set_query))
-        conn.execute(text("COMMIT;"))
-        conn.close()
-        response_object["message"] = "修改成功"
-
-    except Exception as e:
-        response_object["status"] = "failed"
-        response_object["message"] = str(e)
-
-    return jsonify(response_object)
-
-
-@app.route("/type_reindex", methods=["POST"])
-def type_reindex():
-    response_object = {"status": "success"}
-    try:
-        conn = engine.connect()
-        post_data = request.get_json()
-        
-        for item in post_data.get("type_sort"):
-            id = item["id"]
-            project_type_sort = item["project_type_sort"]
-            requery = """
-            UPDATE project_sort SET project_type_sort = {} WHERE type_id = {} AND user_id = {} AND project_ended = {};
-            """.format(project_type_sort, id, post_data.get("user_id"), post_data.get("project_ended"))
-            conn.execute(text(requery))
-            print("sort:{}, type_id:{}, user_id:{}".format(project_type_sort, id, post_data.get("user_id")))
-        conn.execute(text("COMMIT;"))
-        conn.close()
-        response_object["message"] = "修改成功"
-
-    except Exception as e:
-        response_object["status"] = "failed"
-        response_object["message"] = str(e)
-
-    return jsonify(response_object)
-
-
-@app.route("/to_trashcan", methods=["POST"])
-def trashcan():
-    response_object = {"status": "success"}
-    try:
-        conn = engine.connect()
-        post_data = request.get_json()
-        set_query = """
-                        UPDATE project SET project_trashcan = 1
-                        WHERE id = {};
-                    """.format(post_data.get("project_id"))
-        conn.execute(text(set_query))
-        conn.execute(text("COMMIT;"))
-        conn.close()
-        response_object["message"] = "修改成功"
-
-    except Exception as e:
-        response_object["status"] = "failed"
-        response_object["message"] = str(e)
-
-    return jsonify(response_object)
-
-
-@app.route("/personal_setting", methods=["POST"])
+@app.route('/personal_setting', methods=['POST'])
 def personal_setting():
     try:
         conn = engine.connect()
         response_object = {"status": "success"}
         post_data = request.get_json()
-        
+
         nor_query = """
                         SELECT * FROM users WHERE id = {};
                     """.format(post_data.get("user_id"))
@@ -518,12 +363,10 @@ def personal_setting():
         data = [dict(zip(keys, row)) for row in SQL_data.fetchall()]
         conn.close()
         response_object["items"] = data
-    
+
     except Exception as e:
         response_object["status"] = "failed"
         response_object["message"] = str(e)
-
-    return jsonify(response_object)
 
 
 @app.route('/notification', methods=['POST'])
@@ -660,8 +503,6 @@ def lcs(data):
                 dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
 
     return dp[str2_len][str1_len]
-
-
 
 
 if __name__ == "__main__":
